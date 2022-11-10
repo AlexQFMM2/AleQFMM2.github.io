@@ -1,4 +1,4 @@
-hename: HEXO CI
+name: HEXO CI
  
 on:
   push:
