@@ -1,11 +1,10 @@
-```
 ---
 title: centos搭建hexo博客（二）
 categories: blog
 date: 2022-11-10 15:35:45
 tags: hexo
 ---
-```
+
 
 
 
