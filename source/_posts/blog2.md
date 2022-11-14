@@ -7,9 +7,66 @@ tags: hexo
 
 
 
+
 # centos搭建hexo博客（二）
 
-## 一、hexo的多机迁移
+## 一、评论区搭建
+
+###### 注册Leancloud账号
+
+```
+https://console.leancloud.cn/login
+```
+
+![image-20221114192145068](image-20221114192145068.png)
+
+注册完成后进入app控制面板->创建应用->创建开发版应用。
+
+![image-20221114192202376](image-20221114192202376.png)
+
+创建完之后所有应用->设置->安全中心->web安全域名。填入你的博客网址。
+
+![image-20221114191933365](image-20221114191933365.png)
+
+进入安全凭证，进入主题的_config.yml打开Valine，加入appid和appkey
+
+![Quicker_20221114_192329](Quicker_20221114_192329.png)
+
+在菜单栏添加留言版
+
+```
+hexo new page "guestbook"
+```
+
+进入网页，加入内容
+
+```
+---
+title: 给我留言吧
+date: 2022-02-18 20:04:25
+type: "guestbook"
+---
+
+# 欢迎来到我的博客！
+```
+
+进入blog的_config.yml添加内容
+
+```
+menu:
+  guestbook: /guestbook/ || fa fa-book
+```
+
+更改语言翻译（themes/next/languages）
+
+```
+menu:
+  guestbook: 留言板
+```
+
+
+
+## 二、hexo的多机迁移
 
 ```
 push 推
@@ -98,7 +155,7 @@ git push
 git pull
 ```
 
-## 二、hexo的后台搭建（qexo）
+## 三、hexo的后台搭建（qexo）
 
 ###### 1、申请MongoDB
 
@@ -125,7 +182,7 @@ git pull
 
 ​    Project ID，前往你的Qexo项目设置（最下方）
 
-## 三、流水线自动部署
+## 四、流水线自动部署
 
 ######     ubtuntu容器安装git
 
