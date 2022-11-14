@@ -7,7 +7,6 @@ tags: hexo
 
 
 
-
 # centos搭建hexo博客（二）
 
 ## 一、hexo的多机迁移
