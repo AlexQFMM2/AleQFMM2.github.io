@@ -1,10 +1,13 @@
 ---
-title: centos搭建hexo博客（三）
-categories: blog
-date: 2022-11-14 13:31:45
-tags: hexo
+abbrlink: ''
+categories:
+- blog
+date: '2022-11-14 13:31:45'
+tags:
+- hexo
+title: centos搭建hexo博客（番外）
+updated: '2022-11-14 16:32:51'
 ---
-
 # 番外、dockerfile的写法
 
 ###### 所需镜像自行拉取，示例：
@@ -118,4 +121,3 @@ docker  inspect -f '{{.ID}}'  容器名
 复制
 docker cp 文件名 长id:目标路径
 ```
-
