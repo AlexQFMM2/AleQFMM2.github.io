@@ -6,7 +6,7 @@ date: '2022-11-14 13:31:45'
 tags:
 - hexo
 title: centos搭建hexo博客（番外）
-updated: '2022-11-14 16:32:51'
+updated: '2022-11-14 16:44:46'
 ---
 # 番外、dockerfile的写法
 
