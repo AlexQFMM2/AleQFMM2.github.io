@@ -1,9 +1,11 @@
+
 ---
 title: centos搭建hexo博客（一）
 categories: blog
 date: 2022-11-06 13:31:45
 tags: hexo
 ---
+
 
 
 
@@ -534,7 +536,32 @@ blog/source/_posts
 <!--more-->
 ```
 
-## 四、博客的上传
+## 四、图片的添加
+
+安装图形插件hexo-renderer-marked
+
+```
+cnpm install hexo-renderer-marked
+```
+
+在blog目录下修改_config.yaml
+
+```
+post_asset_folder: true
+marked:
+  prependRoot: true
+  postAsset: true
+```
+
+在/blog/source/_posts/目录下会多出和博客名一样的文件夹，里面用来放置图片资源
+
+
+
+###### 扩展、使用typora插入图片（windows系统）
+
+在插入图片后路径名，删除/blog即可使用，本地会预览不了，但是推送后可以查看
+
+## 五、博客的上传
 
 ```
 github创建仓库，与用户名相同（小写）

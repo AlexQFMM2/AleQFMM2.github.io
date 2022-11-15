@@ -1,3 +1,4 @@
+
 ---
 title: centos搭建hexo博客（二）
 categories: blog
@@ -159,11 +160,41 @@ git pull
 
 ###### 1、申请MongoDB
 
-​	[注册 MongoDB 账号 (opens new window)](https://www.mongodb.com/cloud/atlas/register)创建免费 MongoDB 数据库，区域**一定要选择 AWS / N. Virginia (us-east-1)** 在 Clusters 页面点击 CONNECT，按步骤设置允许所有 IP 地址的连接），创建数据库用户，并记录数据库连接信息，密码即为你所设置的值
+​	[注册 MongoDB 账号 (opens new window)](https://www.mongodb.com/cloud/atlas/register)创建免费 MongoDB 数据库
+
+![image-20221115094446726](image-20221115094446726.png)
+
+区域**一定要选择 AWS / N. Virginia (us-east-1)** 
+
+![image-20221115094519445](image-20221115094519445.png)
+
+在 Clusters 页面点击 CONNECT，按步骤设置允许所有 IP 地址的连接），创建数据库用户，并记录数据库连接信息，密码即为你所设置的值
+
+![image-20221115094540556](image-20221115094540556.png)
+
+允许所有链接
+
+![image-20221115094609823](image-20221115094609823.png)
+
+复制shell脚本
+
+![image-20221115094629012](image-20221115094629012.png)
+
+
 
 ###### 2、登录[New Project – Vercel](https://vercel.com/new/clone?repository-url=https://github.com/am-abudu/Qexo)进行创建
 
-​	创建项目后会报错。进setting配置环境变量
+直接创建
+
+![image-20221115094658221](image-20221115094658221.png)
+
+​	创建项目后会报错。
+
+![image-20221115094724722](image-20221115094724722.png)
+
+进setting配置环境变量
+
+![image-20221115094737649](image-20221115094737649.png)
 
 | 名称         | 意义                                            | 示例                                    |
 | ------------ | ----------------------------------------------- | --------------------------------------- |
@@ -178,9 +209,15 @@ git pull
 
 ​	github密匙在github-头像-setting中创建
 
+![image-20221115094917875](mage-20221115094917875.png)
+
 ​	vercel密匙在vercel的setting中创建
 
+![image-20221115094939000](image-20221115094939000.png)
+
 ​    Project ID，前往你的Qexo项目设置（最下方）
+
+![image-20221115095012441](image-20221115095012441.png)
 
 ## 四、流水线自动部署
 
@@ -212,6 +249,8 @@ cat /root/.ssh/id_rsa
 
 在项目仓库的setting--Secrets--Actions--New  repository sercet
 
+![image-20221115095130715](image-20221115095130715.png)
+
 ```
 Title:
 HEXO_DEPLOY_PRI
@@ -220,6 +259,8 @@ HEXO_DEPLOY_PRI
 ```
 
 在项目仓库的setting--Deploy keys	
+
+![image-20221115095213890](image-20221115095213890.png)
 
 ```
 Title:
