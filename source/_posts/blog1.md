@@ -107,6 +107,18 @@ systemctl enable docker
 docker version
 ```
 
+###### 拉取镜像
+```
+docker pull centos:centos7.5.1804 
+
+docker pull ubuntu:latest
+
+docker images
+
+ubuntu        latest           ba6acccedd29   13 months ago   72.8MB
+centos        centos7.5.1804   cf49811e3cdb   3 years ago     200MB
+```
+
 ### 	3、图形化界面安装（可不做）
 
 ###### 升级yum包
@@ -298,6 +310,22 @@ scheme: Pisces
 ### 4、更改背景
 
 ###### 将需要做背景的图片放入blog/themes/next/source/images/路径下
+```
+[root@master ~]# ll |grep .jpg
+-rw-r--r--. 1 root root    1613625 May 28 09:17 Avatar.jpg
+-rw-r--r--. 1 root root     135576 Nov 14 16:57 background2.jpg
+-rw-r--r--. 1 root root    2501902 Nov  2 09:04 background.jpg
+
+[root@master ~]# docker ps -a
+CONTAINER ID   IMAGE              COMMAND            CREATED       STATUS                    PORTS     NAMES
+920635e9bdec   blog-test:v1.1     "/usr/sbin/init"   2 weeks ago   Up 2 days                           blog-main
+
+docker  inspect -f '{{.ID}}'  blog-main
+
+
+docker cp *.jpg id:/blog/themes/next/source/images/
+
+```
 
 ```
 cp background.jpg blog/themes/next/source/images/

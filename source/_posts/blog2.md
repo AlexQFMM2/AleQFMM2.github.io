@@ -84,6 +84,20 @@ git clone xxx
 
 接下来在克隆到本地的目录中，把除了.git 文件夹外的所有文件都删掉，如果你之前克隆过[theme](https://www.zhihu.com/search?q=theme&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra={"sourceType"%3A"answer"%2C"sourceId"%3A489124966})中的主题文件，那么应该把主题文件中的`.git`文件夹删掉
 
+```
+[root@920635e9bdec blog]# ls -al
+total 596
+drwxr-xr-x.   1 root root   4096 11月 18 05:47 .
+drwxr-xr-x.   1 root root     74 11月 21 05:46 ..
+-rw-r--r--.   1 root root      0 11月  9 01:23 _admin-config.yml
+-rw-r--r--.   1 root root      0 11月  9 01:23 _config.landscape.yml
+-rw-r--r--.   1 root root    179 11月  9 01:23 config.txt
+-rw-r--r--.   1 root root   2894 11月 18 05:47 _config.yml
+-rw-r--r--.   1 root root 273356 11月 23 05:29 db.json
+drwxr-xr-x.  14 root root    185 11月 23 05:29 .deploy_git
+drwxr-xr-x.   8 root root    220 11月 21 05:47 .git
+drwxr-xr-x.   3 root root     45 11月 10 07:25 .github
+```
  把之前我们写的博客源文件全部复制过来，除了`.deploy_git`。这里应该说一句，复制过来的源文件应该有一个`.gitignore`，用来忽略一些不需要的文件，如果没有的话，自己新建一个，在里面写上如下，表示这些类型文件不需要git：
 
 ```text
