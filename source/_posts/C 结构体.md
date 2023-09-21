@@ -42,7 +42,7 @@ struct Books //结构体标签
 
 在一般情况下，**tag、member-list、variable-list** 这 3 部分至少要出现 2 个。
 
-
+<!--more-->
 
 ## 2.结构体变量的初始化
 
