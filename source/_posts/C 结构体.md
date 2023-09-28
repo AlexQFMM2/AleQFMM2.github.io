@@ -1,6 +1,6 @@
 ---
 title: C 结构体
-categories: C
+categories: C-数据结构
 date: 2023-9-20 20:27:45
 tags: 数据结构
 ---
