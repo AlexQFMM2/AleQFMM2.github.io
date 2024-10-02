@@ -60,7 +60,7 @@ public:
     
 
 private:  
-    std::queue<redisContext*> connectionPool; // 连接池  
+    std::queue<std::unique_ptr<redisContext, std::function<void(redisContext*)>>> connectionPool; // 连接池  
     std::mutex mtx; // 互斥锁  
     int maxPoolSize; // 最大连接数  
     std::condition_variable cv; // 条件变量  
@@ -86,7 +86,8 @@ private:
 RedisPool::RedisPool(const std::string& host, int port, int pool_size)  
     : host(host), port(port), maxPoolSize(pool_size) {  
     for (int i = 0; i < maxPoolSize; ++i) {  
-        redisContext* ctx = redisConnect(host.c_str(), port);  
+        auto ctx = redisConnect(host.c_str(), port);  
+
         if (ctx == nullptr || ctx->err) {  
             if (ctx) {  
                 std::cerr << "Error connecting to Redis: " << ctx->errstr << std::endl;  
@@ -94,17 +95,23 @@ RedisPool::RedisPool(const std::string& host, int port, int pool_size)
             } else {  
                 std::cerr << "Can't allocate Redis context" << std::endl;  
             }  
-        } else {  
-            connectionPool.push(ctx); // 将连接加入池中  
+        } else {
+        
+            auto ctxPtr = std::unique_ptr<redisContext,std::function<void(redisContext*)>>(ctx , [this](redisContext* c){
+                this->releaseConnection(c);
+            });
+
+            {
+                std::lock_guard<std::mutex>lock(mtx);
+                connectionPool.push(std::move(ctxPtr)); // 将连接加入池中  
+            }
+            
         }  
     }  
 }  
 
 RedisPool::~RedisPool() {  
-    while (!connectionPool.empty()) {  
-        redisFree(connectionPool.front()); // 释放连接  
-        connectionPool.pop();  
-    }  
+
 }  
 
 // 使用 unique_ptr 进行连接的获取  
@@ -112,22 +119,22 @@ std::unique_ptr<redisContext, std::function<void(redisContext*)>> RedisPool::get
     std::unique_lock<std::mutex> lock(mtx); // 加锁  
     cv.wait(lock, [this] { return !connectionPool.empty(); }); // 等待直到连接可用  
 
-    redisContext* conn = connectionPool.front();  
+    auto connPtr = std::move(connectionPool.front());  
     connectionPool.pop();  
     
     //std::cout << "pool can use thread : " << connectionPool.size() << std::endl;
 
-    return std::unique_ptr<redisContext, std::function<void(redisContext*)>>(
-        conn, 
-        [this](redisContext* conn) { this->releaseConnection(conn); } // 使用 lambda 捕获 this 指针
-    );
+    return connPtr;
 }  
 
 void RedisPool::releaseConnection(redisContext* conn) {  
     if (conn) {  
+        auto ctxPtr = std::unique_ptr<redisContext,std::function<void(redisContext*)>>(conn , [this](redisContext* c){
+                this->releaseConnection(c);
+            });
         {  
             std::lock_guard<std::mutex> lock(mtx);  
-            connectionPool.push(conn); // 将连接放回池中  
+            connectionPool.push(std::move(ctxPtr)); // 将连接放回池中  
         }  
         //std::cout << "pool can use thread : " << connectionPool.size() << std::endl; 
         cv.notify_one(); // 通知等待的线程  
