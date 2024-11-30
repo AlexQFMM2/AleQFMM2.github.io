@@ -125,6 +125,7 @@ menu:
   #schedule: /schedule/ || fa fa-calendar
   #sitemap: /sitemap.xml || fa fa-sitemap
   #commonweal: /404/ || fa fa-heartbeat
+  简历: /HTML/test/index.html
 
 # Enable / Disable menu icons / item badges.
 menu_settings:
