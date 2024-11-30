@@ -1,51 +1,68 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh">
 
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-
-    <title>逼真的玻璃卡片悬停效果</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <div class="container">
-        <div class="card">
-            <div class="content">
-                <h2>01</h2>
-                <h3>Card One</h3>
-                <p>Realistic glass card hover effect, realistic glass card hover effect, realistic glass card hover effect.</p>
-                <a href="#">Read More</a>
-            </div>
-        </div>
-        <div class="card">
-            <div class="content">
-                <h2>02</h2>
-                <h3>Card Two</h3>
-                <p>Realistic glass card hover effect, realistic glass card hover effect, realistic glass card hover effect.</p>
-                <a href="#">Read More</a>
-            </div>
-        </div>
-        <div class="card">
-            <div class="content">
-                <h2>03</h2>
-                <h3>Card Three</h3>
-                <p>Realistic glass card hover effect, realistic glass card hover effect, realistic glass card hover effect, realistic glass card hover effect.</p>
-                <a href="#">Read More</a>
-            </div>
-        </div>
+
+    <div class="shell">
+        <ul class="nav">
+            
+            <li class="active" id="logo">
+                <a href="#">
+                    <div class="icon">
+                        <div class="imageBox">
+                            <img src="./Avatar.png" alt="">
+                        </div>
+                    </div>
+                    <div class="text">Alex</div>
+                </a>
+            </li>
+            
+            <li>
+                <a href="#home">
+                    <div class="icon">
+                        <div class="imageBox">
+                            <img src="./mouse1.png" alt="">
+                        </div>
+                    </div>
+                    <div class="text">主页</div>
+                </a>
+            </li>
+
+            <li>
+                <a href="#theme">
+                    <div class="icon">
+                        <div class="imageBox">
+                            <img src="./mouse2.png" alt="">
+                        </div>
+                    </div>
+                    <div class="text">主题</div>
+                </a>
+            </li>
+
+            
+        </ul>
     </div>
-    <script src="vanilla-tilt.js"></script>
-    <script>
-        // vanilla-tilt.js是一个平滑的3D倾斜JS库，具体参数配置度娘可查到
-        VanillaTilt.init(document.querySelectorAll(".card"),{
-            max: 15,  //最大倾斜度数
-            speed: 400,  //倾斜转换的速度
-            glare: true,  //是否开启眩光效果
-            "max-glare": 1  //最大眩光的不透明度
-        })
-    </script>
+
+    <section id="">Home</section>
+    <section id="home">Home</section>
+    <section id="theme">Theme</section>
+
+
 </body>
+
+    <script>
+        let nav = document.querySelectorAll(".nav li");
+        function activeLink() {
+            nav.forEach((item) => item.classList.remove("active"));
+            this.classList.add("active");
+        }
+        nav.forEach((item) => item.addEventListener("click", activeLink));
+    </script>
 
 </html>
