@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="电影推荐算法1、下载MovieLens数据集https:&#x2F;&#x2F;files.grouplens.org&#x2F;datasets&#x2F;movielens&#x2F; 模型构建大纲1. 导入必要库和模块 导入数据处理和分析的库（如 NumPy、Pandas）。 导入深度学习框架（如 TensorFlow、Keras 或 PyTorch）。  2. 数据准备 加载数据 从存储中加载预处理好的数据集（用户特征、电影特征和评分）。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="电影推荐算法">
+<meta property="og:url" content="http://example.com/2024/10/13/%E7%94%B5%E5%BD%B1%E6%8E%A8%E8%8D%90%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:site_name" content="AlexHome">
+<meta property="og:description" content="电影推荐算法1、下载MovieLens数据集https:&#x2F;&#x2F;files.grouplens.org&#x2F;datasets&#x2F;movielens&#x2F; 模型构建大纲1. 导入必要库和模块 导入数据处理和分析的库（如 NumPy、Pandas）。 导入深度学习框架（如 TensorFlow、Keras 或 PyTorch）。  2. 数据准备 加载数据 从存储中加载预处理好的数据集（用户特征、电影特征和评分）。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-10-13T10:20:45.000Z">
+<meta property="article:modified_time" content="2024-12-01T13:58:43.018Z">
+<meta property="article:author" content="AlexQFMM">
+<meta property="article:tag" content="人工智能">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2024/10/13/%E7%94%B5%E5%BD%B1%E6%8E%A8%E8%8D%90%E7%AE%97%E6%B3%95/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>电影推荐算法 | AlexHome</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">AlexHome</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-guestbook">
+
+    <a href="/guestbook/" rel="section"><i class="fa fa-book fa-fw"></i>留言</a>
+
+  </li>
+        <li class="menu-item menu-item-mypage">
+
+    <a href="/MYHTML/test/index.html" rel="section"><i class="fas fa-file-user fa-fw"></i>myPage</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/10/13/%E7%94%B5%E5%BD%B1%E6%8E%A8%E8%8D%90%E7%AE%97%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/Avatar.jpg">
+      <meta itemprop="name" content="AlexQFMM">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AlexHome">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          电影推荐算法
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-10-13 10:20:45" itemprop="dateCreated datePublished" datetime="2024-10-13T10:20:45+00:00">2024-10-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-12-01 13:58:43" itemprop="dateModified" datetime="2024-12-01T13:58:43+00:00">2024-12-01</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2024/10/13/%E7%94%B5%E5%BD%B1%E6%8E%A8%E8%8D%90%E7%AE%97%E6%B3%95/" class="post-meta-item leancloud_visitors" data-flag-title="电影推荐算法" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2024/10/13/%E7%94%B5%E5%BD%B1%E6%8E%A8%E8%8D%90%E7%AE%97%E6%B3%95/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2024/10/13/%E7%94%B5%E5%BD%B1%E6%8E%A8%E8%8D%90%E7%AE%97%E6%B3%95/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="电影推荐算法"><a href="#电影推荐算法" class="headerlink" title="电影推荐算法"></a>电影推荐算法</h1><h2 id="1、下载MovieLens数据集"><a href="#1、下载MovieLens数据集" class="headerlink" title="1、下载MovieLens数据集"></a>1、下载MovieLens数据集</h2><p><a target="_blank" rel="noopener" href="https://files.grouplens.org/datasets/movielens/">https://files.grouplens.org/datasets/movielens/</a></p>
+<h3 id="模型构建大纲"><a href="#模型构建大纲" class="headerlink" title="模型构建大纲"></a>模型构建大纲</h3><h4 id="1-导入必要库和模块"><a href="#1-导入必要库和模块" class="headerlink" title="1. 导入必要库和模块"></a>1. 导入必要库和模块</h4><ul>
+<li>导入数据处理和分析的库（如 NumPy、Pandas）。</li>
+<li>导入深度学习框架（如 TensorFlow、Keras 或 PyTorch）。</li>
+</ul>
+<h4 id="2-数据准备"><a href="#2-数据准备" class="headerlink" title="2. 数据准备"></a>2. 数据准备</h4><ul>
+<li>加载数据<ul>
+<li>从存储中加载预处理好的数据集（用户特征、电影特征和评分）。</li>
+</ul>
+</li>
+<li>特征选择<ul>
+<li>确定用于训练的特征（用户特征和电影特征）。</li>
+</ul>
+</li>
+<li>划分数据集<ul>
+<li>将数据集划分为训练集、验证集和测试集（如 80% 训练，10% 验证，10% 测试）。</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-定义嵌入层和输入层"><a href="#3-定义嵌入层和输入层" class="headerlink" title="3. 定义嵌入层和输入层"></a>3. 定义嵌入层和输入层</h4><ul>
+<li>嵌入层<ul>
+<li>为用户和电影ID创建嵌入层，指定嵌入维度。</li>
+</ul>
+</li>
+<li>输入层<ul>
+<li>为其他特征（如性别、年龄、职业、电影类型等）创建输入层。</li>
+</ul>
+</li>
+</ul>
+<h4 id="4-特征处理"><a href="#4-特征处理" class="headerlink" title="4. 特征处理"></a>4. 特征处理</h4><ul>
+<li>通过嵌入层对用户和电影的离散特征进行嵌入。</li>
+<li>将文本特征通过卷积网络或其他方式进行特征提取（如 LSTM、GRU）。</li>
+<li>对固定特征（如年龄、性别）进行全连接层处理。</li>
+</ul>
+<h4 id="5-特征融合"><a href="#5-特征融合" class="headerlink" title="5. 特征融合"></a>5. 特征融合</h4><ul>
+<li>将处理后的用户特征和电影特征进行合并（例如，使用连接或求和）。</li>
+<li>经过全连接层进一步处理，这可以包含多个隐藏层，以及激活函数（如 ReLU）。</li>
+</ul>
+<h4 id="6-输出层"><a href="#6-输出层" class="headerlink" title="6. 输出层"></a>6. 输出层</h4><ul>
+<li>定义最终的输出层，用于预测评分（如回归问题，输出层的激活函数可以设为线性）。</li>
+</ul>
+<h4 id="7-编译模型"><a href="#7-编译模型" class="headerlink" title="7. 编译模型"></a>7. 编译模型</h4><ul>
+<li>选择损失函数（如均方误差 MSE）和优化器（如 Adam）。</li>
+<li>编译模型，准备进行训练。</li>
+</ul>
+<h4 id="8-训练模型"><a href="#8-训练模型" class="headerlink" title="8. 训练模型"></a>8. 训练模型</h4><ul>
+<li>使用训练集进行训练，并在验证集上进行验证。</li>
+<li>设置合适的批次大小和训练轮数，观察训练过程中的损失值和评估指标。</li>
+</ul>
+<h4 id="9-模型评估"><a href="#9-模型评估" class="headerlink" title="9. 模型评估"></a>9. 模型评估</h4><ul>
+<li>使用测试集评估模型的性能，计算评估指标（如均方误差、决定系数等）。</li>
+<li>可视化训练过程和结果，评估模型的拟合效果。</li>
+</ul>
+<h4 id="10-结果解释"><a href="#10-结果解释" class="headerlink" title="10. 结果解释"></a>10. 结果解释</h4><ul>
+<li>分析模型输出，解释模型结果和重要特征，为决策提供支持。</li>
+</ul>
+<span id="more"></span>
+
+<h2 id="2、数据预处理"><a href="#2、数据预处理" class="headerlink" title="2、数据预处理"></a>2、数据预处理</h2><p>data_prepare.py</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">import re</span><br><span class="line">import pickle</span><br><span class="line"></span><br><span class="line">def load_data():</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    Load Dataset from File</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    #读取User数据</span><br><span class="line">    users_title = [&#x27;UserID&#x27;, &#x27;Gender&#x27;, &#x27;Age&#x27;, &#x27;JobID&#x27;, &#x27;Zip-code&#x27;]</span><br><span class="line">    users = pd.read_csv(&#x27;./ml-1m/users.dat&#x27;, sep=&#x27;::&#x27;, header=None, names=users_title, engine = &#x27;python&#x27;)</span><br><span class="line">    users = users.filter(regex=&#x27;UserID|Gender|Age|JobID&#x27;)</span><br><span class="line">    users_orig = users.values</span><br><span class="line">    #改变User数据中性别和年龄</span><br><span class="line">    gender_map = &#123;&#x27;F&#x27;:0, &#x27;M&#x27;:1&#125;</span><br><span class="line">    users[&#x27;Gender&#x27;] = users[&#x27;Gender&#x27;].map(gender_map)</span><br><span class="line"></span><br><span class="line">    age_map = &#123;val:ii for ii,val in enumerate(set(users[&#x27;Age&#x27;]))&#125;</span><br><span class="line">    users[&#x27;Age&#x27;] = users[&#x27;Age&#x27;].map(age_map)</span><br><span class="line"></span><br><span class="line">    #读取Movie数据集</span><br><span class="line">    movies_title = [&#x27;MovieID&#x27;, &#x27;Title&#x27;, &#x27;Genres&#x27;]</span><br><span class="line">    movies = pd.read_csv(&#x27;./ml-1m/movies.dat&#x27;, sep=&#x27;::&#x27;, header=None, names=movies_title, engine = &#x27;python&#x27;)</span><br><span class="line">    movies_orig = movies.values</span><br><span class="line">    #将Title中的年份去掉</span><br><span class="line">    pattern = re.compile(r&#x27;^(.*)\((\d+)\)$&#x27;)</span><br><span class="line"></span><br><span class="line">    title_map = &#123;val:pattern.match(val).group(1) for ii,val in enumerate(set(movies[&#x27;Title&#x27;]))&#125;</span><br><span class="line">    movies[&#x27;Title&#x27;] = movies[&#x27;Title&#x27;].map(title_map)</span><br><span class="line"></span><br><span class="line">    #电影类型转数字字典</span><br><span class="line">    genres_set = set()</span><br><span class="line">    for val in movies[&#x27;Genres&#x27;].str.split(&#x27;|&#x27;):</span><br><span class="line">        genres_set.update(val)</span><br><span class="line"></span><br><span class="line">    genres_set.add(&#x27;&lt;PAD&gt;&#x27;)</span><br><span class="line">    genres2int = &#123;val:ii for ii, val in enumerate(genres_set)&#125;</span><br><span class="line"></span><br><span class="line">    #将电影类型转成等长数字列表，长度是18</span><br><span class="line">    genres_map = &#123;val:[genres2int[row] for row in val.split(&#x27;|&#x27;)] for ii,val in enumerate(set(movies[&#x27;Genres&#x27;]))&#125;</span><br><span class="line"></span><br><span class="line">    for key in genres_map:</span><br><span class="line">        for cnt in range(max(genres2int.values()) - len(genres_map[key])):</span><br><span class="line">            genres_map[key].insert(len(genres_map[key]) + cnt,genres2int[&#x27;&lt;PAD&gt;&#x27;])</span><br><span class="line">    </span><br><span class="line">    movies[&#x27;Genres&#x27;] = movies[&#x27;Genres&#x27;].map(genres_map)</span><br><span class="line"></span><br><span class="line">    #电影Title转数字字典</span><br><span class="line">    title_set = set()</span><br><span class="line">    for val in movies[&#x27;Title&#x27;].str.split():</span><br><span class="line">        title_set.update(val)</span><br><span class="line">    </span><br><span class="line">    title_set.add(&#x27;&lt;PAD&gt;&#x27;)</span><br><span class="line">    title2int = &#123;val:ii for ii, val in enumerate(title_set)&#125;</span><br><span class="line"></span><br><span class="line">    #将电影Title转成等长数字列表，长度是15</span><br><span class="line">    title_count = 15</span><br><span class="line">    title_map = &#123;val:[title2int[row] for row in val.split()] for ii,val in enumerate(set(movies[&#x27;Title&#x27;]))&#125;</span><br><span class="line">    </span><br><span class="line">    for key in title_map:</span><br><span class="line">        for cnt in range(title_count - len(title_map[key])):</span><br><span class="line">            title_map[key].insert(len(title_map[key]) + cnt,title2int[&#x27;&lt;PAD&gt;&#x27;])</span><br><span class="line">    </span><br><span class="line">    movies[&#x27;Title&#x27;] = movies[&#x27;Title&#x27;].map(title_map)</span><br><span class="line"></span><br><span class="line">    #读取评分数据集</span><br><span class="line">    ratings_title = [&#x27;UserID&#x27;,&#x27;MovieID&#x27;, &#x27;ratings&#x27;, &#x27;timestamps&#x27;]</span><br><span class="line">    ratings = pd.read_csv(&#x27;./ml-1m/ratings.dat&#x27;, sep=&#x27;::&#x27;, header=None, names=ratings_title, engine = &#x27;python&#x27;)</span><br><span class="line">    ratings = ratings.filter(regex=&#x27;UserID|MovieID|ratings&#x27;)</span><br><span class="line"></span><br><span class="line">    #合并三个表</span><br><span class="line">    data = pd.merge(pd.merge(ratings, users), movies)</span><br><span class="line">    </span><br><span class="line">    columns_order = [&#x27;UserID&#x27;, &#x27;Gender&#x27;, &#x27;Age&#x27;, &#x27;JobID&#x27;, &#x27;MovieID&#x27;,&#x27;Title&#x27;, &#x27;Genres&#x27; ,&#x27;ratings&#x27;]  # 这里假设是原始列顺序  </span><br><span class="line">    data = data[columns_order]  # 使用指定的列顺序进行重排 </span><br><span class="line"></span><br><span class="line">    #将数据分成X和y两张表</span><br><span class="line">    target_fields = [&#x27;ratings&#x27;]</span><br><span class="line">    features_pd, targets_pd = data.drop(target_fields, axis=1), data[target_fields]</span><br><span class="line">     </span><br><span class="line">    features = features_pd.values</span><br><span class="line">    targets_values = targets_pd.values</span><br><span class="line">    </span><br><span class="line">    return title_count, title_set, genres2int, features, targets_values, ratings, users, movies, data, movies_orig, users_orig</span><br><span class="line"></span><br><span class="line">title_count, title_set, genres2int, features, targets_values, ratings, users, movies, data, movies_orig, users_orig = load_data()</span><br><span class="line"></span><br><span class="line">pickle.dump((title_count, title_set, genres2int, features, targets_values, ratings, users, movies, data, movies_orig, users_orig), open(&#x27;preprocess.p&#x27;, &#x27;wb&#x27;))</span><br></pre></td></tr></table></figure>
+
+<h2 id="3、辅助文件"><a href="#3、辅助文件" class="headerlink" title="3、辅助文件"></a>3、辅助文件</h2><p>load.py</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br></pre></td><td class="code"><pre><span class="line">import pickle</span><br><span class="line">import torch</span><br><span class="line">import pandas as pd</span><br><span class="line">import numpy as np</span><br><span class="line"></span><br><span class="line"># Save parameters to file  </span><br><span class="line">def save_params(params):  </span><br><span class="line">    pickle.dump(params, open(&#x27;preprocess.p&#x27;, &#x27;wb&#x27;))  </span><br><span class="line"></span><br><span class="line"># Load parameters from file  </span><br><span class="line">def load_params():  </span><br><span class="line">    return pickle.load(open(&#x27;preprocess.p&#x27;, mode=&#x27;rb&#x27;))  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># Load parameters  </span><br><span class="line">title_count, title_set, genres2int, features, targets_values, ratings, users, movies, data, movies_orig, users_orig = load_params()  </span><br><span class="line"></span><br><span class="line"># 参数设置  </span><br><span class="line">embed_dim = 32  # 嵌入矩阵的维度  </span><br><span class="line">uid_max = max(features.take(0, 1)) + 1  # 用户ID个数  </span><br><span class="line">gender_max = max(features.take(1, 1)) + 1  # 性别个数  </span><br><span class="line">age_max = max(features.take(2, 1)) + 1  # 年龄类别个数  </span><br><span class="line">job_max = max(features.take(3, 1)) + 1  # 职业个数  </span><br><span class="line">movie_id_max = max(features.take(4, 1)) + 1  # 电影ID个数  </span><br><span class="line">movie_categories_max = max(genres2int.values()) + 1  # 电影类型个数  </span><br><span class="line">movie_title_max = len(title_set)  # 电影名单词个数  </span><br><span class="line"></span><br><span class="line"># 组合方法  </span><br><span class="line">combiner = &quot;sum&quot;  </span><br><span class="line">sentences_size = title_count  # = 15  </span><br><span class="line">window_sizes = [2, 3, 4, 5]  # 使用列表替代集合  </span><br><span class="line">filter_num = 8  </span><br><span class="line">movieid2idx = &#123;val[0]: i for i, val in enumerate(movies.values)&#125;  </span><br><span class="line"></span><br><span class="line"># 超参  </span><br><span class="line">num_epochs = 5  </span><br><span class="line">batch_size = 256  </span><br><span class="line">dropout_keep = 0.5  </span><br><span class="line">learning_rate = 0.0001  </span><br><span class="line">show_every_n_batches = 20  </span><br><span class="line">save_dir = &#x27;./save&#x27;  </span><br><span class="line"></span><br><span class="line">&quot;&quot;&quot;  </span><br><span class="line">- title_count: Title字段的长度(15)  </span><br><span class="line">- title_set: Title文本的集合  </span><br><span class="line">- genres2int: 电影类型转数字的字典  </span><br><span class="line">- features: 是输入X  </span><br><span class="line">- targets_values: 是学习目标y  </span><br><span class="line">- ratings: 评分数据集的Pandas对象  </span><br><span class="line">- users: 用户数据集的Pandas对象  </span><br><span class="line">- movies: 电影数据的Pandas对象  </span><br><span class="line">- data: 三个数据集组合在一起的Pandas对象  </span><br><span class="line">- movies_orig: 没有做数据处理的原始电影数据  </span><br><span class="line">- users_orig: 没有做数据处理的原始用户数据  </span><br><span class="line">&quot;&quot;&quot;  </span><br><span class="line"></span><br><span class="line">def get_tensor(data):  </span><br><span class="line">    df = pd.DataFrame(data)  </span><br><span class="line"></span><br><span class="line">    # 处理 DataFrame，将列表填充到相同的长度  </span><br><span class="line">    max_length = max(df[5].apply(len).max(), df[6].apply(len).max())  </span><br><span class="line"></span><br><span class="line">    # 创建填充后的列表  </span><br><span class="line">    title_tensor = df[5].apply(lambda x: x + [0] * (max_length - len(x)))  </span><br><span class="line">    genres_tensor = df[6].apply(lambda x: x + [0] * (max_length - len(x)))  </span><br><span class="line"></span><br><span class="line">    # 这里不需要用浮点数，直接使用long  </span><br><span class="line">    title_tensor = torch.tensor(title_tensor.tolist(), dtype=torch.long)  </span><br><span class="line">    genres_tensor = torch.tensor(genres_tensor.tolist(), dtype=torch.long)  </span><br><span class="line"></span><br><span class="line">    # 提取用户特征  </span><br><span class="line">    user_ids = df.iloc[:, 0].values.astype(np.int64)  # 转换为整型  </span><br><span class="line">    user_genders = df.iloc[:, 1].values.astype(np.int64)  # 转换为整型  </span><br><span class="line">    user_ages = df.iloc[:, 2].values.astype(np.int64)  # 转换为整型  </span><br><span class="line">    user_jobs = df.iloc[:, 3].values.astype(np.int64)  # 转换为整型  </span><br><span class="line"></span><br><span class="line">    # 转换标量特征为张量，并确保都为 Long 类型  </span><br><span class="line">    uid_tensor = torch.tensor(user_ids, dtype=torch.long)  </span><br><span class="line">    gender_tensor = torch.tensor(user_genders, dtype=torch.long)  </span><br><span class="line">    age_tensor = torch.tensor(user_ages, dtype=torch.long)  </span><br><span class="line">    job_tensor = torch.tensor(user_jobs, dtype=torch.long)</span><br><span class="line"></span><br><span class="line">    movies_features = df[4].values  </span><br><span class="line">    movies_tensor = torch.tensor(movies_features.astype(np.float32), dtype=torch.long)  </span><br><span class="line"></span><br><span class="line">    return uid_tensor,gender_tensor,age_tensor, job_tensor,movies_tensor, title_tensor, genres_tensor  </span><br><span class="line"></span><br><span class="line">def get_users(data):</span><br><span class="line">    df = pd.DataFrame(data)  </span><br><span class="line">    # 提取用户特征  </span><br><span class="line">    user_ids = df.iloc[:, 0].values.astype(np.int64)  # 转换为整型  </span><br><span class="line">    user_genders = df.iloc[:, 1].values.astype(np.int64)  # 转换为整型  </span><br><span class="line">    user_ages = df.iloc[:, 2].values.astype(np.int64)  # 转换为整型  </span><br><span class="line">    user_jobs = df.iloc[:, 3].values.astype(np.int64)  # 转换为整型  </span><br><span class="line"></span><br><span class="line">    # 转换标量特征为张量，并确保都为 Long 类型  </span><br><span class="line">    uid_tensor = torch.tensor(user_ids, dtype=torch.long)  </span><br><span class="line">    gender_tensor = torch.tensor(user_genders, dtype=torch.long)  </span><br><span class="line">    age_tensor = torch.tensor(user_ages, dtype=torch.long)  </span><br><span class="line">    job_tensor = torch.tensor(user_jobs, dtype=torch.long)</span><br><span class="line"></span><br><span class="line">    return uid_tensor, gender_tensor, age_tensor, job_tensor</span><br><span class="line"></span><br><span class="line">def get_movies(data):  </span><br><span class="line">    df = pd.DataFrame(data)</span><br><span class="line"></span><br><span class="line">    # 处理 DataFrame，将列表填充到相同的长度  </span><br><span class="line">    max_length = max(df[&#x27;Title&#x27;].apply(len).max(), df[&#x27;Genres&#x27;].apply(len).max())  </span><br><span class="line"></span><br><span class="line">    # 创建填充后的列表  </span><br><span class="line">    title_tensor = df[&#x27;Title&#x27;].apply(lambda x: x + [0] * (max_length - len(x)))  </span><br><span class="line">    genres_tensor = df[&#x27;Genres&#x27;].apply(lambda x: x + [0] * (max_length - len(x)))  </span><br><span class="line"></span><br><span class="line">    # 这里不需要用浮点数，直接使用long  </span><br><span class="line">    title_tensor = torch.tensor(title_tensor.tolist(), dtype=torch.long)  </span><br><span class="line">    genres_tensor = torch.tensor(genres_tensor.tolist(), dtype=torch.long) </span><br><span class="line"></span><br><span class="line">    movies_features = df[&#x27;MovieID&#x27;].values  </span><br><span class="line">    movies_tensor = torch.tensor(movies_features.astype(np.float32), dtype=torch.long)</span><br><span class="line"></span><br><span class="line">    return movies_tensor, title_tensor, genres_tensor</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="4、用户模型"><a href="#4、用户模型" class="headerlink" title="4、用户模型"></a>4、用户模型</h2><p>UserFeatureLayer.py</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">import torch  </span><br><span class="line">import torch.nn as nn  </span><br><span class="line">import load as ld  </span><br><span class="line">import pandas as pd  </span><br><span class="line">import numpy as np  </span><br><span class="line">import os</span><br><span class="line"></span><br><span class="line"># 载入参数  </span><br><span class="line">embed_dim_uid = 32  </span><br><span class="line">embed_dim_other = 16  </span><br><span class="line">uid_max = ld.uid_max  </span><br><span class="line">age_max = ld.age_max  </span><br><span class="line">gender_max = ld.gender_max  </span><br><span class="line">job_max = ld.job_max  </span><br><span class="line">X = ld.features  </span><br><span class="line"></span><br><span class="line">class UserFeatureLayer(nn.Module):  </span><br><span class="line">    def __init__(self):  </span><br><span class="line">        super(UserFeatureLayer, self).__init__()  </span><br><span class="line">        </span><br><span class="line">        # 嵌入层  </span><br><span class="line">        self.uid_embedding = nn.Embedding(uid_max, embed_dim_uid)  </span><br><span class="line">        self.gender_embedding = nn.Embedding(gender_max, embed_dim_other)  </span><br><span class="line">        self.age_embedding = nn.Embedding(age_max, embed_dim_other)  </span><br><span class="line">        self.job_embedding = nn.Embedding(job_max, embed_dim_other)  </span><br><span class="line"></span><br><span class="line">        # 计算拼接后的特征维度  </span><br><span class="line">        total_feature_dim = embed_dim_uid + 3 * embed_dim_other  # 32 + 16 + 16 + 16 = 80  </span><br><span class="line">        </span><br><span class="line">        # 全连接层  </span><br><span class="line">        self.fc1 = nn.Linear(total_feature_dim, 128)  </span><br><span class="line">        self.fc2 = nn.Linear(128, 200)  </span><br><span class="line">        self.relu = nn.ReLU()  </span><br><span class="line"></span><br><span class="line">    def forward(self, uid, user_gender, user_age, user_job):  </span><br><span class="line">        # 获取嵌入  </span><br><span class="line">        uid_embed = self.uid_embedding(uid)  </span><br><span class="line">        gender_embed = self.gender_embedding(user_gender)  </span><br><span class="line">        age_embed = self.age_embedding(user_age)  </span><br><span class="line">        job_embed = self.job_embedding(user_job)  </span><br><span class="line"></span><br><span class="line">        # 拼接特征  </span><br><span class="line">        user_feature_layer = torch.cat((uid_embed, gender_embed, age_embed, job_embed), dim=1)  </span><br><span class="line"></span><br><span class="line">        # 通过全连接层获取最终用户特征  </span><br><span class="line">        output = self.fc1(user_feature_layer)  </span><br><span class="line">        output = self.relu(output)  </span><br><span class="line">        output = self.fc2(output)  </span><br><span class="line">        output = self.relu(output)  </span><br><span class="line">        </span><br><span class="line">        return output  </span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="5、电影特征模型"><a href="#5、电影特征模型" class="headerlink" title="5、电影特征模型"></a>5、电影特征模型</h2><p>MovieFeatureLayer.py</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">import torch  </span><br><span class="line">import torch.nn as nn  </span><br><span class="line">import torch.nn.functional as F  </span><br><span class="line">import load as ld  </span><br><span class="line">import pandas as pd  </span><br><span class="line">import numpy as np  </span><br><span class="line">import os  </span><br><span class="line"></span><br><span class="line"># 基础参数  </span><br><span class="line">embed_dim = ld.embed_dim  </span><br><span class="line">movie_id_max = ld.movie_id_max  # 电影ID个数  </span><br><span class="line">movie_categories_max = ld.movie_categories_max  # 电影类型个数  </span><br><span class="line">movie_title_max = ld.movie_title_max  # 电影名单词个数  </span><br><span class="line"></span><br><span class="line"># 组合方法  </span><br><span class="line">combiner = &quot;sum&quot;  </span><br><span class="line">sentences_size = ld.title_count  # = 15  </span><br><span class="line">window_sizes = [2, 3, 4, 5]  # 使用列表替代集合  </span><br><span class="line">filter_num = 8  </span><br><span class="line">movieid2idx = &#123;val[0]: i for i, val in enumerate(ld.movies.values)&#125;  </span><br><span class="line"></span><br><span class="line"># 超参数  </span><br><span class="line">num_epochs = 5  </span><br><span class="line">batch_size = 256  </span><br><span class="line">dropout_keep = 0.5  </span><br><span class="line">learning_rate = 0.0001  </span><br><span class="line">show_every_n_batches = 20  </span><br><span class="line"></span><br><span class="line">class MovieFeatureLayer(nn.Module):  </span><br><span class="line">    def __init__(self):  </span><br><span class="line">        super(MovieFeatureLayer, self).__init__()  </span><br><span class="line">        self.movie_id_embedding = nn.Embedding(movie_id_max, embed_dim)  </span><br><span class="line">        self.category_embedding = nn.Embedding(movie_categories_max, embed_dim)  # 新增的类别嵌入层  </span><br><span class="line"></span><br><span class="line">        self.fc1 = nn.Linear(embed_dim * 2, 64)  # 电影ID嵌入和类别嵌入拼接后是 2 * embed_dim   </span><br><span class="line">        self.fc2 = nn.Linear(64 + filter_num * len(window_sizes), 200)  # + filter_num * len(window_sizes) 从 CNN 输出  </span><br><span class="line">        self.relu = nn.ReLU()  # 正确的激活函数定义  </span><br><span class="line"></span><br><span class="line">    # 合并电影类型的多个嵌入向量  </span><br><span class="line">    def get_movie_categories_layers(self, movie_categories):  </span><br><span class="line">        category_embeddings = self.category_embedding(movie_categories)  </span><br><span class="line">        return torch.mean(category_embeddings, dim=1)  </span><br><span class="line"></span><br><span class="line">    # Movie Title 的文本卷积网络实现  </span><br><span class="line">    def get_movie_cnn_layer(self, movie_titles):  </span><br><span class="line">        movie_title_embed_layer = nn.Embedding(movie_title_max, embed_dim)(movie_titles)  </span><br><span class="line">        movie_title_embed_layer = movie_title_embed_layer.unsqueeze(1)  </span><br><span class="line">        pool_layer_lst = []  </span><br><span class="line">        for window_size in window_sizes:  </span><br><span class="line">            conv_layer = F.relu(nn.Conv2d(in_channels=1, out_channels=filter_num, kernel_size=(window_size, embed_dim))(movie_title_embed_layer))  </span><br><span class="line">            maxpool_layer = F.max_pool2d(conv_layer, kernel_size=(conv_layer.size(2), 1), stride=(1, 1))  </span><br><span class="line">            pool_layer_lst.append(maxpool_layer)  </span><br><span class="line">        pool_layer = torch.cat(pool_layer_lst, dim=1)    </span><br><span class="line">        pool_layer_flat = pool_layer.view(pool_layer.size(0), -1)  </span><br><span class="line">        dropout_layer = F.dropout(pool_layer_flat, p=1-dropout_keep, training=True)  </span><br><span class="line">        return pool_layer_flat, dropout_layer  </span><br><span class="line"></span><br><span class="line">    # movie 全连接后 返回一个 movie_features  </span><br><span class="line">    def forward(self, movie_ids, movie_categories, movie_titles):  </span><br><span class="line">        movie_id_embed = self.movie_id_embedding(movie_ids)   </span><br><span class="line">        movie_category_embed = self.get_movie_categories_layers(movie_categories)  </span><br><span class="line"></span><br><span class="line">        # 拼接电影ID嵌入和电影类别嵌入  </span><br><span class="line">        tmp_features = torch.cat((movie_id_embed, movie_category_embed), dim=1)  </span><br><span class="line">        </span><br><span class="line">        output = self.fc1(tmp_features)  # 正确使用全连接层  </span><br><span class="line">        output = self.relu(output)  # 使用激活函数  </span><br><span class="line"></span><br><span class="line">        movie_title_flat, movie_title_dropout = self.get_movie_cnn_layer(movie_titles)   </span><br><span class="line"></span><br><span class="line">        movie_features = torch.cat((output, movie_title_dropout), dim=1)  # 拼接  </span><br><span class="line">        output = self.fc2(movie_features)  # 第二次全连接  </span><br><span class="line">        output = self.relu(output)  # 使用激活函数  </span><br><span class="line"></span><br><span class="line">        return output   </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="6、主模型"><a href="#6、主模型" class="headerlink" title="6、主模型"></a>6、主模型</h2><p>MyNet.py</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br></pre></td><td class="code"><pre><span class="line">import os  </span><br><span class="line">import time  </span><br><span class="line">import torch  </span><br><span class="line">import torch.nn as nn  </span><br><span class="line">import torch.optim as optim  </span><br><span class="line">import numpy as np  </span><br><span class="line">from sklearn.model_selection import train_test_split  </span><br><span class="line">import load as ld  </span><br><span class="line">import MovieFeatureLayer as Model_Movie  </span><br><span class="line">import UserFeatureLayer as Model_User  </span><br><span class="line"></span><br><span class="line">def get_batches(Xs, ys, batch_size):  </span><br><span class="line">    for start in range(0, len(Xs), batch_size):  </span><br><span class="line">        end = min(start + batch_size, len(Xs))  </span><br><span class="line">        yield Xs[start:end], ys[start:end]  </span><br><span class="line"></span><br><span class="line">class MyModel(nn.Module):  </span><br><span class="line">    def __init__(self, batch_size=256, learning_rate=0.001):  </span><br><span class="line">        super(MyModel, self).__init__()  </span><br><span class="line">        self.batch_size = batch_size  </span><br><span class="line">        self.best_loss = float(&#x27;inf&#x27;)  </span><br><span class="line">        self.losses = &#123;&#x27;train&#x27;: [], &#x27;test&#x27;: []&#125;  </span><br><span class="line"></span><br><span class="line">        # 实例化用户和电影特征层模型  </span><br><span class="line">        self.U_model = Model_User.UserFeatureLayer()  </span><br><span class="line">        self.M_model = Model_Movie.MovieFeatureLayer()  </span><br><span class="line"></span><br><span class="line">        # 优化器  </span><br><span class="line">        self.optimizer = optim.Adam(self.parameters(), lr=learning_rate)  </span><br><span class="line">        self.criterion = nn.MSELoss()  </span><br><span class="line"></span><br><span class="line">        # 创建检查点目录  </span><br><span class="line">        self.model_dir = &#x27;model_dir&#x27;  </span><br><span class="line">        self.checkpoint_dir = os.path.join(self.model_dir, &#x27;checkpoints&#x27;)  </span><br><span class="line">        os.makedirs(self.checkpoint_dir, exist_ok=True)  </span><br><span class="line"></span><br><span class="line">    def forward(self, uid_tensor, gender_tensor, age_tensor, job_tensor, movies_tensor, genres_tensor, title_tensor):  </span><br><span class="line">        user_features = self.U_model(uid_tensor, gender_tensor, age_tensor, job_tensor)  </span><br><span class="line">        movie_features = self.M_model(movies_tensor, genres_tensor, title_tensor)  </span><br><span class="line">        inference = torch.sum(user_features * movie_features, dim=1)  </span><br><span class="line">        return inference.unsqueeze(1)  </span><br><span class="line"></span><br><span class="line">    def save_checkpoint(self, filename=&#x27;checkpoint.pth&#x27;):  </span><br><span class="line">        torch.save(&#123;  </span><br><span class="line">            &#x27;model_state_dict&#x27;: self.state_dict(),  </span><br><span class="line">            &#x27;optimizer_state_dict&#x27;: self.optimizer.state_dict(),  </span><br><span class="line">            &#x27;best_loss&#x27;: self.best_loss,  </span><br><span class="line">        &#125;, os.path.join(self.checkpoint_dir, filename))  </span><br><span class="line"></span><br><span class="line">    def load_checkpoint(self, filename=&#x27;checkpoint.pth&#x27;):  </span><br><span class="line">        checkpoint = torch.load(os.path.join(self.checkpoint_dir, filename))  </span><br><span class="line">        self.load_state_dict(checkpoint[&#x27;model_state_dict&#x27;])  </span><br><span class="line">        self.optimizer.load_state_dict(checkpoint[&#x27;optimizer_state_dict&#x27;])  </span><br><span class="line">        self.best_loss = checkpoint[&#x27;best_loss&#x27;]  </span><br><span class="line">        print(&quot;恢复检查点成功&quot;)  </span><br><span class="line"></span><br><span class="line">    def compute_loss(self, labels, logits):  </span><br><span class="line">        return self.criterion(logits, labels)  </span><br><span class="line"></span><br><span class="line">    def compute_metrics(self, labels, logits):  </span><br><span class="line">        return torch.mean(torch.abs(logits - labels))  </span><br><span class="line"></span><br><span class="line">    def extract_movie_features(self, data_batches):  </span><br><span class="line">        movie_matrics = []  </span><br><span class="line">        self.M_model.eval()  </span><br><span class="line">        </span><br><span class="line">        with torch.no_grad():  </span><br><span class="line">            for batch in data_batches:  </span><br><span class="line">                x, _ = batch  </span><br><span class="line">                _, _, _, _, movies_tensor, title_tensor, genres_tensor = ld.get_tensor(x)  </span><br><span class="line"></span><br><span class="line">                features = self.M_model(movies_tensor, genres_tensor, title_tensor)  </span><br><span class="line">                movie_matrics.append(features.numpy())  </span><br><span class="line">        </span><br><span class="line">        # 处理空结果  </span><br><span class="line">        if len(movie_matrics) == 0:  </span><br><span class="line">            print(&quot;Warning: No movie features extracted.&quot;)  </span><br><span class="line">            return np.array([])  # 或者使用其他默认值  </span><br><span class="line"></span><br><span class="line">        return np.vstack(movie_matrics)  </span><br><span class="line"></span><br><span class="line">    def extract_user_features(self, data_batches):  </span><br><span class="line">        user_matrics = []  </span><br><span class="line">        self.U_model.eval()  </span><br><span class="line"></span><br><span class="line">        with torch.no_grad():  </span><br><span class="line">            for batch in data_batches:  </span><br><span class="line">                x, _ = batch  </span><br><span class="line">                uid_tensor, gender_tensor, age_tensor, job_tensor, _, _, _ = ld.get_tensor(x)  </span><br><span class="line">                features = self.U_model(uid_tensor, gender_tensor, age_tensor, job_tensor)  </span><br><span class="line">                user_matrics.append(features.numpy())  </span><br><span class="line">        </span><br><span class="line">        # 处理空结果  </span><br><span class="line">        if len(user_matrics) == 0:  </span><br><span class="line">            print(&quot;Warning: No user features extracted.&quot;)  </span><br><span class="line">            return np.array([])  # 或者使用其他默认值  </span><br><span class="line">            </span><br><span class="line">        return np.vstack(user_matrics)</span><br><span class="line">    </span><br><span class="line">    def train_step(self, x, y):  </span><br><span class="line">        self.optimizer.zero_grad()  </span><br><span class="line">        logits = self.forward(*x)  </span><br><span class="line">        loss = self.compute_loss(y, logits)  </span><br><span class="line">        loss.backward()  </span><br><span class="line">        self.optimizer.step()  </span><br><span class="line">        return loss, logits  </span><br><span class="line"></span><br><span class="line">    def train_model(self, features, targets_values, epochs=5, log_freq=50):  </span><br><span class="line">        </span><br><span class="line">        for epoch_i in range(epochs):  </span><br><span class="line">            train_X, test_X, train_y, test_y = train_test_split(features, targets_values, test_size=0.2, random_state=0)  </span><br><span class="line">            train_batches = get_batches(train_X, train_y, self.batch_size)  </span><br><span class="line">            batch_num = len(train_X) // self.batch_size  </span><br><span class="line"></span><br><span class="line">            train_start = time.time()  </span><br><span class="line">            avg_loss = 0.0  </span><br><span class="line"></span><br><span class="line">            for batch_i in range(batch_num):  </span><br><span class="line">                x, y = next(train_batches)  </span><br><span class="line">                uid_tensor, gender_tensor, age_tensor, job_tensor, movies_tensor, title_tensor, genres_tensor = ld.get_tensor(x)  </span><br><span class="line">                loss, logits = self.train_step((uid_tensor, gender_tensor, age_tensor, job_tensor, movies_tensor, genres_tensor, title_tensor),  </span><br><span class="line">                                               torch.tensor(np.reshape(y, [self.batch_size, 1]), dtype=torch.float32))  </span><br><span class="line"></span><br><span class="line">                avg_loss += loss.item()  </span><br><span class="line"></span><br><span class="line">                step = self.optimizer.state[self.optimizer.param_groups[0][&#x27;params&#x27;][0]][&#x27;step&#x27;]  </span><br><span class="line">                if step % log_freq == 0:  </span><br><span class="line">                    rate = log_freq / (time.time() - train_start)  </span><br><span class="line">                    print(&#x27;Epoch &#123;:&gt;3&#125; Batch &#123;:&gt;4&#125;/&#123;&#125;   Loss: &#123;:.6f&#125;&#x27;.format(epoch_i, batch_i, batch_num, loss.item(), rate))  </span><br><span class="line">                    train_start = time.time()  </span><br><span class="line"></span><br><span class="line">            self.losses[&#x27;train&#x27;].append(avg_loss / batch_num)  </span><br><span class="line">            self.testing((test_X, test_y), epoch_i)  </span><br><span class="line">            </span><br><span class="line">            train_batches = list(train_batches)  # 将生成器转换为列表  </span><br><span class="line"></span><br><span class="line">            mov_batches = train_batches  </span><br><span class="line">            user_batches = train_batches  </span><br><span class="line"></span><br><span class="line">            # 提取并保存 movie_matrics  </span><br><span class="line">            movie_matrics = self.extract_movie_features(mov_batches)  </span><br><span class="line">            with open(&#x27;movie_matrics.npy&#x27;, &#x27;wb&#x27;) as f:  </span><br><span class="line">                np.save(f, movie_matrics)  </span><br><span class="line"></span><br><span class="line">            # 提取并保存 user_matrics  </span><br><span class="line">            user_matrics = self.extract_user_features(user_batches)  </span><br><span class="line">            with open(&#x27;user_matrics.npy&#x27;, &#x27;wb&#x27;) as f:  </span><br><span class="line">                np.save(f, user_matrics)</span><br><span class="line"></span><br><span class="line">    def testing(self, test_dataset, step_num):  </span><br><span class="line">        print(&quot;start testing&quot;)  </span><br><span class="line">        test_X, test_y = test_dataset  </span><br><span class="line">        test_batches = get_batches(test_X, test_y, self.batch_size)  </span><br><span class="line">        avg_loss = 0.0  </span><br><span class="line"></span><br><span class="line">        for batch_i in range(len(test_X) // self.batch_size):  </span><br><span class="line">            x, y = next(test_batches)  </span><br><span class="line">            uid_tensor, gender_tensor, age_tensor, job_tensor, movies_tensor, title_tensor, genres_tensor = ld.get_tensor(x)  </span><br><span class="line">            logits = self.forward(uid_tensor, gender_tensor, age_tensor, job_tensor, movies_tensor, genres_tensor, title_tensor)  </span><br><span class="line">            test_loss = self.compute_loss(torch.tensor(np.reshape(y, [self.batch_size, 1]), dtype=torch.float32), logits)  </span><br><span class="line">            avg_loss += test_loss.item()  </span><br><span class="line"></span><br><span class="line">        avg_loss /= (len(test_X) // self.batch_size)  </span><br><span class="line">        print(&#x27;Model test set loss: &#123;:.6f&#125;&#x27;.format(avg_loss))  </span><br><span class="line"></span><br><span class="line">        if avg_loss &lt; self.best_loss:  </span><br><span class="line">            self.best_loss = avg_loss  </span><br><span class="line">            print(&quot;best loss = &#123;&#125;&quot;.format(self.best_loss))  </span><br><span class="line">            self.save_checkpoint()</span><br></pre></td></tr></table></figure>
+
+<h2 id="7、-功能实现"><a href="#7、-功能实现" class="headerlink" title="7、 功能实现"></a>7、 功能实现</h2><p>main.py</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br></pre></td><td class="code"><pre><span class="line">import pickle</span><br><span class="line">import keras</span><br><span class="line">import MyModel as Main_Model</span><br><span class="line">import load as ld</span><br><span class="line">import numpy as np</span><br><span class="line">import torch</span><br><span class="line">import pandas as pd</span><br><span class="line">import MovieFeatureLayer</span><br><span class="line">import random</span><br><span class="line"></span><br><span class="line">def init_model():</span><br><span class="line">    X = ld.features</span><br><span class="line">    Y = ld.targets_values</span><br><span class="line">    my_net.train_model(X,Y)</span><br><span class="line"></span><br><span class="line">my_net = Main_Model.MyModel()</span><br><span class="line">#init_model()</span><br><span class="line">my_net.load_checkpoint()</span><br><span class="line"># 载入电影特征矩阵  </span><br><span class="line">movie_matrics = np.load(&#x27;movie_matrics.npy&#x27;)  </span><br><span class="line">#print(&quot;Movie Matrics:&quot;, movie_matrics)  </span><br><span class="line"></span><br><span class="line"># 载入用户特征矩阵  </span><br><span class="line">users_matrics = np.load(&#x27;user_matrics.npy&#x27;)  </span><br><span class="line">#print(&quot;User Matrics:&quot;, user_matrics)</span><br><span class="line"></span><br><span class="line">movies = ld.movies</span><br><span class="line">movieid2idx = ld.movieid2idx</span><br><span class="line">sentences_size = ld.sentences_size</span><br><span class="line">users = ld.users</span><br><span class="line">movies_orig = ld.movies_orig</span><br><span class="line">users_orig = ld.users_orig</span><br><span class="line"></span><br><span class="line"># 指定用户和电影进行评分</span><br><span class="line">#这部分就是对网络做正向传播，计算得到预测的评分</span><br><span class="line">def rating_movie(mv_net, user_id_val, movie_id_val):  </span><br><span class="line">    user_data = users.iloc[[user_id_val - 1]]</span><br><span class="line">    movie_data = movies.iloc[[movie_id_val -1]]</span><br><span class="line">    uid_tensor, gender_tensor, age_tensor, job_tensor = ld.get_users(user_data)</span><br><span class="line"></span><br><span class="line">    movies_tensor, title_tensor , genres_tensor = ld.get_movies(movie_data)</span><br><span class="line"></span><br><span class="line">    # 进行推理  </span><br><span class="line">    inference_val = mv_net(uid_tensor, gender_tensor, age_tensor, job_tensor, movies_tensor, genres_tensor, title_tensor)  </span><br><span class="line">    </span><br><span class="line">    return inference_val.detach().numpy()  # 返回 NumPy 数组  </span><br><span class="line"></span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">res = rating_movie(my_net, 234, 1401)</span><br><span class="line">print(res)</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">def recommend_same_type_movie(movie_id_val, movieid2idx, movies_orig, movie_matrics, top_k=20):  </span><br><span class="line">    # 确保输入是 PyTorch 张量  </span><br><span class="line">    if isinstance(movie_matrics, np.ndarray):  </span><br><span class="line">        movie_matrics = torch.tensor(movie_matrics, dtype=torch.float32)  </span><br><span class="line"></span><br><span class="line">    # 归一化电影矩阵  </span><br><span class="line">    norm_movie_matrics = torch.sqrt(torch.sum(movie_matrics**2, dim=1, keepdim=True))  # 计算L2范数  </span><br><span class="line">    normalized_movie_matrics = movie_matrics / norm_movie_matrics  # 归一化  </span><br><span class="line"></span><br><span class="line">    # 推荐同类型的电影  </span><br><span class="line">    probs_embeddings = normalized_movie_matrics[movieid2idx[movie_id_val]].reshape(1, -1)  # 确保形状正确  </span><br><span class="line">    probs_similarity = torch.matmul(probs_embeddings, normalized_movie_matrics.t())  # 计算相似度  </span><br><span class="line">    sim = probs_similarity.squeeze().numpy()  # 将结果转换为 NumPy 数组  </span><br><span class="line"></span><br><span class="line">    print(&quot;您看的电影是：&#123;&#125;&quot;.format(movies_orig[movieid2idx[movie_id_val]]))  </span><br><span class="line">    print(&quot;猜你还喜欢看：&quot;)  </span><br><span class="line">    </span><br><span class="line">    # 使用概率分布推荐电影  </span><br><span class="line">    p = np.squeeze(sim)  </span><br><span class="line">    p[np.argsort(p)[:-top_k]] = 0  # 仅保留前 top_k 个电影的相似度  </span><br><span class="line"></span><br><span class="line">    # 确保归一化前不会出现全零情况  </span><br><span class="line">    if np.sum(p) == 0:  </span><br><span class="line">        print(&quot;没有找到可推荐的电影或任意相似度为零。&quot;)  </span><br><span class="line">        return []  </span><br><span class="line"></span><br><span class="line">    p = p / np.sum(p)  # 进行归一化  </span><br><span class="line"></span><br><span class="line">    results = set()  </span><br><span class="line">    while len(results) &lt; 5:  # 确保结果长度为5  </span><br><span class="line">        # 使用 len(p) 而不是硬编码的3883  </span><br><span class="line">        c = np.random.choice(len(p), 1, p=p)[0]  </span><br><span class="line">        results.add(c)  </span><br><span class="line"></span><br><span class="line">    for val in results:  </span><br><span class="line">        print(movies_orig[val])  </span><br><span class="line"></span><br><span class="line">    return results  </span><br><span class="line"></span><br><span class="line">def recommend_your_favorite_movie(user_id_val, movieid2idx, movies_orig, users_matrics, movie_matrics, top_k=10):  </span><br><span class="line">    # 确保输入是 PyTorch 张量  </span><br><span class="line">    if isinstance(movie_matrics, np.ndarray):  </span><br><span class="line">        movie_matrics = torch.tensor(movie_matrics, dtype=torch.float32)  </span><br><span class="line"></span><br><span class="line">    if isinstance(users_matrics, np.ndarray):  </span><br><span class="line">        users_matrics = torch.tensor(users_matrics, dtype=torch.float32)  </span><br><span class="line"></span><br><span class="line">    # 归一化电影矩阵  </span><br><span class="line">    norm_movie_matrics = torch.sqrt(torch.sum(movie_matrics**2, dim=1, keepdim=True))  # 计算L2范数  </span><br><span class="line">    normalized_movie_matrics = movie_matrics / norm_movie_matrics  # 归一化  </span><br><span class="line"></span><br><span class="line">    # 推荐您喜欢的电影  </span><br><span class="line">    probs_embeddings = users_matrics[user_id_val - 1].reshape(1, -1)  # 确保形状正确  </span><br><span class="line">    probs_similarity = torch.matmul(probs_embeddings, normalized_movie_matrics.t())  # 计算相似度  </span><br><span class="line">    sim = probs_similarity.squeeze().numpy()  # 将结果转换为 NumPy 数组  </span><br><span class="line">    </span><br><span class="line">    print(&quot;猜您喜欢：&quot;)  </span><br><span class="line">    p = np.squeeze(sim)  </span><br><span class="line">    </span><br><span class="line">    # 确保只保留前 top_k 的相似度  </span><br><span class="line">    p[np.argsort(p)[:-top_k]] = 0  </span><br><span class="line">    if np.sum(p) == 0:  </span><br><span class="line">        print(&quot;没有可推荐的电影。&quot;)  </span><br><span class="line">        return []  </span><br><span class="line">    </span><br><span class="line">    p = p / np.sum(p)  # 进行归一化  </span><br><span class="line"></span><br><span class="line">    results = set()  </span><br><span class="line">    while len(results) &lt; 5:  # 确保结果长度为 5  </span><br><span class="line">        c = np.random.choice(len(p), 1, p=p)[0]  # 使用 len(movies_orig) 动态获取电影数量  </span><br><span class="line">        results.add(c)  </span><br><span class="line"></span><br><span class="line">    for val in results:  </span><br><span class="line">        print(movies_orig[val])  </span><br><span class="line"></span><br><span class="line">    return results  </span><br><span class="line"></span><br><span class="line">def recommend_other_favorite_movie(movie_id_val, movieid2idx, movies_orig, users_orig, users_matrics, movie_matrics, top_k=20):  </span><br><span class="line">    # 确保输入是 PyTorch 张量  </span><br><span class="line">    if isinstance(movie_matrics, np.ndarray):  </span><br><span class="line">        movie_matrics = torch.tensor(movie_matrics, dtype=torch.float32)  </span><br><span class="line"></span><br><span class="line">    if isinstance(users_matrics, np.ndarray):  </span><br><span class="line">        users_matrics = torch.tensor(users_matrics, dtype=torch.float32)  </span><br><span class="line"></span><br><span class="line">    # 选择电影特征  </span><br><span class="line">    probs_movie_embeddings = users_matrics[movieid2idx[movie_id_val]].reshape(1, -1)  </span><br><span class="line"></span><br><span class="line">    # 计算用户喜欢此电影的相似度  </span><br><span class="line">    probs_user_favorite_similarity = torch.matmul(probs_movie_embeddings, users_matrics.t())  </span><br><span class="line">    favorite_user_id = np.argsort(probs_user_favorite_similarity.numpy())[-top_k:]  </span><br><span class="line"></span><br><span class="line">    # 输出观看的电影信息  </span><br><span class="line">    print(&quot;您看的电影是：&#123;&#125;&quot;.format(movies_orig[movieid2idx[movie_id_val]]))  </span><br><span class="line">    #print(&quot;喜欢看这个电影的人是：&#123;&#125;&quot;.format(users_orig[favorite_user_id - 1]))  </span><br><span class="line"></span><br><span class="line">    # 获取喜欢此电影的用户的特征  </span><br><span class="line">    probs_users_embeddings = users_matrics[favorite_user_id - 1].reshape(-1, 200)  </span><br><span class="line">    </span><br><span class="line">    # 计算这些用户与电影的相似度  </span><br><span class="line">    probs_similarity = torch.matmul(probs_users_embeddings, movie_matrics.t())  </span><br><span class="line">    sim = probs_similarity.numpy()  </span><br><span class="line"></span><br><span class="line">    # 找到用户喜欢的电影  </span><br><span class="line">    p = np.argmax(sim, axis=1)  </span><br><span class="line">    print(&quot;喜欢看这个电影的人还喜欢看：&quot;)  </span><br><span class="line"></span><br><span class="line">    if len(set(p)) &lt; 5:  </span><br><span class="line">        results = set(p)  </span><br><span class="line">    else:  </span><br><span class="line">        results = set()  </span><br><span class="line">        while len(results) &lt; 5:  </span><br><span class="line">            c = p[random.randint(0, top_k - 1)]  # 从前 top_k 个用户中随机挑选  </span><br><span class="line">            results.add(c)  </span><br><span class="line"></span><br><span class="line">    for val in results:  </span><br><span class="line">        print(movies_orig[val])  </span><br><span class="line"></span><br><span class="line">    return results  </span><br><span class="line"></span><br><span class="line">def test():</span><br><span class="line">    print(&quot;\n&quot;)</span><br><span class="line">    recommend_your_favorite_movie(user_id_val=16, movieid2idx=movieid2idx, movies_orig=movies_orig, users_matrics=users_matrics, movie_matrics=movie_matrics)</span><br><span class="line">    print(&quot;\n&quot;)</span><br><span class="line">    recommend_same_type_movie(movie_id_val=27, movieid2idx=movieid2idx, movies_orig=movies_orig, movie_matrics=movie_matrics)    </span><br><span class="line">    print(&quot;\n&quot;)</span><br><span class="line">    recommend_other_favorite_movie(movie_id_val=27, movieid2idx=movieid2idx, movies_orig=movies_orig, users_orig=users_orig, users_matrics=users_matrics, movie_matrics=movie_matrics)  </span><br><span class="line"></span><br><span class="line">test()</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="tag"># 人工智能</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/10/12/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0(%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C)/" rel="prev" title="深度学习(神经网络)">
+      <i class="fa fa-chevron-left"></i> 深度学习(神经网络)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/10/22/C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93/" rel="next" title="面试题">
+      面试题 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%94%B5%E5%BD%B1%E6%8E%A8%E8%8D%90%E7%AE%97%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">电影推荐算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81%E4%B8%8B%E8%BD%BDMovieLens%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="nav-number">1.1.</span> <span class="nav-text">1、下载MovieLens数据集</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E6%9E%84%E5%BB%BA%E5%A4%A7%E7%BA%B2"><span class="nav-number">1.1.1.</span> <span class="nav-text">模型构建大纲</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%AF%BC%E5%85%A5%E5%BF%85%E8%A6%81%E5%BA%93%E5%92%8C%E6%A8%A1%E5%9D%97"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">1. 导入必要库和模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E6%95%B0%E6%8D%AE%E5%87%86%E5%A4%87"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">2. 数据准备</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E5%AE%9A%E4%B9%89%E5%B5%8C%E5%85%A5%E5%B1%82%E5%92%8C%E8%BE%93%E5%85%A5%E5%B1%82"><span class="nav-number">1.1.1.3.</span> <span class="nav-text">3. 定义嵌入层和输入层</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E7%89%B9%E5%BE%81%E5%A4%84%E7%90%86"><span class="nav-number">1.1.1.4.</span> <span class="nav-text">4. 特征处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E7%89%B9%E5%BE%81%E8%9E%8D%E5%90%88"><span class="nav-number">1.1.1.5.</span> <span class="nav-text">5. 特征融合</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-%E8%BE%93%E5%87%BA%E5%B1%82"><span class="nav-number">1.1.1.6.</span> <span class="nav-text">6. 输出层</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-%E7%BC%96%E8%AF%91%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.1.1.7.</span> <span class="nav-text">7. 编译模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.1.1.8.</span> <span class="nav-text">8. 训练模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0"><span class="nav-number">1.1.1.9.</span> <span class="nav-text">9. 模型评估</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10-%E7%BB%93%E6%9E%9C%E8%A7%A3%E9%87%8A"><span class="nav-number">1.1.1.10.</span> <span class="nav-text">10. 结果解释</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81%E6%95%B0%E6%8D%AE%E9%A2%84%E5%A4%84%E7%90%86"><span class="nav-number">1.2.</span> <span class="nav-text">2、数据预处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%E3%80%81%E8%BE%85%E5%8A%A9%E6%96%87%E4%BB%B6"><span class="nav-number">1.3.</span> <span class="nav-text">3、辅助文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4%E3%80%81%E7%94%A8%E6%88%B7%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.4.</span> <span class="nav-text">4、用户模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5%E3%80%81%E7%94%B5%E5%BD%B1%E7%89%B9%E5%BE%81%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.5.</span> <span class="nav-text">5、电影特征模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6%E3%80%81%E4%B8%BB%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.6.</span> <span class="nav-text">6、主模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7%E3%80%81-%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.7.</span> <span class="nav-text">7、 功能实现</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="AlexQFMM"
+      src="/images/Avatar.jpg">
+  <p class="site-author-name" itemprop="name">AlexQFMM</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://qexo-ten-roan.vercel.app/" title="控制中心 → https:&#x2F;&#x2F;qexo-ten-roan.vercel.app&#x2F;" rel="noopener" target="_blank">控制中心</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AlexQFMM</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : 'UaEUwcYLlkREnSn9jPNe0oRf-gzGzoHsz',
+      appKey     : '5d7KwGdf31jiCBxBobH0wVk6',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/assets/miku.model.json"},"display":{"position":"left","width":200,"height":400},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="centos搭建hexo博客（一）一、环境搭建1、网络配置更改网卡1vi &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens32   12345678910111213141516171819TYPE&#x3D;EthernetPROXY_METHOD&#x3D;noneBROWSER_ONLY&#x3D;noBOOTPROTO&#x3D;staticDEFROUTE&#x3D;yesIPADDR&#x3D;192.168.1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="centos搭建hexo博客（一）">
+<meta property="og:url" content="http://example.com/2022/11/06/blog1/index.html">
+<meta property="og:site_name" content="AlexHome">
+<meta property="og:description" content="centos搭建hexo博客（一）一、环境搭建1、网络配置更改网卡1vi &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens32   12345678910111213141516171819TYPE&#x3D;EthernetPROXY_METHOD&#x3D;noneBROWSER_ONLY&#x3D;noBOOTPROTO&#x3D;staticDEFROUTE&#x3D;yesIPADDR&#x3D;192.168.1">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-11-06T13:31:45.000Z">
+<meta property="article:modified_time" content="2024-12-01T13:58:43.014Z">
+<meta property="article:author" content="AlexQFMM">
+<meta property="article:tag" content="hexo">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/11/06/blog1/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>centos搭建hexo博客（一） | AlexHome</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">AlexHome</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-guestbook">
+
+    <a href="/guestbook/" rel="section"><i class="fa fa-book fa-fw"></i>留言</a>
+
+  </li>
+        <li class="menu-item menu-item-mypage">
+
+    <a href="/MYHTML/test/index.html" rel="section"><i class="fas fa-file-user fa-fw"></i>myPage</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/06/blog1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/Avatar.jpg">
+      <meta itemprop="name" content="AlexQFMM">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AlexHome">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          centos搭建hexo博客（一）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-11-06 13:31:45" itemprop="dateCreated datePublished" datetime="2022-11-06T13:31:45+00:00">2022-11-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-12-01 13:58:43" itemprop="dateModified" datetime="2024-12-01T13:58:43+00:00">2024-12-01</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/blog/" itemprop="url" rel="index"><span itemprop="name">blog</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2022/11/06/blog1/" class="post-meta-item leancloud_visitors" data-flag-title="centos搭建hexo博客（一）" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/11/06/blog1/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/11/06/blog1/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="centos搭建hexo博客（一）"><a href="#centos搭建hexo博客（一）" class="headerlink" title="centos搭建hexo博客（一）"></a>centos搭建hexo博客（一）</h1><h2 id="一、环境搭建"><a href="#一、环境搭建" class="headerlink" title="一、环境搭建"></a>一、环境搭建</h2><h3 id="1、网络配置"><a href="#1、网络配置" class="headerlink" title="1、网络配置"></a>1、网络配置</h3><h6 id="更改网卡"><a href="#更改网卡" class="headerlink" title="更改网卡"></a>更改网卡</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/sysconfig/network-scripts/ifcfg-ens32 </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">TYPE=Ethernet</span><br><span class="line">PROXY_METHOD=none</span><br><span class="line">BROWSER_ONLY=no</span><br><span class="line">BOOTPROTO=static</span><br><span class="line">DEFROUTE=yes</span><br><span class="line">IPADDR=192.168.10.100</span><br><span class="line">NETMASK=255.255.255.0</span><br><span class="line">GATEWAY=192.168.10.2</span><br><span class="line">DNS=8.8.8.8</span><br><span class="line">IPV4_FAILURE_FATAL=no</span><br><span class="line">IPV6INIT=yes</span><br><span class="line">IPV6_AUTOCONF=yes</span><br><span class="line">IPV6_DEFROUTE=yes</span><br><span class="line">IPV6_FAILURE_FATAL=no</span><br><span class="line">IPV6_ADDR_GEN_MODE=stable-privacy</span><br><span class="line">NAME=ens32</span><br><span class="line">UUID=a7fcd28f-d8f2-4b72-83c0-6e60d26e257d</span><br><span class="line">DEVICE=ens32</span><br><span class="line">ONBOOT=yes</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<h6 id="重启服务"><a href="#重启服务" class="headerlink" title="重启服务"></a>重启服务</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart network</span><br></pre></td></tr></table></figure>
+
+<h6 id="关闭防火墙"><a href="#关闭防火墙" class="headerlink" title="关闭防火墙"></a>关闭防火墙</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop firewalld</span><br><span class="line"></span><br><span class="line">systemctl disable firewalld</span><br></pre></td></tr></table></figure>
+
+<h3 id="2、Docker的安装"><a href="#2、Docker的安装" class="headerlink" title="2、Docker的安装"></a>2、Docker的安装</h3><h6 id="更新yum包（root）"><a href="#更新yum包（root）" class="headerlink" title="更新yum包（root）"></a>更新yum包（root）</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum update</span><br></pre></td></tr></table></figure>
+
+<h6 id="设置yum源"><a href="#设置yum源" class="headerlink" title="设置yum源"></a>设置yum源</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y yum-utils device-mapper-persistent-data lvm2</span><br></pre></td></tr></table></figure>
+
+<h6 id="使用阿里云访问，添加docker的yum源"><a href="#使用阿里云访问，添加docker的yum源" class="headerlink" title="使用阿里云访问，添加docker的yum源"></a>使用阿里云访问，添加docker的yum源</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo</span><br></pre></td></tr></table></figure>
+
+<h6 id="查看docker版本"><a href="#查看docker版本" class="headerlink" title="查看docker版本"></a>查看docker版本</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum list docker-ce --showduplicates | sort -r</span><br></pre></td></tr></table></figure>
+
+<h6 id="配置镜像加速器"><a href="#配置镜像加速器" class="headerlink" title="配置镜像加速器"></a>配置镜像加速器</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">进入阿里云控制台 ( https://cr.console.aliyun.com/#/accelerator )根据下面操作来</span><br></pre></td></tr></table></figure>
+
+<h6 id="安装docker"><a href="#安装docker" class="headerlink" title="安装docker"></a>安装docker</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install docker-ce</span><br></pre></td></tr></table></figure>
+
+<h6 id="添加开机启动"><a href="#添加开机启动" class="headerlink" title="添加开机启动"></a>添加开机启动</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">systemctl start docker</span><br><span class="line"></span><br><span class="line">systemctl enable docker</span><br><span class="line"></span><br><span class="line">docker version</span><br></pre></td></tr></table></figure>
+
+<h6 id="拉取镜像"><a href="#拉取镜像" class="headerlink" title="拉取镜像"></a>拉取镜像</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">docker pull centos:centos7.5.1804 </span><br><span class="line"></span><br><span class="line">docker pull ubuntu:latest</span><br><span class="line"></span><br><span class="line">docker images</span><br><span class="line"></span><br><span class="line">ubuntu        latest           ba6acccedd29   13 months ago   72.8MB</span><br><span class="line">centos        centos7.5.1804   cf49811e3cdb   3 years ago     200MB</span><br></pre></td></tr></table></figure>
+
+<h3 id="3、图形化界面安装（可不做）"><a href="#3、图形化界面安装（可不做）" class="headerlink" title="3、图形化界面安装（可不做）"></a>3、图形化界面安装（可不做）</h3><h6 id="升级yum包"><a href="#升级yum包" class="headerlink" title="升级yum包"></a>升级yum包</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum upgrade -y</span><br></pre></td></tr></table></figure>
+
+<h6 id="安装图形化界面"><a href="#安装图形化界面" class="headerlink" title="安装图形化界面"></a>安装图形化界面</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum groupinstall &quot;X Window System&quot; &amp;&amp; yum groupinstall -y &quot;GNOME Desktop&quot;</span><br></pre></td></tr></table></figure>
+
+<h6 id="转到图形化"><a href="#转到图形化" class="headerlink" title="转到图形化"></a>转到图形化</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">init 5</span><br></pre></td></tr></table></figure>
+
+<h3 id="4、node包安装"><a href="#4、node包安装" class="headerlink" title="4、node包安装"></a>4、node包安装</h3><h6 id="官网（推荐下载14以上版本）"><a href="#官网（推荐下载14以上版本）" class="headerlink" title="官网（推荐下载14以上版本）"></a>官网（推荐下载14以上版本）</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://nodejs.org/en/download/</span><br></pre></td></tr></table></figure>
+
+<h6 id="导入，解压，改名"><a href="#导入，解压，改名" class="headerlink" title="导入，解压，改名"></a>导入，解压，改名</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tar -xvf node-v14.20.0-linux-x64.tar.xz -C /usr/local/src/</span><br><span class="line"></span><br><span class="line">mv -v node-v14.20.0-linux-x64 node</span><br></pre></td></tr></table></figure>
+
+<h6 id="设置环境变量"><a href="#设置环境变量" class="headerlink" title="设置环境变量"></a>设置环境变量</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/profile</span><br><span class="line"></span><br><span class="line">末尾加</span><br><span class="line">export NODE_HOME=/usr/local/src/node/</span><br><span class="line">export PATH=$NODE_HOME/bin:$PATH</span><br><span class="line"></span><br><span class="line">source /etc/profile</span><br><span class="line">node -v</span><br></pre></td></tr></table></figure>
+
+<h6 id="安装cnpm"><a href="#安装cnpm" class="headerlink" title="安装cnpm"></a>安装cnpm</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm install -g cnpm --registry=https://registry.npmmirror.com</span><br><span class="line"></span><br><span class="line">cnpm -v</span><br></pre></td></tr></table></figure>
+
+<h3 id="5、hexo搭建"><a href="#5、hexo搭建" class="headerlink" title="5、hexo搭建"></a>5、hexo搭建</h3><h6 id="hexo环境搭建"><a href="#hexo环境搭建" class="headerlink" title="hexo环境搭建"></a>hexo环境搭建</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">cnpm install hexo-cli -g   </span><br><span class="line"></span><br><span class="line">mkdir blog</span><br><span class="line">cd blog/</span><br><span class="line"></span><br><span class="line"> hexo init</span><br><span class="line"> hexo -v</span><br><span class="line"> cnpm install</span><br><span class="line"></span><br><span class="line"> hexo s</span><br></pre></td></tr></table></figure>
+
+<p>结果：<br>INFO  Validating config<br>INFO  Start processing<br>INFO  Hexo is running at <a target="_blank" rel="noopener" href="http://localhost:4000/">http://localhost:4000</a> . Press Ctrl+C to stop.</p>
+<p>http:虚拟机ip:4000（主机）</p>
+<p>复制超链接进浏览器即可预览博客</p>
+<h3 id="6、git安装"><a href="#6、git安装" class="headerlink" title="6、git安装"></a>6、git安装</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y git</span><br></pre></td></tr></table></figure>
+
+<h6 id="取消git代理（TCP-connection-reset-by-peer再不行就科学上网）"><a href="#取消git代理（TCP-connection-reset-by-peer再不行就科学上网）" class="headerlink" title="取消git代理（TCP connection reset by peer再不行就科学上网）"></a>取消git代理（TCP connection reset by peer再不行就科学上网）</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global --unset http.proxy</span><br><span class="line">git config --global --unset https.proxy</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="二、hexo博客的自定义"><a href="#二、hexo博客的自定义" class="headerlink" title="二、hexo博客的自定义"></a>二、hexo博客的自定义</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo s  运行预览博客页面</span><br><span class="line"></span><br><span class="line">修改配置文件为  vi _config.yml</span><br></pre></td></tr></table></figure>
+
+<h3 id="1、主题变更"><a href="#1、主题变更" class="headerlink" title="1、主题变更"></a>1、主题变更</h3><h6 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/theme-next/hexo-theme-next.git themes/next</span><br></pre></td></tr></table></figure>
+
+<h6 id="变更（blog目录下）"><a href="#变更（blog目录下）" class="headerlink" title="变更（blog目录下）"></a>变更（blog目录下）</h6><p>原</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># Extensions</span><br><span class="line">## Plugins: https://hexo.io/plugins/</span><br><span class="line">## Themes: https://hexo.io/themes/</span><br><span class="line">theme: landscape</span><br></pre></td></tr></table></figure>
+
+<p>改</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># Extensions</span><br><span class="line">## Plugins: https://hexo.io/plugins/</span><br><span class="line">## Themes: https://hexo.io/themes/</span><br><span class="line">theme: next</span><br></pre></td></tr></table></figure>
+
+<h3 id="2、语言以及其他显示信息"><a href="#2、语言以及其他显示信息" class="headerlink" title="2、语言以及其他显示信息"></a>2、语言以及其他显示信息</h3><h6 id="变更（blog目录下）-1"><a href="#变更（blog目录下）-1" class="headerlink" title="变更（blog目录下）"></a>变更（blog目录下）</h6><p>原</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># Site</span><br><span class="line">title: Hexo</span><br><span class="line">subtitle: &#x27;&#x27;</span><br><span class="line">description: &#x27;&#x27;</span><br><span class="line">keywords:</span><br><span class="line">author: John Doe</span><br><span class="line">language: en</span><br><span class="line">timezone: &#x27;&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>改</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># Site</span><br><span class="line">title: AlexHome</span><br><span class="line">subtitle: &#x27;&#x27;</span><br><span class="line">description: &#x27;&#x27;</span><br><span class="line">keywords:</span><br><span class="line">author: Alex</span><br><span class="line">language: zh-CN</span><br><span class="line">timezone: &#x27;&#x27;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3、分栏"><a href="#3、分栏" class="headerlink" title="3、分栏"></a>3、分栏</h3><h6 id="变更（blog-themes-next目录下）"><a href="#变更（blog-themes-next目录下）" class="headerlink" title="变更（blog&#x2F;themes&#x2F;next目录下）"></a>变更（blog&#x2F;themes&#x2F;next目录下）</h6><p>原</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># Schemes</span><br><span class="line">scheme: Muse</span><br><span class="line">#scheme: Mist</span><br><span class="line">#scheme: Pisces</span><br><span class="line">#scheme: Gemini</span><br></pre></td></tr></table></figure>
+
+<p>改</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># Schemes</span><br><span class="line">scheme: Pisces</span><br><span class="line">#scheme: Mist</span><br><span class="line">#scheme: Pisces</span><br><span class="line">#scheme: Gemini</span><br></pre></td></tr></table></figure>
+
+<h3 id="4、更改背景"><a href="#4、更改背景" class="headerlink" title="4、更改背景"></a>4、更改背景</h3><h6 id="将需要做背景的图片放入blog-themes-next-source-images-路径下"><a href="#将需要做背景的图片放入blog-themes-next-source-images-路径下" class="headerlink" title="将需要做背景的图片放入blog&#x2F;themes&#x2F;next&#x2F;source&#x2F;images&#x2F;路径下"></a>将需要做背景的图片放入blog&#x2F;themes&#x2F;next&#x2F;source&#x2F;images&#x2F;路径下</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@master ~]# ll |grep .jpg</span><br><span class="line">-rw-r--r--. 1 root root    1613625 May 28 09:17 Avatar.jpg</span><br><span class="line">-rw-r--r--. 1 root root     135576 Nov 14 16:57 background2.jpg</span><br><span class="line">-rw-r--r--. 1 root root    2501902 Nov  2 09:04 background.jpg</span><br><span class="line"></span><br><span class="line">[root@master ~]# docker ps -a</span><br><span class="line">CONTAINER ID   IMAGE              COMMAND            CREATED       STATUS                    PORTS     NAMES</span><br><span class="line">920635e9bdec   blog-test:v1.1     &quot;/usr/sbin/init&quot;   2 weeks ago   Up 2 days                           blog-main</span><br><span class="line"></span><br><span class="line">docker  inspect -f &#x27;&#123;&#123;.ID&#125;&#125;&#x27;  blog-main</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">docker cp *.jpg id:/blog/themes/next/source/images/</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp background.jpg blog/themes/next/source/images/</span><br></pre></td></tr></table></figure>
+
+<h6 id="末尾新增（blog-themes-next-source-css-schemes-Pisces（主题样式名）-index-styl）"><a href="#末尾新增（blog-themes-next-source-css-schemes-Pisces（主题样式名）-index-styl）" class="headerlink" title="末尾新增（blog&#x2F;themes&#x2F;next&#x2F;source&#x2F;css&#x2F;_schemes&#x2F;Pisces（主题样式名）&#x2F;index.styl）"></a>末尾新增（blog&#x2F;themes&#x2F;next&#x2F;source&#x2F;css&#x2F;_schemes&#x2F;Pisces（主题样式名）&#x2F;index.styl）</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">body &#123;</span><br><span class="line"></span><br><span class="line">    background:url(/images/background.jpg);</span><br><span class="line"></span><br><span class="line">    background-repeat: no-repeat;</span><br><span class="line"></span><br><span class="line">    background-attachment:fixed; //不重复</span><br><span class="line"></span><br><span class="line">    background-size: cover;      //填充</span><br><span class="line"></span><br><span class="line">    background-position:50% 50%;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h6 id="侧边栏透明度（-blog-themes-next-source-css-schemes-Pisces-sidebar-styl）"><a href="#侧边栏透明度（-blog-themes-next-source-css-schemes-Pisces-sidebar-styl）" class="headerlink" title="侧边栏透明度（&#x2F;blog&#x2F;themes&#x2F;next&#x2F;source&#x2F;css&#x2F;_schemes&#x2F;Pisces&#x2F; _sidebar.styl）"></a>侧边栏透明度（&#x2F;blog&#x2F;themes&#x2F;next&#x2F;source&#x2F;css&#x2F;_schemes&#x2F;Pisces&#x2F; _sidebar.styl）</h6><p>原</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.sidebar &#123;</span><br><span class="line">  background: var(--content-bg-color);</span><br><span class="line">  box-shadow: none;</span><br><span class="line">  margin-top: 100%;</span><br><span class="line">  position: static;</span><br><span class="line">  width: $sidebar-desktop;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.sidebar-inner &#123;</span><br><span class="line">  background: var(--content-bg-color);</span><br><span class="line">  border-radius: $border-radius;</span><br><span class="line">  box-shadow: $box-shadow;</span><br><span class="line">  box-sizing: border-box;</span><br><span class="line">  color: var(--text-color);</span><br></pre></td></tr></table></figure>
+
+<p>改</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.sidebar &#123;</span><br><span class="line">  background: rgba(255,255,255,0.3);</span><br><span class="line">  box-shadow: none;</span><br><span class="line">  margin-top: 100%;</span><br><span class="line">  position: static;</span><br><span class="line">  width: $sidebar-desktop;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">.sidebar-inner &#123;</span><br><span class="line">  background: rgba(255,255,255,0.3);</span><br><span class="line">  border-radius: $border-radius;</span><br><span class="line">  box-shadow: $box-shadow;</span><br><span class="line">  box-sizing: border-box;</span><br><span class="line">  color: var(--text-color);</span><br><span class="line">&quot;_sidebar.styl&quot; 123L, 2082C</span><br></pre></td></tr></table></figure>
+
+<h6 id="头部透明（-blog-themes-next-source-css-schemes-Pisces-layout-styl）"><a href="#头部透明（-blog-themes-next-source-css-schemes-Pisces-layout-styl）" class="headerlink" title="头部透明（&#x2F;blog&#x2F;themes&#x2F;next&#x2F;source&#x2F;css&#x2F;_schemes&#x2F;Pisces&#x2F; _layout.styl）"></a>头部透明（&#x2F;blog&#x2F;themes&#x2F;next&#x2F;source&#x2F;css&#x2F;_schemes&#x2F;Pisces&#x2F; _layout.styl）</h6><p>原</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">.header-inner &#123;</span><br><span class="line">  background: var(--content-bg-color);</span><br><span class="line">  border-radius: $border-radius-inner;</span><br><span class="line">  box-shadow: $box-shadow-inner;</span><br><span class="line">  overflow: hidden;</span><br><span class="line">  padding: 0;</span><br><span class="line">  position: absolute;</span><br><span class="line">  top: 0;</span><br><span class="line">  width: $sidebar-desktop;</span><br></pre></td></tr></table></figure>
+
+<p>改</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">.header-inner &#123;</span><br><span class="line">  background: rgba(255,255,255,0.3);</span><br><span class="line">  border-radius: $border-radius-inner;</span><br><span class="line">  box-shadow: $box-shadow-inner;</span><br><span class="line">  overflow: hidden;</span><br><span class="line">  padding: 0;</span><br><span class="line">  position: absolute;</span><br><span class="line">  top: 0;</span><br><span class="line">  width: $sidebar-desktop;</span><br></pre></td></tr></table></figure>
+
+<h6 id="主题框透明（-blog-themes-next-source-css-schemes-Pisces-layout-styl）"><a href="#主题框透明（-blog-themes-next-source-css-schemes-Pisces-layout-styl）" class="headerlink" title="主题框透明（&#x2F;blog&#x2F;themes&#x2F;next&#x2F;source&#x2F;css&#x2F;_schemes&#x2F;Pisces&#x2F; _layout.styl）"></a>主题框透明（&#x2F;blog&#x2F;themes&#x2F;next&#x2F;source&#x2F;css&#x2F;_schemes&#x2F;Pisces&#x2F; _layout.styl）</h6><p>原</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">.content-wrap &#123;</span><br><span class="line">  background: var(--content-bg-color);</span><br><span class="line">  border-radius: $border-radius-inner;</span><br><span class="line">  box-shadow: $box-shadow-inner;</span><br><span class="line">  box-sizing: border-box;</span><br><span class="line">  padding: $content-desktop-padding;</span><br><span class="line">  width: $content-wrap;</span><br></pre></td></tr></table></figure>
+
+<p>改</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">.content-wrap &#123;</span><br><span class="line">  background: rgba(255,255,255,0.3);</span><br><span class="line">  border-radius: $border-radius-inner;</span><br><span class="line">  box-shadow: $box-shadow-inner;</span><br><span class="line">  box-sizing: border-box;</span><br><span class="line">  padding: $content-desktop-padding;</span><br><span class="line">  width: $content-wrap;</span><br></pre></td></tr></table></figure>
+
+<h3 id="5、添加标签（分类）页"><a href="#5、添加标签（分类）页" class="headerlink" title="5、添加标签（分类）页"></a>5、添加标签（分类）页</h3><h6 id="创建标签页（blog目录下）"><a href="#创建标签页（blog目录下）" class="headerlink" title="创建标签页（blog目录下）"></a>创建标签页（blog目录下）</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new page tags</span><br></pre></td></tr></table></figure>
+
+<h6 id="修改tags页面"><a href="#修改tags页面" class="headerlink" title="修改tags页面"></a>修改tags页面</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cd /source/tags</span><br><span class="line"></span><br><span class="line">vi index.md</span><br><span class="line"></span><br><span class="line">title: tags</span><br><span class="line">date: 2022-11-02 15:56:30</span><br><span class="line">type: &quot;tags&quot;</span><br></pre></td></tr></table></figure>
+
+<h6 id="添加tag（-blog-themes-next）"><a href="#添加tag（-blog-themes-next）" class="headerlink" title="添加tag（&#x2F;blog&#x2F;themes&#x2F;next）"></a>添加tag（&#x2F;blog&#x2F;themes&#x2F;next）</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">menu:</span><br><span class="line">  home: / || fa fa-home</span><br><span class="line">  #about: /about/ || fa fa-user</span><br><span class="line">  tags: /tags/ || fa fa-tags</span><br><span class="line">  #categories: /categories/ || fa fa-th</span><br><span class="line">  archives: /archives/ || fa fa-archive</span><br><span class="line">  #schedule: /schedule/ || fa fa-calendar</span><br><span class="line">  #sitemap: /sitemap.xml || fa fa-sitemap</span><br><span class="line">  #commonweal: /404/ || fa fa-heartbeat</span><br></pre></td></tr></table></figure>
+
+<h6 id="ps：分类页同理，把所有的tags改为categories即可"><a href="#ps：分类页同理，把所有的tags改为categories即可" class="headerlink" title="ps：分类页同理，把所有的tags改为categories即可"></a>ps：分类页同理，把所有的tags改为categories即可</h6><h3 id="6、添加头像"><a href="#6、添加头像" class="headerlink" title="6、添加头像"></a>6、添加头像</h3><h6 id="blog-themes-next目录下"><a href="#blog-themes-next目录下" class="headerlink" title="&#x2F;blog&#x2F;themes&#x2F;next目录下"></a>&#x2F;blog&#x2F;themes&#x2F;next目录下</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">avatar:</span><br><span class="line">  # Replace the default image and set the url here.</span><br><span class="line">  url: #/images/avatar.gif</span><br><span class="line">  # If true, the avatar will be dispalyed in circle.</span><br><span class="line">  rounded: false</span><br><span class="line">  # If true, the avatar will be rotated with the cursor.</span><br><span class="line">  rotated: false</span><br></pre></td></tr></table></figure>
+
+<p>改</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">avatar:</span><br><span class="line">  # Replace the default image and set the url here.</span><br><span class="line">  url: /images/Avatar.jpg</span><br><span class="line">  # If true, the avatar will be dispalyed in circle.</span><br><span class="line">  rounded: true</span><br><span class="line">  # If true, the avatar will be rotated with the cursor.</span><br><span class="line">  rotated: true</span><br></pre></td></tr></table></figure>
+
+<h3 id="7、live2d制作"><a href="#7、live2d制作" class="headerlink" title="7、live2d制作"></a>7、live2d制作</h3><h6 id="更新依赖（blog目录下）"><a href="#更新依赖（blog目录下）" class="headerlink" title="更新依赖（blog目录下）"></a>更新依赖（blog目录下）</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm uninstall hexo-helper-live2d</span><br><span class="line"></span><br><span class="line">npm install --save hexo-helper-live2d</span><br></pre></td></tr></table></figure>
+
+<h6 id="导入live2d包（blog目录下）"><a href="#导入live2d包（blog目录下）" class="headerlink" title="导入live2d包（blog目录下）"></a>导入live2d包（blog目录下）</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp -rvf live2d-widget-model-miku blog/</span><br></pre></td></tr></table></figure>
+
+<h6 id="编写配置（blog目录下）"><a href="#编写配置（blog目录下）" class="headerlink" title="编写配置（blog目录下）"></a>编写配置（blog目录下）</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">live2d:</span><br><span class="line">  enable: true</span><br><span class="line">  pluginModelPath: assets/</span><br><span class="line">  model:</span><br><span class="line">    use: live2d-widget-model-miku</span><br><span class="line">  display:</span><br><span class="line">    position: left</span><br><span class="line">    width: 200</span><br><span class="line">    height: 400</span><br><span class="line">  mobile:</span><br><span class="line">    show: true</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、博客的编写"><a href="#三、博客的编写" class="headerlink" title="三、博客的编写"></a>三、博客的编写</h2><h6 id="生成命令"><a href="#生成命令" class="headerlink" title="生成命令"></a>生成命令</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new 博客标题</span><br></pre></td></tr></table></figure>
+
+<h6 id="生成目录"><a href="#生成目录" class="headerlink" title="生成目录"></a>生成目录</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">blog/source/_posts</span><br></pre></td></tr></table></figure>
+
+<h6 id="收缩全文"><a href="#收缩全文" class="headerlink" title="收缩全文"></a>收缩全文</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">在需要收起的行下面添加</span><br><span class="line"></span><br><span class="line">&lt;!--more--&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="四、图片的添加"><a href="#四、图片的添加" class="headerlink" title="四、图片的添加"></a>四、图片的添加</h2><p>安装图形插件hexo-renderer-marked</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cnpm install hexo-renderer-marked</span><br></pre></td></tr></table></figure>
+
+<p>在blog目录下修改_config.yaml</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">post_asset_folder: true</span><br><span class="line">marked:</span><br><span class="line">  prependRoot: true</span><br><span class="line">  postAsset: true</span><br></pre></td></tr></table></figure>
+
+<p>在&#x2F;blog&#x2F;source&#x2F;_posts&#x2F;目录下会多出和博客名一样的文件夹，里面用来放置图片资源</p>
+<h6 id="扩展、使用typora插入图片（windows系统）"><a href="#扩展、使用typora插入图片（windows系统）" class="headerlink" title="扩展、使用typora插入图片（windows系统）"></a>扩展、使用typora插入图片（windows系统）</h6><p>在插入图片后路径名，删除&#x2F;blog即可使用，本地会预览不了，但是推送后可以查看</p>
+<h2 id="五、博客的上传"><a href="#五、博客的上传" class="headerlink" title="五、博客的上传"></a>五、博客的上传</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">github创建仓库，与用户名相同（小写）</span><br></pre></td></tr></table></figure>
+
+<h6 id="创建git密匙"><a href="#创建git密匙" class="headerlink" title="创建git密匙"></a>创建git密匙</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C &quot;your_email@youremail.com&quot;</span><br><span class="line"></span><br><span class="line">cat ~/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure>
+
+<h6 id="复制下来点击头像进入setting—-SSH创建新ssh"><a href="#复制下来点击头像进入setting—-SSH创建新ssh" class="headerlink" title="复制下来点击头像进入setting—-SSH创建新ssh"></a>复制下来点击头像进入setting—-SSH创建新ssh</h6><h6 id="执行"><a href="#执行" class="headerlink" title="执行"></a>执行</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+
+<h6 id="打开项目，复制git的地址"><a href="#打开项目，复制git的地址" class="headerlink" title="打开项目，复制git的地址"></a>打开项目，复制git的地址</h6><h6 id="修改站点信息（blog目录下）"><a href="#修改站点信息（blog目录下）" class="headerlink" title="修改站点信息（blog目录下）"></a>修改站点信息（blog目录下）</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: &#x27;git&#x27;</span><br><span class="line">  repo: &#x27;git@github.com:AlexQFMM2/AleQFMM2.github.io.git&#x27;</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
+
+<h6 id="登录"><a href="#登录" class="headerlink" title="登录"></a>登录</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name &quot;yourname&quot;</span><br><span class="line">git config --global user.email &quot;youremail&quot;</span><br></pre></td></tr></table></figure>
+
+<h6 id="安装上传插件"><a href="#安装上传插件" class="headerlink" title="安装上传插件"></a>安装上传插件</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cnpm install hexo-deployer-git --save</span><br><span class="line"></span><br><span class="line">hexo g -d  上传</span><br></pre></td></tr></table></figure>
+
+<h6 id="进入项目库setting–pages修改访问源即可访问你的博客网页"><a href="#进入项目库setting–pages修改访问源即可访问你的博客网页" class="headerlink" title="进入项目库setting–pages修改访问源即可访问你的博客网页"></a>进入项目库setting–pages修改访问源即可访问你的博客网页</h6>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/hexo/" rel="tag"># hexo</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2022/11/10/blog2/" rel="next" title="centos搭建hexo博客（二）">
+      centos搭建hexo博客（二） <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#centos%E6%90%AD%E5%BB%BAhexo%E5%8D%9A%E5%AE%A2%EF%BC%88%E4%B8%80%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">centos搭建hexo博客（一）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="nav-number">1.1.</span> <span class="nav-text">一、环境搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE"><span class="nav-number">1.1.1.</span> <span class="nav-text">1、网络配置</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%9B%B4%E6%94%B9%E7%BD%91%E5%8D%A1"><span class="nav-number">1.1.1.0.0.1.</span> <span class="nav-text">更改网卡</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E9%87%8D%E5%90%AF%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.1.1.0.0.2.</span> <span class="nav-text">重启服务</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%85%B3%E9%97%AD%E9%98%B2%E7%81%AB%E5%A2%99"><span class="nav-number">1.1.1.0.0.3.</span> <span class="nav-text">关闭防火墙</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81Docker%E7%9A%84%E5%AE%89%E8%A3%85"><span class="nav-number">1.1.2.</span> <span class="nav-text">2、Docker的安装</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0yum%E5%8C%85%EF%BC%88root%EF%BC%89"><span class="nav-number">1.1.2.0.0.1.</span> <span class="nav-text">更新yum包（root）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AEyum%E6%BA%90"><span class="nav-number">1.1.2.0.0.2.</span> <span class="nav-text">设置yum源</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E9%98%BF%E9%87%8C%E4%BA%91%E8%AE%BF%E9%97%AE%EF%BC%8C%E6%B7%BB%E5%8A%A0docker%E7%9A%84yum%E6%BA%90"><span class="nav-number">1.1.2.0.0.3.</span> <span class="nav-text">使用阿里云访问，添加docker的yum源</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8Bdocker%E7%89%88%E6%9C%AC"><span class="nav-number">1.1.2.0.0.4.</span> <span class="nav-text">查看docker版本</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E9%95%9C%E5%83%8F%E5%8A%A0%E9%80%9F%E5%99%A8"><span class="nav-number">1.1.2.0.0.5.</span> <span class="nav-text">配置镜像加速器</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%AE%89%E8%A3%85docker"><span class="nav-number">1.1.2.0.0.6.</span> <span class="nav-text">安装docker</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8"><span class="nav-number">1.1.2.0.0.7.</span> <span class="nav-text">添加开机启动</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%8B%89%E5%8F%96%E9%95%9C%E5%83%8F"><span class="nav-number">1.1.2.0.0.8.</span> <span class="nav-text">拉取镜像</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81%E5%9B%BE%E5%BD%A2%E5%8C%96%E7%95%8C%E9%9D%A2%E5%AE%89%E8%A3%85%EF%BC%88%E5%8F%AF%E4%B8%8D%E5%81%9A%EF%BC%89"><span class="nav-number">1.1.3.</span> <span class="nav-text">3、图形化界面安装（可不做）</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%8D%87%E7%BA%A7yum%E5%8C%85"><span class="nav-number">1.1.3.0.0.1.</span> <span class="nav-text">升级yum包</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E5%9B%BE%E5%BD%A2%E5%8C%96%E7%95%8C%E9%9D%A2"><span class="nav-number">1.1.3.0.0.2.</span> <span class="nav-text">安装图形化界面</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%BD%AC%E5%88%B0%E5%9B%BE%E5%BD%A2%E5%8C%96"><span class="nav-number">1.1.3.0.0.3.</span> <span class="nav-text">转到图形化</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81node%E5%8C%85%E5%AE%89%E8%A3%85"><span class="nav-number">1.1.4.</span> <span class="nav-text">4、node包安装</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%AE%98%E7%BD%91%EF%BC%88%E6%8E%A8%E8%8D%90%E4%B8%8B%E8%BD%BD14%E4%BB%A5%E4%B8%8A%E7%89%88%E6%9C%AC%EF%BC%89"><span class="nav-number">1.1.4.0.0.1.</span> <span class="nav-text">官网（推荐下载14以上版本）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%AF%BC%E5%85%A5%EF%BC%8C%E8%A7%A3%E5%8E%8B%EF%BC%8C%E6%94%B9%E5%90%8D"><span class="nav-number">1.1.4.0.0.2.</span> <span class="nav-text">导入，解压，改名</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">1.1.4.0.0.3.</span> <span class="nav-text">设置环境变量</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%AE%89%E8%A3%85cnpm"><span class="nav-number">1.1.4.0.0.4.</span> <span class="nav-text">安装cnpm</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5%E3%80%81hexo%E6%90%AD%E5%BB%BA"><span class="nav-number">1.1.5.</span> <span class="nav-text">5、hexo搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#hexo%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="nav-number">1.1.5.0.0.1.</span> <span class="nav-text">hexo环境搭建</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6%E3%80%81git%E5%AE%89%E8%A3%85"><span class="nav-number">1.1.6.</span> <span class="nav-text">6、git安装</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%8F%96%E6%B6%88git%E4%BB%A3%E7%90%86%EF%BC%88TCP-connection-reset-by-peer%E5%86%8D%E4%B8%8D%E8%A1%8C%E5%B0%B1%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%EF%BC%89"><span class="nav-number">1.1.6.0.0.1.</span> <span class="nav-text">取消git代理（TCP connection reset by peer再不行就科学上网）</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81hexo%E5%8D%9A%E5%AE%A2%E7%9A%84%E8%87%AA%E5%AE%9A%E4%B9%89"><span class="nav-number">1.2.</span> <span class="nav-text">二、hexo博客的自定义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E4%B8%BB%E9%A2%98%E5%8F%98%E6%9B%B4"><span class="nav-number">1.2.1.</span> <span class="nav-text">1、主题变更</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD"><span class="nav-number">1.2.1.0.0.1.</span> <span class="nav-text">下载</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%8F%98%E6%9B%B4%EF%BC%88blog%E7%9B%AE%E5%BD%95%E4%B8%8B%EF%BC%89"><span class="nav-number">1.2.1.0.0.2.</span> <span class="nav-text">变更（blog目录下）</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E8%AF%AD%E8%A8%80%E4%BB%A5%E5%8F%8A%E5%85%B6%E4%BB%96%E6%98%BE%E7%A4%BA%E4%BF%A1%E6%81%AF"><span class="nav-number">1.2.2.</span> <span class="nav-text">2、语言以及其他显示信息</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%8F%98%E6%9B%B4%EF%BC%88blog%E7%9B%AE%E5%BD%95%E4%B8%8B%EF%BC%89-1"><span class="nav-number">1.2.2.0.0.1.</span> <span class="nav-text">变更（blog目录下）</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81%E5%88%86%E6%A0%8F"><span class="nav-number">1.2.3.</span> <span class="nav-text">3、分栏</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%8F%98%E6%9B%B4%EF%BC%88blog-themes-next%E7%9B%AE%E5%BD%95%E4%B8%8B%EF%BC%89"><span class="nav-number">1.2.3.0.0.1.</span> <span class="nav-text">变更（blog&#x2F;themes&#x2F;next目录下）</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81%E6%9B%B4%E6%94%B9%E8%83%8C%E6%99%AF"><span class="nav-number">1.2.4.</span> <span class="nav-text">4、更改背景</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%B0%86%E9%9C%80%E8%A6%81%E5%81%9A%E8%83%8C%E6%99%AF%E7%9A%84%E5%9B%BE%E7%89%87%E6%94%BE%E5%85%A5blog-themes-next-source-images-%E8%B7%AF%E5%BE%84%E4%B8%8B"><span class="nav-number">1.2.4.0.0.1.</span> <span class="nav-text">将需要做背景的图片放入blog&#x2F;themes&#x2F;next&#x2F;source&#x2F;images&#x2F;路径下</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%9C%AB%E5%B0%BE%E6%96%B0%E5%A2%9E%EF%BC%88blog-themes-next-source-css-schemes-Pisces%EF%BC%88%E4%B8%BB%E9%A2%98%E6%A0%B7%E5%BC%8F%E5%90%8D%EF%BC%89-index-styl%EF%BC%89"><span class="nav-number">1.2.4.0.0.2.</span> <span class="nav-text">末尾新增（blog&#x2F;themes&#x2F;next&#x2F;source&#x2F;css&#x2F;_schemes&#x2F;Pisces（主题样式名）&#x2F;index.styl）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%BE%A7%E8%BE%B9%E6%A0%8F%E9%80%8F%E6%98%8E%E5%BA%A6%EF%BC%88-blog-themes-next-source-css-schemes-Pisces-sidebar-styl%EF%BC%89"><span class="nav-number">1.2.4.0.0.3.</span> <span class="nav-text">侧边栏透明度（&#x2F;blog&#x2F;themes&#x2F;next&#x2F;source&#x2F;css&#x2F;_schemes&#x2F;Pisces&#x2F; _sidebar.styl）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%A4%B4%E9%83%A8%E9%80%8F%E6%98%8E%EF%BC%88-blog-themes-next-source-css-schemes-Pisces-layout-styl%EF%BC%89"><span class="nav-number">1.2.4.0.0.4.</span> <span class="nav-text">头部透明（&#x2F;blog&#x2F;themes&#x2F;next&#x2F;source&#x2F;css&#x2F;_schemes&#x2F;Pisces&#x2F; _layout.styl）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%B8%BB%E9%A2%98%E6%A1%86%E9%80%8F%E6%98%8E%EF%BC%88-blog-themes-next-source-css-schemes-Pisces-layout-styl%EF%BC%89"><span class="nav-number">1.2.4.0.0.5.</span> <span class="nav-text">主题框透明（&#x2F;blog&#x2F;themes&#x2F;next&#x2F;source&#x2F;css&#x2F;_schemes&#x2F;Pisces&#x2F; _layout.styl）</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5%E3%80%81%E6%B7%BB%E5%8A%A0%E6%A0%87%E7%AD%BE%EF%BC%88%E5%88%86%E7%B1%BB%EF%BC%89%E9%A1%B5"><span class="nav-number">1.2.5.</span> <span class="nav-text">5、添加标签（分类）页</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%A0%87%E7%AD%BE%E9%A1%B5%EF%BC%88blog%E7%9B%AE%E5%BD%95%E4%B8%8B%EF%BC%89"><span class="nav-number">1.2.5.0.0.1.</span> <span class="nav-text">创建标签页（blog目录下）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9tags%E9%A1%B5%E9%9D%A2"><span class="nav-number">1.2.5.0.0.2.</span> <span class="nav-text">修改tags页面</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0tag%EF%BC%88-blog-themes-next%EF%BC%89"><span class="nav-number">1.2.5.0.0.3.</span> <span class="nav-text">添加tag（&#x2F;blog&#x2F;themes&#x2F;next）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#ps%EF%BC%9A%E5%88%86%E7%B1%BB%E9%A1%B5%E5%90%8C%E7%90%86%EF%BC%8C%E6%8A%8A%E6%89%80%E6%9C%89%E7%9A%84tags%E6%94%B9%E4%B8%BAcategories%E5%8D%B3%E5%8F%AF"><span class="nav-number">1.2.5.0.0.4.</span> <span class="nav-text">ps：分类页同理，把所有的tags改为categories即可</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6%E3%80%81%E6%B7%BB%E5%8A%A0%E5%A4%B4%E5%83%8F"><span class="nav-number">1.2.6.</span> <span class="nav-text">6、添加头像</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#blog-themes-next%E7%9B%AE%E5%BD%95%E4%B8%8B"><span class="nav-number">1.2.6.0.0.1.</span> <span class="nav-text">&#x2F;blog&#x2F;themes&#x2F;next目录下</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7%E3%80%81live2d%E5%88%B6%E4%BD%9C"><span class="nav-number">1.2.7.</span> <span class="nav-text">7、live2d制作</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0%E4%BE%9D%E8%B5%96%EF%BC%88blog%E7%9B%AE%E5%BD%95%E4%B8%8B%EF%BC%89"><span class="nav-number">1.2.7.0.0.1.</span> <span class="nav-text">更新依赖（blog目录下）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%AF%BC%E5%85%A5live2d%E5%8C%85%EF%BC%88blog%E7%9B%AE%E5%BD%95%E4%B8%8B%EF%BC%89"><span class="nav-number">1.2.7.0.0.2.</span> <span class="nav-text">导入live2d包（blog目录下）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E7%BC%96%E5%86%99%E9%85%8D%E7%BD%AE%EF%BC%88blog%E7%9B%AE%E5%BD%95%E4%B8%8B%EF%BC%89"><span class="nav-number">1.2.7.0.0.3.</span> <span class="nav-text">编写配置（blog目录下）</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%8D%9A%E5%AE%A2%E7%9A%84%E7%BC%96%E5%86%99"><span class="nav-number">1.3.</span> <span class="nav-text">三、博客的编写</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E5%91%BD%E4%BB%A4"><span class="nav-number">1.3.0.0.0.1.</span> <span class="nav-text">生成命令</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E7%9B%AE%E5%BD%95"><span class="nav-number">1.3.0.0.0.2.</span> <span class="nav-text">生成目录</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%94%B6%E7%BC%A9%E5%85%A8%E6%96%87"><span class="nav-number">1.3.0.0.0.3.</span> <span class="nav-text">收缩全文</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%9B%BE%E7%89%87%E7%9A%84%E6%B7%BB%E5%8A%A0"><span class="nav-number">1.4.</span> <span class="nav-text">四、图片的添加</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E3%80%81%E4%BD%BF%E7%94%A8typora%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87%EF%BC%88windows%E7%B3%BB%E7%BB%9F%EF%BC%89"><span class="nav-number">1.4.0.0.0.1.</span> <span class="nav-text">扩展、使用typora插入图片（windows系统）</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E5%8D%9A%E5%AE%A2%E7%9A%84%E4%B8%8A%E4%BC%A0"><span class="nav-number">1.5.</span> <span class="nav-text">五、博客的上传</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%88%9B%E5%BB%BAgit%E5%AF%86%E5%8C%99"><span class="nav-number">1.5.0.0.0.1.</span> <span class="nav-text">创建git密匙</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%A4%8D%E5%88%B6%E4%B8%8B%E6%9D%A5%E7%82%B9%E5%87%BB%E5%A4%B4%E5%83%8F%E8%BF%9B%E5%85%A5setting%E2%80%94-SSH%E5%88%9B%E5%BB%BA%E6%96%B0ssh"><span class="nav-number">1.5.0.0.0.2.</span> <span class="nav-text">复制下来点击头像进入setting—-SSH创建新ssh</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C"><span class="nav-number">1.5.0.0.0.3.</span> <span class="nav-text">执行</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%89%93%E5%BC%80%E9%A1%B9%E7%9B%AE%EF%BC%8C%E5%A4%8D%E5%88%B6git%E7%9A%84%E5%9C%B0%E5%9D%80"><span class="nav-number">1.5.0.0.0.4.</span> <span class="nav-text">打开项目，复制git的地址</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E7%AB%99%E7%82%B9%E4%BF%A1%E6%81%AF%EF%BC%88blog%E7%9B%AE%E5%BD%95%E4%B8%8B%EF%BC%89"><span class="nav-number">1.5.0.0.0.5.</span> <span class="nav-text">修改站点信息（blog目录下）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E7%99%BB%E5%BD%95"><span class="nav-number">1.5.0.0.0.6.</span> <span class="nav-text">登录</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E4%B8%8A%E4%BC%A0%E6%8F%92%E4%BB%B6"><span class="nav-number">1.5.0.0.0.7.</span> <span class="nav-text">安装上传插件</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%BF%9B%E5%85%A5%E9%A1%B9%E7%9B%AE%E5%BA%93setting%E2%80%93pages%E4%BF%AE%E6%94%B9%E8%AE%BF%E9%97%AE%E6%BA%90%E5%8D%B3%E5%8F%AF%E8%AE%BF%E9%97%AE%E4%BD%A0%E7%9A%84%E5%8D%9A%E5%AE%A2%E7%BD%91%E9%A1%B5"><span class="nav-number">1.5.0.0.0.8.</span> <span class="nav-text">进入项目库setting–pages修改访问源即可访问你的博客网页</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="AlexQFMM"
+      src="/images/Avatar.jpg">
+  <p class="site-author-name" itemprop="name">AlexQFMM</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://qexo-ten-roan.vercel.app/" title="控制中心 → https:&#x2F;&#x2F;qexo-ten-roan.vercel.app&#x2F;" rel="noopener" target="_blank">控制中心</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AlexQFMM</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : 'UaEUwcYLlkREnSn9jPNe0oRf-gzGzoHsz',
+      appKey     : '5d7KwGdf31jiCBxBobH0wVk6',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/assets/miku.model.json"},"display":{"position":"left","width":200,"height":400},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

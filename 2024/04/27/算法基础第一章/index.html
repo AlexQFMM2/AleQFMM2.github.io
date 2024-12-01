@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="算法基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="算法基础">
+<meta property="og:url" content="http://example.com/2024/04/27/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%B8%80%E7%AB%A0/index.html">
+<meta property="og:site_name" content="AlexHome">
+<meta property="og:description" content="算法基础">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-04-27T13:28:45.000Z">
+<meta property="article:modified_time" content="2024-12-01T13:58:43.022Z">
+<meta property="article:author" content="AlexQFMM">
+<meta property="article:tag" content="算法基础">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2024/04/27/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%B8%80%E7%AB%A0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>算法基础 | AlexHome</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">AlexHome</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-guestbook">
+
+    <a href="/guestbook/" rel="section"><i class="fa fa-book fa-fw"></i>留言</a>
+
+  </li>
+        <li class="menu-item menu-item-mypage">
+
+    <a href="/MYHTML/test/index.html" rel="section"><i class="fas fa-file-user fa-fw"></i>myPage</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/04/27/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%B8%80%E7%AB%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/Avatar.jpg">
+      <meta itemprop="name" content="AlexQFMM">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AlexHome">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          算法基础
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-04-27 13:28:45" itemprop="dateCreated datePublished" datetime="2024-04-27T13:28:45+00:00">2024-04-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-12-01 13:58:43" itemprop="dateModified" datetime="2024-12-01T13:58:43+00:00">2024-12-01</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ACWing/" itemprop="url" rel="index"><span itemprop="name">ACWing</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2024/04/27/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%B8%80%E7%AB%A0/" class="post-meta-item leancloud_visitors" data-flag-title="算法基础" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2024/04/27/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%B8%80%E7%AB%A0/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2024/04/27/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%B8%80%E7%AB%A0/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="算法基础"><a href="#算法基础" class="headerlink" title="算法基础"></a>算法基础</h1><span id="more"></span>
+
+<h1 id="一、快速排序"><a href="#一、快速排序" class="headerlink" title="一、快速排序"></a>一、快速排序</h1><h6 id="1、直接利用库函数"><a href="#1、直接利用库函数" class="headerlink" title="1、直接利用库函数"></a>1、直接利用库函数</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;algorithm&gt; 	//sort所在头文件</span><br><span class="line"></span><br><span class="line">sort(nums.begin(),nums.end());</span><br></pre></td></tr></table></figure>
+
+<h6 id="2、随机选值，递归实现"><a href="#2、随机选值，递归实现" class="headerlink" title="2、随机选值，递归实现"></a>2、随机选值，递归实现</h6><p>插入排序</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">void insertSort(vector&lt;int&gt;&amp; nums,int start,int end) &#123; //插入</span><br><span class="line">			for(int i=start+1; i&lt;=end; i++) &#123;</span><br><span class="line">				int cur = nums[i];</span><br><span class="line">				int j=i-1;</span><br><span class="line">				while(j&gt;=start &amp;&amp; nums[j] &gt; cur) &#123;</span><br><span class="line">					nums[j+1] = nums[j];</span><br><span class="line">					j--;</span><br><span class="line">				&#125;</span><br><span class="line">				nums[j+1] = cur;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br></pre></td></tr></table></figure>
+
+<p>快速排序</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">void QuickSort(vector&lt;int&gt;&amp; nums,int l,int r) &#123; //快速排序</span><br><span class="line">	if(l&gt;=r) return;</span><br><span class="line">	/*可以用插入加速</span><br><span class="line">		if(r-l+1 &lt; 5)&#123;</span><br><span class="line">			insertsort(vector&lt;int&gt;&amp; nums,l,r);</span><br><span class="line">		&#125;</span><br><span class="line">	*/</span><br><span class="line">	int idx = l + rand()%(r-l+1); //随机基准值</span><br><span class="line">	int piv = nums[idx];</span><br><span class="line">	int i =l-1;</span><br><span class="line">	int j =r+1;</span><br><span class="line">	</span><br><span class="line">	while(i &lt; j) &#123;</span><br><span class="line">		while(nums[++i] &lt; piv);</span><br><span class="line">		while(nums[--j] &gt; piv);</span><br><span class="line">		if(i &lt; j) &#123;</span><br><span class="line">			swap(nums[i],nums[j]);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	QuickSort(nums,l,j);</span><br><span class="line">	QuickSort(nums,j+1,r);//要带上基准值</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="二、快速选择"><a href="#二、快速选择" class="headerlink" title="二、快速选择"></a>二、快速选择</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">寻找指定序列中第k大的元素</span><br><span class="line"></span><br><span class="line">利用快排的思路，寻找基准值，当基准值为k-1的元素，那他就是第k大的</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">int quick_sort(int l, int r, int k) &#123;</span><br><span class="line">	if (l &gt;= r) return q[l];// 如果找到了则直接返回</span><br><span class="line">	</span><br><span class="line">	int x = q[l + r &gt;&gt; 1];</span><br><span class="line">	int i = l - 1, j = r + 1;</span><br><span class="line">	while (i &lt; j) &#123;</span><br><span class="line">		while (q[++i] &lt; x);</span><br><span class="line">		while (q[--j] &gt; x);</span><br><span class="line">		if (i &lt; j) swap(q[i], q[j]);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	if (k &lt;= j) return quick_sort(l, j, k);// 如果第 k 大的数在左半边，则递归左半边寻找</span><br><span class="line">	return quick_sort(j + 1, r, k);// 否则递归右半边</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="三、归并排序"><a href="#三、归并排序" class="headerlink" title="三、归并排序"></a>三、归并排序</h1><p>插入排序</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">void insertSort(vector&lt;int&gt;&amp; nums,int start,int end) &#123; //插入</span><br><span class="line">			int n = end+1;</span><br><span class="line">			for(int i=start+1; i&lt;n; i++) &#123;</span><br><span class="line">				int cur = nums[i];</span><br><span class="line">				int j=i-1;</span><br><span class="line">				while(j&gt;=start &amp;&amp; nums[j] &gt; cur) &#123;</span><br><span class="line">					//Print(nums);</span><br><span class="line">					nums[j+1] = nums[j];</span><br><span class="line">					j--;</span><br><span class="line">				&#125;</span><br><span class="line">				nums[j+1] = cur;</span><br><span class="line">				//Print(nums);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br></pre></td></tr></table></figure>
+
+<p>归并</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">void mergeSort(vector&lt;int&gt;&amp; nums, int l, int r) &#123;//归并 </span><br><span class="line">			if(r-l+1 &lt;= 5)&#123;</span><br><span class="line">				insertSort(nums,l,r);//利用插入提速</span><br><span class="line">				return;</span><br><span class="line">			&#125; </span><br><span class="line">			//if(l&gt;=r) return;</span><br><span class="line">			int m = l + (r - l &gt;&gt; 1);</span><br><span class="line">			mergeSort(nums, l, m); // 对左子数组进行排序</span><br><span class="line">			mergeSort(nums, m + 1, r); // 对右子数组进行排序</span><br><span class="line">			</span><br><span class="line">			vector&lt;int&gt;temp(r-l+1);</span><br><span class="line">			int a1=l,a2=m + 1,k=0;</span><br><span class="line">			while(a1 &lt;= m &amp;&amp; a2 &lt;=r)&#123;</span><br><span class="line">				if(nums[a1] &lt; nums[a2]) temp[k++] = nums[a1++];</span><br><span class="line">				else temp[k++] = nums[a2++];</span><br><span class="line">			&#125;</span><br><span class="line">			while(a1&lt;=m)  temp[k++] = nums[a1++];</span><br><span class="line">			while(a2&lt;=r)  temp[k++] = nums[a2++];</span><br><span class="line">			</span><br><span class="line">			for(int i=0;i&lt;k;i++)</span><br><span class="line">				nums[l+i] = temp[i];</span><br><span class="line">				</span><br><span class="line">			return;</span><br><span class="line">		&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="四、逆序对的数量"><a href="#四、逆序对的数量" class="headerlink" title="四、逆序对的数量"></a>四、逆序对的数量</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">逆序对 ： 一个集合中 符合 i&gt;j &amp;&amp; a[i] &lt;a[j] 条件的组合 </span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">typedef long long LL;</span><br><span class="line">const int N = 100010;</span><br><span class="line">int n;</span><br><span class="line">int a[N],tmp[N];</span><br><span class="line">LL merge_sort (int l,int r) &#123;  </span><br><span class="line">    if (l == r) return 0;</span><br><span class="line">    int mid = l + r &gt;&gt; 1;</span><br><span class="line">    </span><br><span class="line">    LL ans = merge_sort (l,mid) + merge_sort (mid + 1,r);</span><br><span class="line">    </span><br><span class="line">    int i = l,j = mid + 1,k = 0;</span><br><span class="line">    while (i &lt;= mid &amp;&amp; j &lt;= r) &#123;</span><br><span class="line">        if (a[i] &lt;= a[j]) tmp[k++] = a[i++];</span><br><span class="line">        else&#123;</span><br><span class="line">        	tmp[k++] = a[j++];</span><br><span class="line">			ans += mid - i + 1;//从mid到i有多少对逆序对 </span><br><span class="line">		&#125; </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    while (i &lt;= mid) tmp[k++] = a[i++];</span><br><span class="line">    while (j &lt;= r) tmp[k++] = a[j++];</span><br><span class="line">    </span><br><span class="line">    for (int i = 0;i&lt;k;i++) a[i+l] = tmp[i];</span><br><span class="line">    return ans;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main () &#123;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    for (int i = 0;i &lt; n;i++) cin &gt;&gt; a[i];</span><br><span class="line">    cout &lt;&lt; merge_sort (0,n-1) &lt;&lt; endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="五、数的范围"><a href="#五、数的范围" class="headerlink" title="五、数的范围"></a>五、数的范围</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">寻找一个重复数在数组中的起点和终点</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int search(vector&lt;int&gt;&amp; nums,int target,int flag) &#123; // 0代表起点，1代表终点</span><br><span class="line">    int left =0,right = nums.size()-1;</span><br><span class="line"></span><br><span class="line">    while(left &lt;= right) &#123;</span><br><span class="line">        int mid = (left+right) &gt;&gt; 1;</span><br><span class="line">        if(nums[mid] &lt; target) left=mid+1;</span><br><span class="line">        else if(nums[mid] &gt; target) right=mid-1;</span><br><span class="line">        else &#123;</span><br><span class="line">            if(flag) &#123;</span><br><span class="line">                if(nums[mid+1]==nums[mid]) &#123;//找终点</span><br><span class="line">                    left = mid + 1;</span><br><span class="line">                    right = nums.size()-1;</span><br><span class="line">                &#125; else &#123;</span><br><span class="line">                    return mid;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                if(nums[mid-1]==nums[mid] ) &#123;//找起点</span><br><span class="line">                    left = 0;</span><br><span class="line">                    right = mid - 1;</span><br><span class="line">                &#125; else &#123;</span><br><span class="line">                    return mid;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return -1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">    int n,k;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; k;</span><br><span class="line">    vector&lt;int&gt;nums(n);</span><br><span class="line">    for(int i=0;i&lt;n;i++)</span><br><span class="line">        cin&gt;&gt;nums[i];</span><br><span class="line">    while(k--)&#123;</span><br><span class="line">        int target;</span><br><span class="line">        cin &gt;&gt; target;</span><br><span class="line">        int start = search(nums,target,0);</span><br><span class="line">        int end = search(nums,target,1);</span><br><span class="line">        cout &lt;&lt; start &lt;&lt; &quot; &quot; &lt;&lt; end &lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="六、数的三次方根"><a href="#六、数的三次方根" class="headerlink" title="六、数的三次方根"></a>六、数的三次方根</h1><h6 id="1、直接调用库函数"><a href="#1、直接调用库函数" class="headerlink" title="1、直接调用库函数"></a>1、直接调用库函数</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> #include&lt;iostream&gt;</span><br><span class="line">#include&lt;math.h&gt;</span><br><span class="line">#include&lt;iomanip&gt;</span><br><span class="line">using namespace std; </span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">	int x;</span><br><span class="line">	cin &gt;&gt; x;</span><br><span class="line">	cout &lt;&lt; fixed &lt;&lt; setprecision(6) &lt;&lt; cbrt(x);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h6 id="2、利用二分查找"><a href="#2、利用二分查找" class="headerlink" title="2、利用二分查找"></a>2、利用二分查找</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;iomanip&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">double n,l,r,mid;</span><br><span class="line">bool flag;</span><br><span class="line">double q(double a)&#123;return a*a*a;&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    cin&gt;&gt;n;</span><br><span class="line">    l=-10000,r=10000;</span><br><span class="line">    while(r-l&gt;=1e-7)&#123;</span><br><span class="line">        mid=(l+r)/2;</span><br><span class="line">        if(q(mid)&gt;=n) r=mid;</span><br><span class="line">        else l=mid;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;fixed&lt;&lt;setprecision(6)&lt;&lt;l;//输出l是因为mid这个时候是7位，直接截断会有精度丢失</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="七、前缀和"><a href="#七、前缀和" class="headerlink" title="七、前缀和"></a>七、前缀和</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sum[i] = (nums[i-1] + nums[i-2] + ... +nums[0])</span><br><span class="line"></span><br><span class="line">-&gt;</span><br><span class="line"></span><br><span class="line">sum[i] = sum[i-1]+nums[i-1];</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    int n,k;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; k;</span><br><span class="line">    vector&lt;int&gt;test(n+1,0);</span><br><span class="line">    for(int i=1;i&lt;=n;i++)&#123;</span><br><span class="line">        cin &gt;&gt; test[i];</span><br><span class="line">        test[i]+=test[i-1];//偷懒做法</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    while(k--)&#123;</span><br><span class="line">        int x,y;</span><br><span class="line">        cin &gt;&gt; x &gt;&gt; y;</span><br><span class="line">        cout &lt;&lt; test[y]-test[x-1] &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="八、矩阵的前缀和"><a href="#八、矩阵的前缀和" class="headerlink" title="八、矩阵的前缀和"></a>八、矩阵的前缀和</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">metriax[i][j] = metriax[0][0] + metriax[0][1] + .... metriax[1][0] + ..... metriax[i][j]</span><br><span class="line"></span><br><span class="line">-&gt;</span><br><span class="line">metriax[i][j] += metriax[i-1][j] + metriax[i][j-1] - metriax[i-1][j-1]; </span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    int row, col, k;</span><br><span class="line">    cin &gt;&gt; row &gt;&gt; col &gt;&gt; k;</span><br><span class="line">    vector&lt;vector&lt;int&gt;&gt; metriax(row + 1, vector&lt;int&gt;(col + 1, 0));</span><br><span class="line">    for(int i = 1; i &lt;= row; i++)&#123;</span><br><span class="line">        for(int j = 1; j &lt;= col; j++)&#123;</span><br><span class="line">            cin &gt;&gt; metriax[i][j];</span><br><span class="line">            metriax[i][j] += metriax[i-1][j] + metriax[i][j-1] - metriax[i-1][j-1]; </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    while(k--)&#123;</span><br><span class="line">        int sum = 0;</span><br><span class="line">        int x1, y1, x2, y2;</span><br><span class="line">        cin &gt;&gt; x1 &gt;&gt; y1 &gt;&gt; x2 &gt;&gt; y2;</span><br><span class="line"></span><br><span class="line">        cout &lt;&lt; metriax[x2][y2] - metriax[x1-1][y2] - metriax[x2][y1-1] + metriax[x1-1][y1-1] &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="九、差分"><a href="#九、差分" class="headerlink" title="九、差分"></a>九、差分</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">nums(n+1),sum(n+2);[1,n]</span><br><span class="line"></span><br><span class="line">构造：sub[i] = nums[i] - nums[i-1]</span><br><span class="line"></span><br><span class="line">对 [a,b]区间修改 c</span><br><span class="line"></span><br><span class="line">sub[a] +=c;</span><br><span class="line">sub[b+1] -=c;</span><br><span class="line"></span><br><span class="line">还原：nums[i] = nums[i-1] + sub[i];</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    int n,k;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; k;</span><br><span class="line">    vector&lt;int&gt; nums(n+1,0),sub(n+1,0);</span><br><span class="line">    for(int i=1;i&lt;=n;i++)&#123;</span><br><span class="line">        cin &gt;&gt; nums[i];</span><br><span class="line">        sub[i] = nums[i] - nums[i-1];</span><br><span class="line">    &#125;</span><br><span class="line">    while(k--)&#123;</span><br><span class="line">        int a,b,c;</span><br><span class="line">        cin &gt;&gt; a &gt;&gt; b &gt;&gt; c;</span><br><span class="line">        sub[a] +=c;</span><br><span class="line">        sub[b+1] -=c; </span><br><span class="line">    &#125;</span><br><span class="line">    for(int i=1;i&lt;=n;i++)&#123;</span><br><span class="line">        nums[i] = nums[i-1] + sub[i];</span><br><span class="line">    &#125;</span><br><span class="line">    for(int i=1;i&lt;=n;i++)&#123;</span><br><span class="line">        cout &lt;&lt; nums[i] &lt;&lt; &quot; &quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="十、差分矩阵"><a href="#十、差分矩阵" class="headerlink" title="十、差分矩阵"></a>十、差分矩阵</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;vector&lt;int&gt;&gt; nums(row + 1, vector&lt;int&gt;(col + 1, 0));</span><br><span class="line">vector&lt;vector&lt;int&gt;&gt; diff(row + 2, vector&lt;int&gt;(col + 2, 0));</span><br><span class="line"></span><br><span class="line">构造 diff[i][j] = nums[i][j] - nums[i - 1][j] - nums[i][j - 1] + nums[i - 1][j - 1]; </span><br><span class="line"></span><br><span class="line">修改</span><br><span class="line">diff[x1][y1] += c;</span><br><span class="line">diff[x2 + 1][y1] -= c;</span><br><span class="line">diff[x1][y2 + 1] -= c;</span><br><span class="line">diff[x2 + 1][y2 + 1] += c;</span><br><span class="line"></span><br><span class="line">还原：</span><br><span class="line">nums[i][j] = diff[i][j] + nums[i - 1][j] + nums[i][j - 1] - nums[i - 1][j - 1];</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;vector&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">    int n, m, k;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; m &gt;&gt; k;</span><br><span class="line">    </span><br><span class="line">    vector&lt;vector&lt;int&gt;&gt; nums(n + 1, vector&lt;int&gt;(m + 1, 0));</span><br><span class="line">    vector&lt;vector&lt;int&gt;&gt; diff(n + 2, vector&lt;int&gt;(m + 2, 0));</span><br><span class="line">    </span><br><span class="line">    // 读入原始矩阵</span><br><span class="line">    for (int i = 1; i &lt;= n; i++) &#123;</span><br><span class="line">        for (int j = 1; j &lt;= m; j++) &#123;</span><br><span class="line">            cin &gt;&gt; nums[i][j];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    // 构建差分矩阵</span><br><span class="line">    for (int i = 1; i &lt;= n; i++) &#123;</span><br><span class="line">        for (int j = 1; j &lt;= m; j++) &#123;</span><br><span class="line">            diff[i][j] = nums[i][j] - nums[i - 1][j] - nums[i][j - 1] + nums[i - 1][j - 1];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    // 区间修改</span><br><span class="line">    while (k--) &#123;</span><br><span class="line">        int x1, y1, x2, y2, c;</span><br><span class="line">        cin &gt;&gt; x1 &gt;&gt; y1 &gt;&gt; x2 &gt;&gt; y2 &gt;&gt; c;</span><br><span class="line">        </span><br><span class="line">        diff[x1][y1] += c;</span><br><span class="line">        diff[x2 + 1][y1] -= c;</span><br><span class="line">        diff[x1][y2 + 1] -= c;</span><br><span class="line">        diff[x2 + 1][y2 + 1] += c;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    // 构建最终的矩阵</span><br><span class="line">    for (int i = 1; i &lt;= n; i++) &#123;</span><br><span class="line">        for (int j = 1; j &lt;= m; j++) &#123;</span><br><span class="line">            nums[i][j] = diff[i][j] + nums[i - 1][j] + nums[i][j - 1] - nums[i - 1][j - 1];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    // 输出最终矩阵</span><br><span class="line">    for (int i = 1; i &lt;= n; i++) &#123;</span><br><span class="line">        for (int j = 1; j &lt;= m; j++) &#123;</span><br><span class="line">            cout &lt;&lt; nums[i][j] &lt;&lt; &quot; &quot;;</span><br><span class="line">        &#125;</span><br><span class="line">        cout &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="十一、最长连续不重复子序列"><a href="#十一、最长连续不重复子序列" class="headerlink" title="十一、最长连续不重复子序列"></a>十一、最长连续不重复子序列</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">#include&lt;unordered_map&gt;</span><br><span class="line">#include&lt;math.h&gt; </span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    int n;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    vector&lt;int&gt; nums(n+1,-1);</span><br><span class="line">    unordered_map&lt;int,int&gt;idx;//利用hashmap存储出现过的元素的下标</span><br><span class="line">    int ans = 0;</span><br><span class="line"></span><br><span class="line">    for(int i=1,l=1;i&lt;=n;i++)&#123;</span><br><span class="line">        cin &gt;&gt; nums[i];</span><br><span class="line">        if(idx.count(nums[i]) &gt; 0)&#123;//出现重复元素</span><br><span class="line">            int len = idx.size();//也可以用r-l</span><br><span class="line">            ans = max(ans,len);</span><br><span class="line">            while(l &lt;= (idx[nums[i]]))&#123;//删除重复元素第一次出现前的所有元素</span><br><span class="line">                idx.erase(nums[l++]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        idx[nums[i]] = i;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    int len = idx.size();</span><br><span class="line">    ans = max(ans,len);//最后比一下末尾</span><br><span class="line">    cout &lt;&lt; ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="十二、数组元素的目标和"><a href="#十二、数组元素的目标和" class="headerlink" title="十二、数组元素的目标和"></a>十二、数组元素的目标和</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">#include&lt;map&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    int n1,n2,target;</span><br><span class="line">    cin &gt;&gt; n1 &gt;&gt; n2 &gt;&gt; target;</span><br><span class="line">    vector&lt;int&gt;nums(n2);</span><br><span class="line">    map&lt;int,int&gt;check_map;//哈希存出现过的元素和下标</span><br><span class="line">    for(int i=0;i&lt;n1;i++)&#123;</span><br><span class="line">        int x;</span><br><span class="line">        cin &gt;&gt; x;</span><br><span class="line">        check_map[x] = i;</span><br><span class="line">    &#125;</span><br><span class="line">    for(int i=0;i&lt;n2;i++)&#123;</span><br><span class="line">        cin &gt;&gt; nums[i];</span><br><span class="line">        int f1 = target - nums[i];</span><br><span class="line">        if(check_map.count(f1) &gt; 0)&#123;</span><br><span class="line">            cout &lt;&lt;  check_map[f1] &lt;&lt; &quot; &quot; &lt;&lt; i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="十三、判断子序列"><a href="#十三、判断子序列" class="headerlink" title="十三、判断子序列"></a>十三、判断子序列</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">#include&lt;map&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    int n1,n2;</span><br><span class="line">    cin &gt;&gt; n1 &gt;&gt; n2;</span><br><span class="line">    vector&lt;int&gt;nums1(n1),nums2(n2);</span><br><span class="line">    for(int i=0;i&lt;n1;i++)&#123;</span><br><span class="line">        cin &gt;&gt; nums1[i];</span><br><span class="line">    &#125;</span><br><span class="line">    int l=0;//用一个下标记录nums1</span><br><span class="line">    for(int i=0;i&lt;n2;i++)&#123;</span><br><span class="line">        cin &gt;&gt; nums2[i];</span><br><span class="line">        if(nums2[i] == nums1[l]) l++;//有元素相等了，看nums[l]的下一个元素有没有相等的</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if(l &gt;= n1 ) cout &lt;&lt; &quot;Yes&quot;;//如果l走完了，那说明一定在里面了</span><br><span class="line">    else cout &lt;&lt; &quot;No&quot;;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="十四、判断十进制的数它的二进制中-1的个数"><a href="#十四、判断十进制的数它的二进制中-1的个数" class="headerlink" title="十四、判断十进制的数它的二进制中 1的个数"></a>十四、判断十进制的数它的二进制中 1的个数</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    int n;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    while(n--)&#123;</span><br><span class="line">        int x;</span><br><span class="line">        int count=0;</span><br><span class="line">        cin &gt;&gt; x;</span><br><span class="line">        while(x)&#123;</span><br><span class="line">            if(x &amp; 1) ++count;</span><br><span class="line">            x &gt;&gt;= 1;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        cout &lt;&lt; count &lt;&lt; &quot; &quot;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="十五、区间和"><a href="#十五、区间和" class="headerlink" title="十五、区间和"></a>十五、区间和</h1><p>数据范围比较大，用离散映射存储，最后再差分</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">#include &lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">using ll = long long;</span><br><span class="line">using PILL = pair&lt;ll,ll&gt;;</span><br><span class="line">const int N = 1e6;</span><br><span class="line"></span><br><span class="line">ll find(vector&lt;ll&gt;&amp;key,ll x)&#123;//寻找key中第一个大于等于x的元素</span><br><span class="line">	ll l=0,r=key.size()-1;</span><br><span class="line">	while(l&lt;r)&#123;</span><br><span class="line">		ll mid = l+r &gt;&gt; 1;</span><br><span class="line">		if(key[mid] &gt;= x) r=mid;</span><br><span class="line">		else l = mid+1;</span><br><span class="line">	&#125;</span><br><span class="line">	return r+1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">	ll n,k;</span><br><span class="line">	cin &gt;&gt; n &gt;&gt; k;</span><br><span class="line">	vector&lt;PILL&gt;hash;	//key-value组合 </span><br><span class="line">	vector&lt;ll&gt;key;		//关键字 </span><br><span class="line">	vector&lt;ll&gt;value(N,0); //对应的值 </span><br><span class="line">	</span><br><span class="line">	for(ll i=1;i&lt;=n;++i)&#123;</span><br><span class="line">		ll x,c;</span><br><span class="line">		cin &gt;&gt; x &gt;&gt; c;</span><br><span class="line">		hash.push_back(&#123;x,c&#125;);</span><br><span class="line">		key.push_back(x);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	vector&lt;PILL&gt;test;//测试数据 </span><br><span class="line">	for(ll i=1;i&lt;=k;i++)&#123;</span><br><span class="line">		ll l,r;</span><br><span class="line">		cin &gt;&gt; l &gt;&gt; r;</span><br><span class="line">		test.push_back(&#123;l,r&#125;);</span><br><span class="line">		</span><br><span class="line">		key.push_back(l);</span><br><span class="line">		key.push_back(r);//(空key) </span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	sort(key.begin(),key.end());//对key进行一次排序 </span><br><span class="line">	key.erase(unique(key.begin(),key.end()),key.end());//删除重复的key </span><br><span class="line">	</span><br><span class="line">	for(auto it:hash)&#123;//记录value值</span><br><span class="line">		value[find(key,it.first)] += it.second;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	vector&lt;ll&gt;valueSum(N,0);</span><br><span class="line">	for(ll i=1;i&lt;=key.size();i++)&#123;//前缀和 </span><br><span class="line">		valueSum[i] = valueSum[i-1] + value[i];</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	for(auto it:test)&#123;</span><br><span class="line">		ll l=find(key,it.first),r=find(key,it.second);</span><br><span class="line">		cout &lt;&lt; valueSum[r] - valueSum[l-1] &lt;&lt; endl;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="十六、区间的合并"><a href="#十六、区间的合并" class="headerlink" title="十六、区间的合并"></a>十六、区间的合并</h1><p>排序后贪心</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;vector&gt;</span><br><span class="line">#include &lt;algorithm&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    int n;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    vector&lt;pair&lt;int,int&gt;&gt;area;</span><br><span class="line">    for(int i=0;i&lt;n;i++)&#123;</span><br><span class="line">        int l,r;</span><br><span class="line">        cin &gt;&gt; l &gt;&gt; r;</span><br><span class="line">        area.push_back(&#123;l,r&#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    sort(area.begin(),area.end());</span><br><span class="line"></span><br><span class="line">    vector&lt;pair&lt;int,int&gt;&gt;merge;</span><br><span class="line">    merge.push_back(area[0]);</span><br><span class="line">    for(int i=1;i&lt;n;i++)&#123;</span><br><span class="line">        if(area[i].first &lt;= merge.back().second)&#123;//&#123;1，3&#125; &#123;2，4&#125;</span><br><span class="line">            if(merge.back().second &lt; area[i].second)</span><br><span class="line">                merge.back().second = area[i].second;</span><br><span class="line">            else	&#123;1,8&#125; &#123;2，2&#125;</span><br><span class="line">                continue;</span><br><span class="line">        &#125;else</span><br><span class="line">            merge.push_back(area[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; merge.size()&lt;&lt;endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="十七、高精度运算"><a href="#十七、高精度运算" class="headerlink" title="十七、高精度运算"></a>十七、高精度运算</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;math.h&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">#include&lt;iomanip&gt;</span><br><span class="line">#include&lt;string&gt;</span><br><span class="line">using namespace std; </span><br><span class="line">using PILL = pair&lt;string,string&gt;;</span><br></pre></td></tr></table></figure>
+
+<p>添加前导0，方便加减法运算</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">void AddZero(string* s1,string* s2)&#123;</span><br><span class="line">	while((*s1).size() != (*s2).size())&#123;</span><br><span class="line">		if((*s1).size() &lt; (*s2).size())</span><br><span class="line">			(*s1).insert(0,&quot;0&quot;);</span><br><span class="line">		else</span><br><span class="line">			(*s2).insert(0,&quot;0&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>比较字符串大小，减法要用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">int cmp(const string&amp; s1,const string&amp; s2)&#123;</span><br><span class="line">	int i=0;</span><br><span class="line">	while(s1[i]==s2[i]) i++;</span><br><span class="line">	return s1[i]-s2[i];	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>&#x2F;&#x2F;大数加法 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">string LargeAdd(const string&amp; s1,const string&amp; s2)&#123;</span><br><span class="line">	</span><br><span class="line">	int len =s1.size();</span><br><span class="line">	vector&lt;int&gt;nums(len+1);</span><br><span class="line">	for(int i=0;i&lt;len;i++)&#123;</span><br><span class="line">		nums[i] = (s1[len-i-1]-&#x27;0&#x27;) + (s2[len-i-1] - &#x27;0&#x27;);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">​	string ans=&quot;&quot;;</span><br><span class="line">​	int flag =0;</span><br><span class="line">​	for(int i=0;i&lt;len;i++)&#123;</span><br><span class="line">​		nums[i]+=flag;</span><br><span class="line">​		nums[i] &gt;= 10 ? nums[i]%=10,flag=1 : flag=0; </span><br><span class="line">​	&#125;</span><br><span class="line">​	if(flag) ans+=&quot;1&quot;;</span><br><span class="line">​	</span><br><span class="line">​	</span><br><span class="line">​	for(int i=len-1;i&gt;=0;i--)&#123;</span><br><span class="line">​		ans += (nums[i]+&#x27;0&#x27;);</span><br><span class="line">​	&#125;</span><br><span class="line">​	</span><br><span class="line">​	return ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>&#x2F;&#x2F;大数减法 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">string LargeSub(string s1,string s2)&#123;//大数减法 </span><br><span class="line">	int operater =0;</span><br><span class="line">	if(cmp(s1,s2) &lt; 0)&#123;</span><br><span class="line">		swap(s1,s2);</span><br><span class="line">		operater = 1;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	int len = s1.size();</span><br><span class="line">	vector&lt;int&gt;nums(len+1);</span><br><span class="line">	for(int i=0;i&lt;len;i++)&#123;</span><br><span class="line">		nums[i] = (s1[len-i-1]-&#x27;0&#x27;) - (s2[len-i-1] - &#x27;0&#x27;);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">​	string ans =&quot;&quot;;</span><br><span class="line">​	int flag =0;</span><br><span class="line">​	for(int i=0;i&lt;len;i++)&#123;</span><br><span class="line">​		nums[i] -= flag;</span><br><span class="line">​		nums[i] &lt; 0 ? nums[i]+=10,flag=1 : flag = 0;</span><br><span class="line">​	&#125;</span><br><span class="line"></span><br><span class="line">​	if(operater) ans+=&quot;-&quot;;//交换过 </span><br><span class="line">​	</span><br><span class="line">​	int i=len-1;//删除前导0 </span><br><span class="line">​	while(nums[i]==0) i--;</span><br><span class="line">​	</span><br><span class="line">​	if(i &lt; 0) return &quot;0&quot;;//如果全是0，那就返回0 </span><br><span class="line">​	</span><br><span class="line">​	for(;i&gt;=0;i--)&#123;</span><br><span class="line">​		ans+=(nums[i]+&#x27;0&#x27;);</span><br><span class="line">​	&#125;</span><br><span class="line">​	</span><br><span class="line">​	return ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>大数除法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">PILL LargeDiv(const string&amp; A,int B)&#123;//大数除法 </span><br><span class="line">	if(A == &quot;0&quot;) return &#123;&quot;0&quot;,&quot;0&quot;&#125;;</span><br><span class="line">	</span><br><span class="line">	string a=&quot;&quot;,b=&quot;&quot;;//商，余数</span><br><span class="line">	</span><br><span class="line">	for(char ch:A)&#123;</span><br><span class="line">		b += ch;</span><br><span class="line">		int num = stoi(b);</span><br><span class="line">		</span><br><span class="line">		a += to_string(num/B);</span><br><span class="line">		b =  to_string(num%B);</span><br><span class="line">	&#125; </span><br><span class="line"></span><br><span class="line">​	string ans =&quot;&quot;;</span><br><span class="line">​	int idx1=0,idx2=0;</span><br><span class="line">​	while(a[idx1] == &#x27;0&#x27;) idx1++;</span><br><span class="line">​	while(b[idx2] == &#x27;0&#x27;) idx2++;</span><br><span class="line">​	if(idx1 == a.size()) ans = &quot;0&quot;;</span><br><span class="line">​	if(idx2 == b.size()) b = &quot;0&quot;;</span><br><span class="line">​	</span><br><span class="line">​	</span><br><span class="line">​	while(a[idx1])&#123;</span><br><span class="line">​		ans +=a[idx1++];</span><br><span class="line">​	&#125;</span><br><span class="line">​	</span><br><span class="line">​	return &#123;ans,b&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>大数乘法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">string LargeMul(const string&amp; s1,const string&amp; s2)&#123;//大数乘法 </span><br><span class="line">	if(s1 == &quot;0&quot; || s2 == &quot;0&quot;) return &quot;0&quot;;</span><br><span class="line">	</span><br><span class="line">	int len=s1.size()+s2.size();</span><br><span class="line">	vector&lt;int&gt;nums(len,-1);</span><br><span class="line">	int B = stoi(s2);</span><br><span class="line">	int len1 =s1.size();</span><br><span class="line">	for(int i=len1-1;i&gt;=0;--i)&#123;</span><br><span class="line">		nums[i] = (s1[len1-i-1]-&#x27;0&#x27;)*B;</span><br><span class="line">	&#125;</span><br><span class="line">	for(int i:nums)</span><br><span class="line">		cout &lt;&lt; i &lt;&lt; &quot; &quot;;</span><br><span class="line">	cout &lt;&lt; endl;</span><br><span class="line">	int flag =0;</span><br><span class="line">	for(int i=0;i&lt;len1;i++)&#123;</span><br><span class="line">		nums[i] += flag;</span><br><span class="line">		nums[i] &gt;= 10 ? flag = nums[i]/10,nums[i]%=10 : flag = 0;</span><br><span class="line">	&#125;</span><br><span class="line">	for(int i:nums)</span><br><span class="line">		cout &lt;&lt; i &lt;&lt; &quot; &quot;;</span><br><span class="line">	string ans = &quot;&quot;;</span><br><span class="line">	if(flag) ans+=to_string(flag);</span><br><span class="line">	cout &lt;&lt; ans &lt;&lt; endl;</span><br><span class="line">	int i=len-1;</span><br><span class="line">	while(nums[i] == -1)i--;</span><br><span class="line">	for(;i&gt;=0;i--)&#123;</span><br><span class="line">		ans += (nums[i]+&#x27;0&#x27;);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	return ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>主函数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">int main()&#123;</span><br><span class="line">	string s1,s2;</span><br><span class="line">	cin &gt;&gt; s1 &gt;&gt; s2;</span><br><span class="line">	//需要前导0 </span><br><span class="line">	//AddZero(&amp;s1,&amp;s2);</span><br><span class="line">	//cout &lt;&lt; LargeAdd(s1,s2) &lt;&lt; endl;</span><br><span class="line">	//cout &lt;&lt; LargeSub(s1,s2) &lt;&lt; endl;</span><br><span class="line">	</span><br><span class="line">	//不需要前导0 </span><br><span class="line">	cout &lt;&lt; LargeMul(s1,s2) &lt;&lt; endl;</span><br><span class="line">	PILL ans = LargeDiv(s1,stoi(s2));</span><br><span class="line">	cout &lt;&lt; ans.first &lt;&lt; &quot;\n&quot; &lt;&lt; ans.second &lt;&lt; endl;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/" rel="tag"># 算法基础</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/04/27/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%8C%E7%AB%A0/" rel="prev" title="数据结构（ACwing）">
+      <i class="fa fa-chevron-left"></i> 数据结构（ACwing）
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/05/01/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E7%AC%AC%E5%9B%9B%E7%AB%A0/" rel="next" title="数学知识（ACwing）">
+      数学知识（ACwing） <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80"><span class="nav-number">1.</span> <span class="nav-text">算法基础</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F"><span class="nav-number">2.</span> <span class="nav-text">一、快速排序</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1%E3%80%81%E7%9B%B4%E6%8E%A5%E5%88%A9%E7%94%A8%E5%BA%93%E5%87%BD%E6%95%B0"><span class="nav-number">2.0.0.0.0.1.</span> <span class="nav-text">1、直接利用库函数</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2%E3%80%81%E9%9A%8F%E6%9C%BA%E9%80%89%E5%80%BC%EF%BC%8C%E9%80%92%E5%BD%92%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.0.0.0.0.2.</span> <span class="nav-text">2、随机选值，递归实现</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%BF%AB%E9%80%9F%E9%80%89%E6%8B%A9"><span class="nav-number">3.</span> <span class="nav-text">二、快速选择</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F"><span class="nav-number">4.</span> <span class="nav-text">三、归并排序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E9%80%86%E5%BA%8F%E5%AF%B9%E7%9A%84%E6%95%B0%E9%87%8F"><span class="nav-number">5.</span> <span class="nav-text">四、逆序对的数量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E6%95%B0%E7%9A%84%E8%8C%83%E5%9B%B4"><span class="nav-number">6.</span> <span class="nav-text">五、数的范围</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E6%95%B0%E7%9A%84%E4%B8%89%E6%AC%A1%E6%96%B9%E6%A0%B9"><span class="nav-number">7.</span> <span class="nav-text">六、数的三次方根</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1%E3%80%81%E7%9B%B4%E6%8E%A5%E8%B0%83%E7%94%A8%E5%BA%93%E5%87%BD%E6%95%B0"><span class="nav-number">7.0.0.0.0.1.</span> <span class="nav-text">1、直接调用库函数</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2%E3%80%81%E5%88%A9%E7%94%A8%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE"><span class="nav-number">7.0.0.0.0.2.</span> <span class="nav-text">2、利用二分查找</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E5%89%8D%E7%BC%80%E5%92%8C"><span class="nav-number">8.</span> <span class="nav-text">七、前缀和</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E7%9F%A9%E9%98%B5%E7%9A%84%E5%89%8D%E7%BC%80%E5%92%8C"><span class="nav-number">9.</span> <span class="nav-text">八、矩阵的前缀和</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B9%9D%E3%80%81%E5%B7%AE%E5%88%86"><span class="nav-number">10.</span> <span class="nav-text">九、差分</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%81%E3%80%81%E5%B7%AE%E5%88%86%E7%9F%A9%E9%98%B5"><span class="nav-number">11.</span> <span class="nav-text">十、差分矩阵</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%81%E4%B8%80%E3%80%81%E6%9C%80%E9%95%BF%E8%BF%9E%E7%BB%AD%E4%B8%8D%E9%87%8D%E5%A4%8D%E5%AD%90%E5%BA%8F%E5%88%97"><span class="nav-number">12.</span> <span class="nav-text">十一、最长连续不重复子序列</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%81%E4%BA%8C%E3%80%81%E6%95%B0%E7%BB%84%E5%85%83%E7%B4%A0%E7%9A%84%E7%9B%AE%E6%A0%87%E5%92%8C"><span class="nav-number">13.</span> <span class="nav-text">十二、数组元素的目标和</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%81%E4%B8%89%E3%80%81%E5%88%A4%E6%96%AD%E5%AD%90%E5%BA%8F%E5%88%97"><span class="nav-number">14.</span> <span class="nav-text">十三、判断子序列</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%81%E5%9B%9B%E3%80%81%E5%88%A4%E6%96%AD%E5%8D%81%E8%BF%9B%E5%88%B6%E7%9A%84%E6%95%B0%E5%AE%83%E7%9A%84%E4%BA%8C%E8%BF%9B%E5%88%B6%E4%B8%AD-1%E7%9A%84%E4%B8%AA%E6%95%B0"><span class="nav-number">15.</span> <span class="nav-text">十四、判断十进制的数它的二进制中 1的个数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%81%E4%BA%94%E3%80%81%E5%8C%BA%E9%97%B4%E5%92%8C"><span class="nav-number">16.</span> <span class="nav-text">十五、区间和</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%81%E5%85%AD%E3%80%81%E5%8C%BA%E9%97%B4%E7%9A%84%E5%90%88%E5%B9%B6"><span class="nav-number">17.</span> <span class="nav-text">十六、区间的合并</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%81%E4%B8%83%E3%80%81%E9%AB%98%E7%B2%BE%E5%BA%A6%E8%BF%90%E7%AE%97"><span class="nav-number">18.</span> <span class="nav-text">十七、高精度运算</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="AlexQFMM"
+      src="/images/Avatar.jpg">
+  <p class="site-author-name" itemprop="name">AlexQFMM</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://qexo-ten-roan.vercel.app/" title="控制中心 → https:&#x2F;&#x2F;qexo-ten-roan.vercel.app&#x2F;" rel="noopener" target="_blank">控制中心</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AlexQFMM</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : 'UaEUwcYLlkREnSn9jPNe0oRf-gzGzoHsz',
+      appKey     : '5d7KwGdf31jiCBxBobH0wVk6',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/assets/miku.model.json"},"display":{"position":"left","width":200,"height":400},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="数据结构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构（ACwing）">
+<meta property="og:url" content="http://example.com/2024/04/27/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%8C%E7%AB%A0/index.html">
+<meta property="og:site_name" content="AlexHome">
+<meta property="og:description" content="数据结构">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-04-27T13:28:45.000Z">
+<meta property="article:modified_time" content="2024-12-01T13:58:43.022Z">
+<meta property="article:author" content="AlexQFMM">
+<meta property="article:tag" content="算法基础">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2024/04/27/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%8C%E7%AB%A0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>数据结构（ACwing） | AlexHome</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">AlexHome</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-guestbook">
+
+    <a href="/guestbook/" rel="section"><i class="fa fa-book fa-fw"></i>留言</a>
+
+  </li>
+        <li class="menu-item menu-item-mypage">
+
+    <a href="/MYHTML/test/index.html" rel="section"><i class="fas fa-file-user fa-fw"></i>myPage</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/04/27/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%8C%E7%AB%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/Avatar.jpg">
+      <meta itemprop="name" content="AlexQFMM">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AlexHome">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          数据结构（ACwing）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-04-27 13:28:45" itemprop="dateCreated datePublished" datetime="2024-04-27T13:28:45+00:00">2024-04-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-12-01 13:58:43" itemprop="dateModified" datetime="2024-12-01T13:58:43+00:00">2024-12-01</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ACWing/" itemprop="url" rel="index"><span itemprop="name">ACWing</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2024/04/27/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%8C%E7%AB%A0/" class="post-meta-item leancloud_visitors" data-flag-title="数据结构（ACwing）" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2024/04/27/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%8C%E7%AB%A0/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2024/04/27/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%8C%E7%AB%A0/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h1><span id="more"></span>
+
+<h1 id="一、中缀表达式求值"><a href="#一、中缀表达式求值" class="headerlink" title="一、中缀表达式求值"></a>一、中缀表达式求值</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;stack&gt; </span><br><span class="line">#include&lt;map&gt;</span><br><span class="line">using namespace std;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">map&lt;char,int&gt;first =&#123;&#123;&#x27;+&#x27;,1&#125;,&#123;&#x27;-&#x27;,1&#125;,&#123;&#x27;*&#x27;,2&#125;,&#123;&#x27;/&#x27;,2&#125;,&#123;&#x27;(&#x27;,0&#125;&#125;;</span><br><span class="line">stack&lt;int&gt;nums;</span><br><span class="line">stack&lt;char&gt;opSymbol;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">void opreation()&#123;</span><br><span class="line">    int num2 = nums.top();</span><br><span class="line">    nums.pop();</span><br><span class="line">    int num1 = nums.top();</span><br><span class="line">    nums.pop();</span><br><span class="line">    char ch = opSymbol.top();</span><br><span class="line">    opSymbol.pop();</span><br><span class="line">    int ans=0;</span><br><span class="line">    switch(ch)&#123;</span><br><span class="line">        case &#x27;+&#x27;: ans = num1+num2;break;</span><br><span class="line">        case &#x27;-&#x27;: ans = num1-num2;break;</span><br><span class="line">        case &#x27;*&#x27;: ans = num1*num2;break;</span><br><span class="line">        case &#x27;/&#x27;: ans = num1/num2;break;</span><br><span class="line">    &#125;</span><br><span class="line">    nums.push(ans);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">int op(const string&amp; s1)&#123;</span><br><span class="line">    int len = s1.size();</span><br><span class="line">    for(int i=0;i&lt;len;i++)&#123;</span><br><span class="line">        if(s1[i] &gt;=&#x27;0&#x27; &amp;&amp; s1[i] &lt;=&#x27;9&#x27;)&#123;</span><br><span class="line">            int num = 0;</span><br><span class="line">            while(i&lt;len  &amp;&amp; s1[i] &gt;=&#x27;0&#x27; &amp;&amp; s1[i] &lt;=&#x27;9&#x27;)&#123;</span><br><span class="line">                num = s1[i] - &#x27;0&#x27; + num*10;</span><br><span class="line">                i++;</span><br><span class="line">            &#125;</span><br><span class="line">            i--;</span><br><span class="line">            nums.push(num);</span><br><span class="line">        &#125;else if(s1[i] == &#x27;)&#x27;)&#123;</span><br><span class="line">            while(opSymbol.top()!=&#x27;(&#x27;)&#123;</span><br><span class="line"></span><br><span class="line">​                opreation();</span><br><span class="line">​            &#125;</span><br><span class="line">​            opSymbol.pop();</span><br><span class="line">​        &#125;else if(s1[i] == &#x27;(&#x27;)&#123;</span><br><span class="line">​            opSymbol.push(s1[i]);</span><br><span class="line">​        &#125;</span><br><span class="line">​        else&#123;</span><br><span class="line">​            while(!opSymbol.empty()  &amp;&amp;  first[opSymbol.top()] &gt;= first[s1[i]])</span><br><span class="line">​                opreation();</span><br><span class="line">​            opSymbol.push(s1[i]);</span><br><span class="line">​        &#125;</span><br><span class="line">​    &#125;</span><br><span class="line"></span><br><span class="line">​    while(!opSymbol.empty())&#123;</span><br><span class="line">​        opreation();</span><br><span class="line">​    &#125;</span><br><span class="line"></span><br><span class="line">​    return nums.top();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">int main()&#123;</span><br><span class="line">    string s1;</span><br><span class="line">    cin &gt;&gt; s1;</span><br><span class="line">    cout &lt;&lt; op(s1) &lt;&lt; endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="二、单调栈的应用"><a href="#二、单调栈的应用" class="headerlink" title="二、单调栈的应用"></a>二、单调栈的应用</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">给定一个长度为 N</span><br><span class="line"> 的整数数列，输出每个数左边第一个比它小的数，如果不存在则输出 −1</span><br><span class="line">。</span><br><span class="line"></span><br><span class="line">输入格式</span><br><span class="line">第一行包含整数 N</span><br><span class="line">，表示数列长度。</span><br><span class="line"></span><br><span class="line">第二行包含 N</span><br><span class="line"> 个整数，表示整数数列。</span><br><span class="line"></span><br><span class="line">输出格式</span><br><span class="line">共一行，包含 N</span><br><span class="line"> 个整数，其中第 i</span><br><span class="line"> 个数表示第 i</span><br><span class="line"> 个数的左边第一个比它小的数，如果不存在则输出 −1</span><br><span class="line">。</span><br><span class="line"></span><br><span class="line">数据范围</span><br><span class="line">1≤N≤105</span><br><span class="line"></span><br><span class="line">1≤数列中元素≤109</span><br><span class="line">输入样例：</span><br><span class="line">5</span><br><span class="line">3 4 2 7 5</span><br><span class="line">输出样例：</span><br><span class="line">-1 3 -1 2 2</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">#include&lt;stack&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    int n;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    vector&lt;int&gt;nums(n);</span><br><span class="line">    for(int i=0;i&lt;n;i++)&#123;</span><br><span class="line">        cin &gt;&gt; nums[i];</span><br><span class="line">    &#125;</span><br><span class="line">    stack&lt;int&gt;st;</span><br><span class="line">    st.push(n-1);</span><br><span class="line">    vector&lt;int&gt;idx(n,-1);</span><br><span class="line">    for(int i=n-2;i&gt;=0;i--)&#123;</span><br><span class="line">        while(!st.empty() &amp;&amp; nums[i] &lt; nums[st.top()])&#123;</span><br><span class="line">            idx[st.top()] = nums[i];</span><br><span class="line">            st.pop();</span><br><span class="line">        &#125;</span><br><span class="line">        st.push(i);</span><br><span class="line">    &#125;</span><br><span class="line">    for(int i:idx)</span><br><span class="line">        cout &lt;&lt; i &lt;&lt; &quot; &quot;;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="三、单调队列"><a href="#三、单调队列" class="headerlink" title="三、单调队列"></a>三、单调队列</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;queue&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    int n,k;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; k;</span><br><span class="line">    vector&lt;int&gt;nums(n);</span><br><span class="line">    for(int i=0;i&lt;n;i++)</span><br><span class="line">        cin &gt;&gt; nums[i];</span><br><span class="line">    deque&lt;int&gt;q1;</span><br><span class="line">    for(int i=0;i&lt;n;i++)&#123;</span><br><span class="line">        if(!q1.empty() &amp;&amp; q1.front() ==i - k)&#123;</span><br><span class="line">            q1.pop_front();</span><br><span class="line">        &#125;</span><br><span class="line">        while(!q1.empty() &amp;&amp; nums[i] &lt; nums[q1.back()])&#123;</span><br><span class="line">            q1.pop_back();</span><br><span class="line">        &#125;</span><br><span class="line">        q1.push_back(i);</span><br><span class="line"></span><br><span class="line">        if(i&gt;=k-1)&#123;</span><br><span class="line">            cout &lt;&lt; nums[q1.front()] &lt;&lt; &quot; &quot;;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    q1.clear();</span><br><span class="line">    cout &lt;&lt; endl;</span><br><span class="line">    for(int i=0;i&lt;n;i++)&#123;</span><br><span class="line">        if(!q1.empty() &amp;&amp; q1.front() ==i - k)&#123;</span><br><span class="line">            q1.pop_front();</span><br><span class="line">        &#125;</span><br><span class="line">        while(!q1.empty() &amp;&amp; nums[i] &gt; nums[q1.back()])&#123;</span><br><span class="line">            q1.pop_back();</span><br><span class="line">        &#125;</span><br><span class="line">        q1.push_back(i);</span><br><span class="line"></span><br><span class="line">        if(i&gt;=k-1)&#123;</span><br><span class="line">            cout &lt;&lt; nums[q1.front()] &lt;&lt; &quot; &quot;;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="四、KMP"><a href="#四、KMP" class="headerlink" title="四、KMP"></a>四、KMP</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;vector&gt; </span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">void createNext(vector&lt;int&gt;&amp; next,const string&amp; s)&#123;</span><br><span class="line">    int j=0;</span><br><span class="line">    for(int i=1;i&lt;s.size();i++)&#123;</span><br><span class="line">        while(j&gt;0 &amp;&amp; s[i] != s[j])&#123;</span><br><span class="line">            j = next[j-1];</span><br><span class="line">        &#125;</span><br><span class="line">        if(s[i] == s[j])</span><br><span class="line">            j++;</span><br><span class="line">        next[i] = j;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">vector&lt;int&gt; kmp(const string&amp; par,int len1,const string&amp; child,int len2)&#123;</span><br><span class="line">    vector&lt;int&gt;next(len2,0);</span><br><span class="line">    createNext(next,child);</span><br><span class="line">    vector&lt;int&gt;ans;</span><br><span class="line"></span><br><span class="line">    int j=0;</span><br><span class="line">    for(int i=0;i&lt;len1;i++)&#123;</span><br><span class="line">        while(j&gt;0 &amp;&amp; par[i] != child[j])&#123;</span><br><span class="line">            j = next[j-1];</span><br><span class="line">        &#125;</span><br><span class="line">        if(par[i] == child[j])</span><br><span class="line">            j++;</span><br><span class="line">        if(j == len2)&#123;</span><br><span class="line">            ans.push_back(i-len2+1);</span><br><span class="line">            j = next[j-1];      </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return ans;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    string s1,s2;</span><br><span class="line">    int n,m;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; s1 &gt;&gt; m &gt;&gt; s2;</span><br><span class="line">    vector&lt;int&gt;ans = kmp(s2,m,s1,n);//s2是父串,s1是子串</span><br><span class="line"></span><br><span class="line">    if(ans.empty())</span><br><span class="line">        cout &lt;&lt; &quot;null&quot; &lt;&lt; endl;</span><br><span class="line">    else&#123;</span><br><span class="line">        for(int i:ans)</span><br><span class="line">            cout &lt;&lt; i &lt;&lt; &quot; &quot;;</span><br><span class="line">        cout &lt;&lt; endl;</span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="五、字典树"><a href="#五、字典树" class="headerlink" title="五、字典树"></a>五、字典树</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;vector&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">const int N =1e6;</span><br><span class="line">int tree[N][26]=&#123;0&#125;,cnt[N],nodeCnt=0;//结点的数量</span><br><span class="line"></span><br><span class="line">void insert(const string&amp; s)&#123;</span><br><span class="line">    int depth = 0;</span><br><span class="line">    for(char ch:s)&#123;</span><br><span class="line">        int idx = ch-&#x27;a&#x27;;</span><br><span class="line">        if(tree[depth][idx] == 0) tree[depth][idx] = ++nodeCnt;</span><br><span class="line">        depth = tree[depth][idx];</span><br><span class="line">    &#125;</span><br><span class="line">    cnt[depth]++;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int getCnt(const string&amp; s)&#123;</span><br><span class="line">    int depth = 0;</span><br><span class="line">    for(char ch:s)&#123;</span><br><span class="line">        int idx = ch-&#x27;a&#x27;;</span><br><span class="line">        if(tree[depth][idx] == 0) return 0;</span><br><span class="line">        depth = tree[depth][idx];</span><br><span class="line">    &#125;</span><br><span class="line">    return cnt[depth];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    int n;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    while(n--)&#123;</span><br><span class="line">        string op,s1;</span><br><span class="line">        cin &gt;&gt; op &gt;&gt; s1;</span><br><span class="line">        if(op == &quot;I&quot;)   insert(s1);</span><br><span class="line">        else cout &lt;&lt; getCnt(s1) &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="六、最大异或对（字典树）"><a href="#六、最大异或对（字典树）" class="headerlink" title="六、最大异或对（字典树）"></a>六、最大异或对（字典树）</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">在给定的 N</span><br><span class="line"> 个整数 A1，A2……AN</span><br><span class="line"> 中选出两个进行 xor</span><br><span class="line">（异或）运算，得到的结果最大是多少？</span><br><span class="line"></span><br><span class="line">输入格式</span><br><span class="line">第一行输入一个整数 N</span><br><span class="line">。</span><br><span class="line"></span><br><span class="line">第二行输入 N</span><br><span class="line"> 个整数 A1</span><br><span class="line">～AN</span><br><span class="line">。</span><br><span class="line"></span><br><span class="line">输出格式</span><br><span class="line">输出一个整数表示答案。</span><br><span class="line"></span><br><span class="line">数据范围</span><br><span class="line">1≤N≤105</span><br><span class="line">,</span><br><span class="line">0≤Ai&lt;231</span><br><span class="line">输入样例：</span><br><span class="line">3</span><br><span class="line">1 2 3</span><br><span class="line">输出样例：</span><br><span class="line">3</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">const int N = 100010;</span><br><span class="line">//保存 Trie 树</span><br><span class="line">int son[N * 31][2];  </span><br><span class="line">int n, idx;</span><br><span class="line"></span><br><span class="line">void insert(int x)&#123;</span><br><span class="line">    int p = 0;</span><br><span class="line">    for (int i = 31; i &gt;= 0; i--)</span><br><span class="line">    &#123;   </span><br><span class="line">        int u = x &gt;&gt; i &amp; 1;</span><br><span class="line">        if (!son[p][u]) son[p][u] = ++idx; </span><br><span class="line">        p = son[p][u];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int query(int x)&#123;</span><br><span class="line">    int p = 0;</span><br><span class="line">    int ret = 0; // 保存与 x 异或结果最大的那个数</span><br><span class="line">    for (int i = 31; i &gt;= 0; i--)&#123;</span><br><span class="line"></span><br><span class="line">        int u = x &gt;&gt; i &amp; 1;</span><br><span class="line">        if (son[p][!u])&#123;//如果树中能走到 !u，就走到!u</span><br><span class="line">            u = !u;</span><br><span class="line">        &#125;</span><br><span class="line">        p = son[p][u];</span><br><span class="line">        ret = ret * 2 + u; </span><br><span class="line">    &#125;</span><br><span class="line">    ret = ret ^ x;</span><br><span class="line">    return ret;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    int maxXorNum = 0; </span><br><span class="line">    int x;</span><br><span class="line">    for (int i = 0; i &lt; n; i++)&#123;</span><br><span class="line">        cin &gt;&gt; x;</span><br><span class="line">        insert(x);</span><br><span class="line">        maxXorNum = max(maxXorNum, query(x));</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; maxXorNum &lt;&lt; endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="七、带权并查集"><a href="#七、带权并查集" class="headerlink" title="七、带权并查集"></a>七、带权并查集</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line">动物王国中有三类动物 A,B,C</span><br><span class="line">，这三类动物的食物链构成了有趣的环形。</span><br><span class="line"></span><br><span class="line">A</span><br><span class="line"> 吃 B</span><br><span class="line">，B</span><br><span class="line"> 吃 C</span><br><span class="line">，C</span><br><span class="line"> 吃 A</span><br><span class="line">。</span><br><span class="line"></span><br><span class="line">现有 N</span><br><span class="line"> 个动物，以 1∼N</span><br><span class="line"> 编号。</span><br><span class="line"></span><br><span class="line">每个动物都是 A,B,C</span><br><span class="line"> 中的一种，但是我们并不知道它到底是哪一种。</span><br><span class="line"></span><br><span class="line">有人用两种说法对这 N</span><br><span class="line"> 个动物所构成的食物链关系进行描述：</span><br><span class="line"></span><br><span class="line">第一种说法是 1 X Y，表示 X</span><br><span class="line"> 和 Y</span><br><span class="line"> 是同类。</span><br><span class="line"></span><br><span class="line">第二种说法是 2 X Y，表示 X</span><br><span class="line"> 吃 Y</span><br><span class="line">。</span><br><span class="line"></span><br><span class="line">此人对 N</span><br><span class="line"> 个动物，用上述两种说法，一句接一句地说出 K</span><br><span class="line"> 句话，这 K</span><br><span class="line"> 句话有的是真的，有的是假的。</span><br><span class="line"></span><br><span class="line">当一句话满足下列三条之一时，这句话就是假话，否则就是真话。</span><br><span class="line"></span><br><span class="line">当前的话与前面的某些真的话冲突，就是假话；</span><br><span class="line">当前的话中 X</span><br><span class="line"> 或 Y</span><br><span class="line"> 比 N</span><br><span class="line"> 大，就是假话；</span><br><span class="line">当前的话表示 X</span><br><span class="line"> 吃 X</span><br><span class="line">，就是假话。</span><br><span class="line">你的任务是根据给定的 N</span><br><span class="line"> 和 K</span><br><span class="line"> 句话，输出假话的总数。</span><br><span class="line"></span><br><span class="line">输入格式</span><br><span class="line">第一行是两个整数 N</span><br><span class="line"> 和 K</span><br><span class="line">，以一个空格分隔。</span><br><span class="line"></span><br><span class="line">以下 K</span><br><span class="line"> 行每行是三个正整数 D，X，Y</span><br><span class="line">，两数之间用一个空格隔开，其中 D</span><br><span class="line"> 表示说法的种类。</span><br><span class="line"></span><br><span class="line">若 D=1</span><br><span class="line">，则表示 X</span><br><span class="line"> 和 Y</span><br><span class="line"> 是同类。</span><br><span class="line"></span><br><span class="line">若 D=2</span><br><span class="line">，则表示 X</span><br><span class="line"> 吃 Y</span><br><span class="line">。</span><br><span class="line"></span><br><span class="line">输出格式</span><br><span class="line">只有一个整数，表示假话的数目。</span><br><span class="line"></span><br><span class="line">数据范围</span><br><span class="line">1≤N≤50000</span><br><span class="line">,</span><br><span class="line">0≤K≤100000</span><br><span class="line">输入样例：</span><br><span class="line">100 7</span><br><span class="line">1 101 1 </span><br><span class="line">2 1 2</span><br><span class="line">2 2 3 </span><br><span class="line">2 3 3 </span><br><span class="line">1 1 3 </span><br><span class="line">2 3 1 </span><br><span class="line">1 5 5</span><br><span class="line">输出样例：</span><br><span class="line">3</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">class UF &#123;</span><br><span class="line">	private:</span><br><span class="line">		vector&lt;int&gt;p;</span><br><span class="line">		vector&lt;int&gt;d;</span><br><span class="line">	public:</span><br><span class="line">		UF(int n) &#123;</span><br><span class="line">			p.resize(n+1);</span><br><span class="line">			d.resize(n+1);</span><br><span class="line">			for(int i=1; i&lt;=n; i++)</span><br><span class="line">				p[i] = i,d[i]=0;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		int find(int x) &#123;</span><br><span class="line">			if(p[x]!=x) &#123;</span><br><span class="line">				int t = find(p[x]);</span><br><span class="line">				d[x] +=d[p[x]];</span><br><span class="line">				p[x] = t;</span><br><span class="line">			&#125;</span><br><span class="line">			return p[x];</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		void unite(int x,int y,int rel) &#123;</span><br><span class="line">			int px = find(x),py=find(y);</span><br><span class="line">			p[px] = py;</span><br><span class="line">			d[px] =d[y] -d[x] +rel;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		bool isConnect(int x,int y) &#123;</span><br><span class="line">			return find(x) == find(y);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		int getDist(int x) &#123;</span><br><span class="line">			return d[x];</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">	int n,m;</span><br><span class="line">	cin &gt;&gt; n &gt;&gt; m;</span><br><span class="line">	UF uf1(n);</span><br><span class="line">	int ans =0;</span><br><span class="line">	while(m--) &#123;</span><br><span class="line">		int op,x,y;</span><br><span class="line">		cin &gt;&gt; op &gt;&gt; x &gt;&gt;y;</span><br><span class="line">		if(x&gt;n||y&gt;n) &#123;</span><br><span class="line">			++ans;</span><br><span class="line">			continue;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		int rel = (op == 2)? 1:0;</span><br><span class="line"></span><br><span class="line">		if(!uf1.isConnect(x,y)) &#123;</span><br><span class="line">			uf1.unite(x,y,rel);</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			if(op == 1 &amp;&amp; (uf1.getDist(x)-uf1.getDist(y))%3) ++ans;</span><br><span class="line">			else if(op == 2 &amp;&amp; (uf1.getDist(x)-uf1.getDist(y)-1)%3) ++ans;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	cout &lt;&lt; ans &lt;&lt; endl;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="八、模拟散链表（开放寻址法）"><a href="#八、模拟散链表（开放寻址法）" class="headerlink" title="八、模拟散链表（开放寻址法）"></a>八、模拟散链表（开放寻址法）</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">#include&lt;climits&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">const int N = 100003;</span><br><span class="line">const int MAX = 3e5+1;</span><br><span class="line">vector&lt;int&gt;nums(MAX,INT_MIN);</span><br><span class="line"></span><br><span class="line">void insert(int x)&#123;</span><br><span class="line">    int k = (x%N+N)%N;</span><br><span class="line">    while(nums[k]!=INT_MIN)&#123;</span><br><span class="line">        k++;</span><br><span class="line">    &#125;</span><br><span class="line">    nums[k] = x;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bool find(int x)&#123;</span><br><span class="line">    int k = (x % N + N) % N;</span><br><span class="line">    while(nums[k] != INT_MIN &amp;&amp; nums[k] != x)&#123;</span><br><span class="line">        k = (k + 1) % N; // 如果不是目标元素，继续向后查找</span><br><span class="line">    &#125;</span><br><span class="line">    return (nums[k] == x); // 如果找到了x，返回true；否则返回false</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    int n;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    while(n--)&#123;</span><br><span class="line">        string s;</span><br><span class="line">        int x;</span><br><span class="line">        cin &gt;&gt; s &gt;&gt; x;</span><br><span class="line">        if(s == &quot;I&quot;) insert(x);</span><br><span class="line">        else &#123;</span><br><span class="line">            if(find(x)) cout &lt;&lt;&quot;Yes&quot; &lt;&lt; endl;</span><br><span class="line">            else cout &lt;&lt; &quot;No&quot; &lt;&lt; endl;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/" rel="tag"># 算法基础</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/03/23/%E5%B8%B8%E8%A7%81%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="prev" title="常见数据结构">
+      <i class="fa fa-chevron-left"></i> 常见数据结构
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/04/27/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%B8%80%E7%AB%A0/" rel="next" title="算法基础">
+      算法基础 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text">数据结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC"><span class="nav-number">2.</span> <span class="nav-text">一、中缀表达式求值</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%8D%95%E8%B0%83%E6%A0%88%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-number">3.</span> <span class="nav-text">二、单调栈的应用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%8D%95%E8%B0%83%E9%98%9F%E5%88%97"><span class="nav-number">4.</span> <span class="nav-text">三、单调队列</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%E3%80%81KMP"><span class="nav-number">5.</span> <span class="nav-text">四、KMP</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E5%AD%97%E5%85%B8%E6%A0%91"><span class="nav-number">6.</span> <span class="nav-text">五、字典树</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E6%9C%80%E5%A4%A7%E5%BC%82%E6%88%96%E5%AF%B9%EF%BC%88%E5%AD%97%E5%85%B8%E6%A0%91%EF%BC%89"><span class="nav-number">7.</span> <span class="nav-text">六、最大异或对（字典树）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E5%B8%A6%E6%9D%83%E5%B9%B6%E6%9F%A5%E9%9B%86"><span class="nav-number">8.</span> <span class="nav-text">七、带权并查集</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E6%A8%A1%E6%8B%9F%E6%95%A3%E9%93%BE%E8%A1%A8%EF%BC%88%E5%BC%80%E6%94%BE%E5%AF%BB%E5%9D%80%E6%B3%95%EF%BC%89"><span class="nav-number">9.</span> <span class="nav-text">八、模拟散链表（开放寻址法）</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="AlexQFMM"
+      src="/images/Avatar.jpg">
+  <p class="site-author-name" itemprop="name">AlexQFMM</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://qexo-ten-roan.vercel.app/" title="控制中心 → https:&#x2F;&#x2F;qexo-ten-roan.vercel.app&#x2F;" rel="noopener" target="_blank">控制中心</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AlexQFMM</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : 'UaEUwcYLlkREnSn9jPNe0oRf-gzGzoHsz',
+      appKey     : '5d7KwGdf31jiCBxBobH0wVk6',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/assets/miku.model.json"},"display":{"position":"left","width":200,"height":400},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

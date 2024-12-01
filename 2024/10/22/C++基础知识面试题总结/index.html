@@ -1,0 +1,1576 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="面试题">
+<meta property="og:type" content="article">
+<meta property="og:title" content="面试题">
+<meta property="og:url" content="http://example.com/2024/10/22/C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:site_name" content="AlexHome">
+<meta property="og:description" content="面试题">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-10-22T10:20:45.000Z">
+<meta property="article:modified_time" content="2024-12-01T13:58:43.014Z">
+<meta property="article:author" content="AlexQFMM">
+<meta property="article:tag" content="面试">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2024/10/22/C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>面试题 | AlexHome</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">AlexHome</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-guestbook">
+
+    <a href="/guestbook/" rel="section"><i class="fa fa-book fa-fw"></i>留言</a>
+
+  </li>
+        <li class="menu-item menu-item-mypage">
+
+    <a href="/MYHTML/test/index.html" rel="section"><i class="fas fa-file-user fa-fw"></i>myPage</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/10/22/C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/Avatar.jpg">
+      <meta itemprop="name" content="AlexQFMM">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AlexHome">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          面试题
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-10-22 10:20:45" itemprop="dateCreated datePublished" datetime="2024-10-22T10:20:45+00:00">2024-10-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-12-01 13:58:43" itemprop="dateModified" datetime="2024-12-01T13:58:43+00:00">2024-12-01</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2024/10/22/C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93/" class="post-meta-item leancloud_visitors" data-flag-title="面试题" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2024/10/22/C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2024/10/22/C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="面试题"><a href="#面试题" class="headerlink" title="面试题"></a>面试题</h1><span id="more"></span>
+
+<h2 id="一、C-基础知识面试题总结"><a href="#一、C-基础知识面试题总结" class="headerlink" title="一、C++基础知识面试题总结"></a>一、C++基础知识面试题总结</h2><p>1、多态的实现</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">通过虚函数（virtual）实现，父类指定特定方法为虚函数，子类可以选择覆写方法，如果父类有=0，则代表此为抽象方法，子类就必须覆写</span><br><span class="line">编译器会为每一个带有虚函数的类创建一个虚函数表，</span><br><span class="line">当创建对象时，编译器会创建一个虚函数指针，</span><br><span class="line">当调用虚函数时，程序会通过虚函数指针找到相应的虚函数表，进而找到具体的函数实现进行调用</span><br><span class="line"></span><br><span class="line">ps:如果一个类定义了虚函数，则这个类的析构函数也应该被声明为虚析构函数，以确保在删除派生类对象时能够正确调用析构函数。</span><br><span class="line">避免在基类中定义默认实现，除非希望子类可以选择性地调用它。</span><br></pre></td></tr></table></figure>
+
+<p>2、说说C&#x2F;C++的区别</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">c是面向过程编程即通过函数调用来实现功能，c++可以面向对象编程，具有面向对象编程的特点即封装继承多态</span><br><span class="line">c++引入了class类封装结构，而c是使用struct结构体</span><br><span class="line">c++引入了namespace来区分命名空间，而c没有</span><br><span class="line">c++还有很多强大的功能和库，比如智能指针，模板，STL库，更符合现代开发</span><br></pre></td></tr></table></figure>
+
+<p>3、const关键字</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const关键字是定义一个常量用，不可变动，加在类中的方法后，代表方法中成员变量不会有变化</span><br></pre></td></tr></table></figure>
+
+<p>4、说说malloc&#x2F;free 和 new&#x2F;delete区别</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">malloc-free是c语言使用的，仅申请空间和释放空间</span><br><span class="line">new和delete是c++中使用的，除了申请空间和释放空间以外，还能自动调用构造函数和析构函数，更不容易内存泄漏，更安全</span><br></pre></td></tr></table></figure>
+
+<p>5、指针和引用的区别</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">指针是指向一个内存空间的变量，而引用是给那个内存空间进行别名，指针能更换指向，而引用不可以</span><br><span class="line"></span><br><span class="line">在实际编程中，引用多用在函数间的地址传参，而指针应用更加的广泛，比如在链式数据结构中，用它指向下一块数据的存储位置</span><br></pre></td></tr></table></figure>
+
+<p>6、C++中堆和栈的区别</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">栈是系统分配的空间，容量小，速度快，系统自动管理</span><br><span class="line"></span><br><span class="line">堆是用户手动分配的空间，容量大，速度相对慢点，获取和释放都需要用户手动管理</span><br></pre></td></tr></table></figure>
+
+<p>7、关键字static</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">static在函数内部表示局部静态变量，拥有静态生命周期和局部作用域。</span><br><span class="line"></span><br><span class="line">在文件级别，static使得全局变量和函数的作用域局限于当前文件，防止命名冲突。</span><br><span class="line"></span><br><span class="line">在类中，static关联到类本身而不是某个特定对象，用于定义类共享的数据和功能。</span><br><span class="line"></span><br><span class="line">static变量在程序的整个运行期间都存在，并存储在静态内存区，而非存储在栈或堆中。</span><br></pre></td></tr></table></figure>
+
+<p>8、在C++程序中调用被C语言修饰的函数，为什么要加extern “C”</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">c++有名称修饰功能，以便支持函数重载，而c语言不存在函数重载，也就不需要名称修饰了</span><br><span class="line">两个不同的语言混合起来使用，c的函数可能会因为名称修饰出现问题，加上extern &quot;c&quot;就可以让编译器对指定函数不进行名称修饰，避免了错误</span><br></pre></td></tr></table></figure>
+
+<p>9、如何防止头文件被重复包含</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">使用#pragma once时，编译器会自动处理这一机制，确保头文件内容只被包含一次。</span><br><span class="line">虽然#pragma once并不是C标准的一部分，但它在实际开发中被广泛使用，并且其优势在于简洁和易读。</span><br></pre></td></tr></table></figure>
+
+<p>10、什么是内存泄漏？什么是野指针？什么是内存越界？如何避免？</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">内存泄漏指没有在对象生命周期结束后释放它的空间，随着时间的推移，内存泄漏会消耗大量内存资源，可能导致程序运行缓慢，甚至崩溃</span><br><span class="line">野指针是指向已释放内存或未初始化内存的指针。</span><br><span class="line">内存越界是指程序尝试读取或写入未分配给它的内存区域。这种情况通常发生在数组或缓冲区操作中</span><br><span class="line"></span><br><span class="line">可以用RALL思路构建类型，即通过构造函数创建对象，通过析构函数在对象生命周期外自动释放</span><br><span class="line">指针从普通指针转为智能指针</span><br><span class="line">普通数组转为容器存储</span><br></pre></td></tr></table></figure>
+
+<p>11、描述一下封装、继承、多态</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">封装指不需要调用方法的人，不需要知道方法是怎么实现的，也可以直接调用，并且不能随意修改，通过类的private特性实现</span><br><span class="line">继承指子类继承父类的成员和方法，促进代码重用和层次化组织</span><br><span class="line">多态指子类继承父类的方法后，可以覆写父类的方法来实现不同的功能</span><br></pre></td></tr></table></figure>
+
+<p>12、堆栈缓存方式的区别</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">栈缓存速度快，容量小，自动管理，符合后进先出特点</span><br><span class="line">堆缓存速度慢，容量大，需要手动管理，容易造成内存泄漏</span><br></pre></td></tr></table></figure>
+
+<p>13、STL容器有哪些，常用的算法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vector:二分，快排</span><br><span class="line">stack: 单调栈</span><br><span class="line">queue: 单调队列,bfs</span><br><span class="line">map、set、list等等</span><br></pre></td></tr></table></figure>
+
+<p>14、什么是面向对象</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">面向对象是将要做的事情抽象化成几个对象来做，</span><br><span class="line">每个对象都有它的属性和方法，通过封装确认安全，通过继承和多态保证代码的复用和灵活扩展</span><br></pre></td></tr></table></figure>
+
+<p>15、用过的设计模式，简单举几个例子</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">单例模式，在进行数据库连接时，可以使用单例模式，确保整个应用程序只有一个数据库连接实例，避免多次连接导致的资源浪费和数据不一致。（太模糊了，说的）</span><br><span class="line">策略模式，将同一个方法用多种实现，比如说支付时候，选择微信、支付宝、银行卡</span><br><span class="line">工厂模式，由工厂创建对象，推迟对象的创建，让用户和产品直接分开，比如绘制形状</span><br><span class="line">原型模式，通过clone现有实例来创建新的对象，减少消耗，适用于游戏中的大量类似角色创建</span><br><span class="line">享元模式，通过共享公共部分，节省对象内存空间，适用于粒子特效之类</span><br><span class="line">外观模式，将子系统统一处理，提供一个简单的对外接口，比如说我调用播放器的播放功能，它自己去处理其他需要调用的对象功能</span><br><span class="line">适配器模式，将两个不同的类通过一个适配器结合起来，比如说listview，可以通过适配器配置它同一行展示的内容</span><br><span class="line">代理模式，用远程代理隐藏网络通信的细节，比如连接远程数据库服务器，虚拟代理可以加快一些常用文件的加载速度</span><br><span class="line">装饰模式，先给一个基础的对象，然后通过其它类来添加功能，比如点餐，一杯咖啡，加糖，加奶，加冰</span><br><span class="line">....</span><br></pre></td></tr></table></figure>
+
+<p>16、如何理解智能指针,什么时候改变引用计数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">智能指针本身是一个对象，它管理另一个指定对象的自动周期，通过析构函数来自动管理自己的生命周期</span><br><span class="line">当管理的另一个对象生命周期结束后，或者被共享，引用计数就会增加</span><br></pre></td></tr></table></figure>
+
+<p>17、share_ptr与weak_ptr的区别与联系</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">shared_ptr 使用引用计数管理资源，而 weak_ptr 只提供对 shared_ptr 的弱引用，不影响其引用计数。</span><br><span class="line">weak_ptr 可以通过调用 lock() 方法转换回 shared_ptr，从而安全地访问对象。如果对象已经被释放，lock() 会返回一个空的 shared_ptr。 </span><br></pre></td></tr></table></figure>
+
+<p>18、表述下string的Copy-On-Write技术，写时copy</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Copy-On-Write（写时复制）技术在多个对象共享同一数据时，只有在写操作发生时才会创建数据副本，以节省内存。</span><br></pre></td></tr></table></figure>
+
+<p>19、描述下C++的浅copy，深copy，写时copy和引用计数的copy</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">浅拷贝：仅复制对象的基本数据，指针指向相同的内存。</span><br><span class="line">深拷贝：复制对象的所有数据，并为指向的内存分配新空间。</span><br><span class="line">写时拷贝：类似于COW，但在写时复制。</span><br><span class="line">引用计数的拷贝：增加引用计数，确保多个对象可以共享同一资源。</span><br></pre></td></tr></table></figure>
+
+<p>20、C++构造函数是否可以抛出异常</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">构造函数可以抛出异常，但应谨慎处理，以避免资源泄露</span><br></pre></td></tr></table></figure>
+
+<p>21、是否在析构函数抛出异常</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">析构函数不要抛出异常，可能导致程序终止</span><br></pre></td></tr></table></figure>
+
+<p>22、构造函数中，成员变量一定要通过初始化列表来初始化的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">不一定，也可以自设，但推荐用初始化列表</span><br></pre></td></tr></table></figure>
+
+<p>23、volatile的作用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">防止编译器优化，确保每次读取变量都从内存中获取，用于多线程编程。</span><br></pre></td></tr></table></figure>
+
+<p>24、构造函数和析构函数可以调用虚函数吗</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">构造函数和析构函数可以调用虚函数，但调用的行为可能不如预期，因为基类的构造和派生类的虚表尚未建立。</span><br></pre></td></tr></table></figure>
+
+<p>25、内存对齐的原则</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">数据必须按其类型要求的最小边界对齐，通常是类型大小的倍数，以优化内存访问速度。</span><br></pre></td></tr></table></figure>
+
+<p>26、内联函数有什么优点？内联函数和宏定义的区别</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">提高性能、减少函数调用开销。区别于宏定义的是，内联函数有类型检查，宏没有。</span><br></pre></td></tr></table></figure>
+
+<p>27、数组与指针的区别与联系，函数指针，指针函数，指针数组，数组指针</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">数组是指向固定大小类型的指针，指针可以改变地址。</span><br><span class="line">函数指针指向函数，指针函数返回指针，</span><br><span class="line">指针数组是指向指针的数组，数组指针是指向数组的指针。</span><br></pre></td></tr></table></figure>
+
+<p>28、STL set 和 map都是基于什么实现的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set和map都是基于红黑树实现的</span><br></pre></td></tr></table></figure>
+
+<p>29、常见的内存错误及其对策</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">常见有内存泄漏（使用智能指针）、</span><br><span class="line">越界（使用标准库容器）、</span><br><span class="line">双重释放（避免多次 delete 指向同一内存）</span><br></pre></td></tr></table></figure>
+
+<p>30、三种内存对象的比较</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">栈对象：生命周期自动管理，受限于作用域。</span><br><span class="line">堆对象：需要手动管理生命周期，灵活但易出错。</span><br><span class="line">全局对象：在程序整个运行期间存在，适合共享数据。</span><br></pre></td></tr></table></figure>
+
+<p>31、C++内存泄露及检测工具</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">内存泄漏是分配内存后未释放导致的。</span><br><span class="line">常用检测工具有 Valgrind、AddressSanitizer、Visual Studio 内存检测器</span><br><span class="line"></span><br><span class="line">Valgrind 适用于 Linux，需要单独安装。</span><br><span class="line">AddressSanitizer 已集成在 GCC 和 Clang 中，只需添加编译选项。</span><br><span class="line">Visual Studio 内存检测器 集成在 Visual Studio 中，适用于 Windows。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">示例：</span><br><span class="line"></span><br><span class="line">alexqfmm@ubuntu:~/Codes/tmp$ g++ -fsanitize=address test.cpp -o test</span><br><span class="line">alexqfmm@ubuntu:~/Codes/tmp$ ./test </span><br><span class="line">Object A created</span><br><span class="line">This is Test AddressSanitizer !</span><br><span class="line"></span><br><span class="line">=================================================================</span><br><span class="line">==163067==ERROR: LeakSanitizer: detected memory leaks</span><br><span class="line"></span><br><span class="line">Direct leak of 1 byte(s) in 1 object(s) allocated from:</span><br><span class="line">    #0 0x7fc3610e0587 in operator new(unsigned long) ../../../../src/libsanitizer/asan/asan_new_delete.cc:104</span><br><span class="line">    #1 0x56127465f301 in main (/home/alexqfmm/Codes/tmp/test+0x1301)</span><br><span class="line">    #2 0x7fc360ab7082 in __libc_start_main ../csu/libc-start.c:308</span><br><span class="line"></span><br><span class="line">SUMMARY: AddressSanitizer: 1 byte(s) leaked in 1 allocation(s).</span><br></pre></td></tr></table></figure>
+
+<p>32、什么时候要用虚析构函数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">当类有派生类且可能通过基类指针删除对象时，需要使用虚析构函数，以确保正确调用析构函数。</span><br><span class="line">如果不使用虚析构函数，则只会调用基类的析构函数，导致 派生类的 对象的资源没有释放</span><br></pre></td></tr></table></figure>
+
+<p>33、#include&lt;a.h&gt; 与#include”a.h”的区别</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;&gt;：用于查找系统头文件。</span><br><span class="line">&quot;&quot;：先在当前目录查找，然后再查找系统目录。</span><br></pre></td></tr></table></figure>
+
+<p>34、什么是RTTI (Run-time type identification)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">运行时类型识别，允许在运行时确定对象的实际类型，常与 typeid 和 dynamic_cast 一起使用。</span><br><span class="line"></span><br><span class="line">typeid(*b) 返回对象的实际类型</span><br><span class="line">dynamic_cast 进行安全的类型转换，失败返回 nullptr</span><br></pre></td></tr></table></figure>
+
+<p>35、引用作为函数参数有哪些特点</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">避免复制，使函数更高效，且可以修改原始对象（非const引用）</span><br></pre></td></tr></table></figure>
+
+<p>36、在什么时候需要使用常引用（const 引用）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">传递大对象以避免复制，同时不希望在函数内部修改对象的内容。</span><br><span class="line">例如const string&amp; str</span><br></pre></td></tr></table></figure>
+
+<p>37、将引用作为函数返回值类型的格式、好处和需要遵守的规则</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">格式：Type&amp; Function()</span><br><span class="line">好处：避免复制及提高效率。</span><br><span class="line">规则：返回的引用必须指向有效的存储（不能返回局部变量的引用）。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">举例：</span><br><span class="line"></span><br><span class="line">class A&#123;</span><br><span class="line">private:</span><br><span class="line">    int val;</span><br><span class="line">public:</span><br><span class="line">    A()&#123;cout &lt;&lt; &quot;Object A created&quot; &lt;&lt; endl;&#125;</span><br><span class="line">    ~A()&#123;cout &lt;&lt; &quot;Object A destroyed&quot; &lt;&lt; endl;&#125;</span><br><span class="line"></span><br><span class="line">    int &amp;getVal()&#123;</span><br><span class="line">        return val;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    </span><br><span class="line">    A obj;</span><br><span class="line">    </span><br><span class="line">    int &amp;res = obj.getVal();</span><br><span class="line">    res = 10;</span><br><span class="line"></span><br><span class="line">    cout &lt;&lt; obj.getVal() &lt;&lt; endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>38、结构体和联合体的区别</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">结构体（struct）：成员共用不同存储，内存大小为所有成员之和</span><br><span class="line">联合体（union）：所有成员共享同一存储，内存大小为最大成员的大小</span><br></pre></td></tr></table></figure>
+
+<p>39、重载和重写的区别</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">重载：同一作用域中函数名相同，参数不同。</span><br><span class="line">重写：派生类重新定义基类的虚函数。</span><br></pre></td></tr></table></figure>
+
+<p>40、栈内存与文字常量区</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">栈内存：</span><br><span class="line">用于存储局部变量和临时数据。自动分配和释放，生命周期仅限于函数执行。</span><br><span class="line">文字常量区：</span><br><span class="line">用于存储不可修改的常量字符串和数据。在程序的整个生命周期内有效，内存在程序结束时释放。</span><br></pre></td></tr></table></figure>
+
+<p>41、struct和class的区别</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">struct默认是public，多用于数据结构</span><br><span class="line">class默认是private，多用于对象</span><br></pre></td></tr></table></figure>
+
+<p>42、如何判断浮点数是否相等，LONG呢</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">由于精度问题，通常使用一个小的容差值比较，例如 fabs(a - b) &lt; epsilon。</span><br><span class="line">对长整型，可以直接使用 ==。</span><br></pre></td></tr></table></figure>
+
+<p>43、不允许重载的5个运算符</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">::（作用域运算符）</span><br><span class="line">.（成员访问运算符）</span><br><span class="line">.*（指针成员访问运算符）</span><br><span class="line">?:（条件运算符）</span><br><span class="line">和sizeof（大小运算符）</span><br></pre></td></tr></table></figure>
+
+<p>44、拷贝构造函数在哪几种情况下会被调用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">传值参数：当对象以值的方式传递给函数。</span><br><span class="line">返回值：当函数返回对象时，返回的对象为副本。</span><br><span class="line">对象初始化：通过已有对象初始化新的对象。</span><br><span class="line">容器操作：在使用 STL 容器时需要复制对象的情况。</span><br></pre></td></tr></table></figure>
+
+<p>45、什么时候必须重写拷贝构造函数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">当类包含指针成员或动态分配的资源时，需实现深拷贝以避免资源冲突。</span><br></pre></td></tr></table></figure>
+
+<p>46、静态成员函数存在的意义</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">提供与类相关的功能，而不依赖于对象实例。</span><br><span class="line">访问和管理静态成员。</span><br><span class="line">实现全局访问点和工具类功能。</span><br><span class="line">管理类级别的状态和逻辑。</span><br></pre></td></tr></table></figure>
+
+<p>47、流运算符为什么不能通过类的成员函数重载</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">因为流对象通常不是类的实例，无法以成员函数的方式调用。</span><br><span class="line">为了保持流操作的通用性和链式调用的灵活性，流运算符通常作为全局函数进行重载。通过这种方式，可以更方便地实现输入和输出操作，并提高代码的可读性和可维护性。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">举例：</span><br><span class="line"></span><br><span class="line">class A&#123;</span><br><span class="line">private:</span><br><span class="line">    static int cnt_;</span><br><span class="line">public:</span><br><span class="line"></span><br><span class="line">     A()&#123;cnt_++ ; cout &lt;&lt; &quot;Object A is created &quot; &lt;&lt; endl;&#125;</span><br><span class="line">    ~A()&#123;cnt_-- ; cout &lt;&lt; &quot;Object A is destroyed&quot; &lt;&lt; endl;&#125;</span><br><span class="line"></span><br><span class="line">    friend ostream&amp; operator &lt;&lt;(ostream&amp; os , const A&amp; obj)&#123;</span><br><span class="line">        os &lt;&lt; &quot;The number of Object A is &quot; &lt;&lt; obj.cnt_;</span><br><span class="line">        return os;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">int A::cnt_ = 0;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    A a;</span><br><span class="line">    A b;</span><br><span class="line"></span><br><span class="line">    cout &lt;&lt; a &lt;&lt; endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>48、当一个类中没有任何成员变量和成员函数，这时sizeof(A)的A值是多少，</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">对于没有成员的类，结果为1</span><br></pre></td></tr></table></figure>
+
+<p>49、如果不是零，请解释一下编译器为什么没有让他为零</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">以确保不同类型对象有不同地址。</span><br></pre></td></tr></table></figure>
+
+<p>50、多态的作用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">为不同的子类用同样的方法实现不通的功能，提高代码的灵活性和可扩展性</span><br></pre></td></tr></table></figure>
+
+<p>51、什么函数不能声明为虚函数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">构造函数、不能实例化的类的析构函数、</span><br><span class="line">静态成员函数，被final修饰的函数</span><br><span class="line">被private修饰且没有友元权限的函数</span><br><span class="line">非类的成员函数</span><br></pre></td></tr></table></figure>
+
+<p>52、系统会自动和关闭的3个标准的文件是</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">标准输入（stdin）、标准输出（stdout）、标准错误（stderr）</span><br></pre></td></tr></table></figure>
+
+<p>53、说出字符常量和字符串常量的区别，并使用sizeof 计算有什么不同</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">字符常量存储一个字符，字符串常量是字符数组。</span><br><span class="line">使用sizeof计算时，字符常量为1，字符串常量包括结束符\0</span><br></pre></td></tr></table></figure>
+
+<p>54、Windows消息系统由哪几部分构成</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">消息队列、消息循环、消息处理和窗口类。</span><br></pre></td></tr></table></figure>
+
+<p>55、assert()的作用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">在调试时作为条件判断，若条件为假则中断程序，帮助捕捉逻辑错误。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">void checkValue(int value) &#123;</span><br><span class="line">    // 使用 assert 检查值是否大于零</span><br><span class="line">    assert(value &gt; 0 &amp;&amp; &quot;Value must be greater than zero&quot;);</span><br><span class="line">    std::cout &lt;&lt; &quot;Value is: &quot; &lt;&lt; value &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">    checkValue(10);  // 正常情况</span><br><span class="line">    checkValue(-5);  // 触发 assert，程序将中断</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>56、Windows的消息机制</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">用户交互产生消息 - 存入消息队列 - 应用程序循环等待，提取消息并分发 - 调用窗口过程处理消息 - 执行相应的操作 - 返回结果或更新界面 - 循环继续处理后续消息</span><br></pre></td></tr></table></figure>
+
+<p>57、SendMessage和PostMessage的区别</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SendMessage：同步执行，等待消息处理完后返回。</span><br><span class="line">PostMessage：异步执行，立即返回，消息入队由系统处理。</span><br></pre></td></tr></table></figure>
+
+<p>58、Dll和lib的区别</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DLL（动态链接库）：在运行时载入，可以被多个程序共享。</span><br><span class="line">LIB（静态库）：在编译时链接，代码包含在可执行文件中。</span><br></pre></td></tr></table></figure>
+
+<p>59、多线程如何实现通讯，如何进行同步</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">条件变量可以唤醒其他线程，也可以让线程暂时进入等待，互斥锁可以保证临界数据的安全，也可以用消息队列来传递线程之间的通信</span><br></pre></td></tr></table></figure>
+
+<p>60、stl实现了那些排序算法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">快速排序，堆排序</span><br></pre></td></tr></table></figure>
+
+<p>61、一元、二元仿函数的区别和使用背景</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">仿函数（Functor）是指重载了函数调用运算符operator()的类或结构体实例，使其可以像普通函数一样被调用。仿函数的主要优点在于它们可以存储状态，提供更复杂的行为，且可以与 STL（标准模板库）算法结合使用。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">一元：</span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;vector&gt;</span><br><span class="line">#include &lt;algorithm&gt;</span><br><span class="line"></span><br><span class="line">struct Square &#123;</span><br><span class="line">    int operator()(int x) const &#123;</span><br><span class="line">        return x * x;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">    std::vector&lt;int&gt; nums = &#123;1, 2, 3, 4&#125;;</span><br><span class="line">    std::transform(nums.begin(), nums.end(), nums.begin(), Square());</span><br><span class="line">    for (int num : nums) &#123;</span><br><span class="line">        std::cout &lt;&lt; num &lt;&lt; &quot; &quot;; // 输出: 1 4 9 16</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">二元：</span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;vector&gt;</span><br><span class="line">#include &lt;numeric&gt;</span><br><span class="line"></span><br><span class="line">struct Add &#123;</span><br><span class="line">    int operator()(int a, int b) const &#123;</span><br><span class="line">        return a + b;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">    std::vector&lt;int&gt; nums = &#123;1, 2, 3, 4&#125;;</span><br><span class="line">    int sum = std::accumulate(nums.begin(), nums.end(), 0, Add());</span><br><span class="line">    std::cout &lt;&lt; &quot;Sum: &quot; &lt;&lt; sum &lt;&lt; std::endl; // 输出: Sum: 10</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>62、智能指针可以放到容器中么</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">可以的</span><br></pre></td></tr></table></figure>
+
+<p>63、请简述Windows内存管理的方式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">1. 虚拟内存</span><br><span class="line">虚拟内存：Windows 使用虚拟内存管理，使每个进程都有一个独立的地址空间。这样，程序不需要关心物理内存的实际分配情况，系统会负责将虚拟地址映射到物理内存。</span><br><span class="line">分页：虚拟内存是通过分页机制实现的，内存被划分为固定大小的页。当进程需要访问未在物理内存中的页时，操作系统会发生页错误，触发页面调入操作，将所需页加载到物理内存。</span><br><span class="line">2. 内存分配</span><br><span class="line">内存池：Windows 提供了内存池管理，允许应用程序在需要时分配和释放内存。内存分配可以使用如 malloc、new 等函数进行动态分配。</span><br><span class="line">内存管理器：Windows 内核有一个内存管理器，负责处理内存的分配和回收，确保内存的有效使用和管理。</span><br><span class="line">3. 物理内存管理</span><br><span class="line">页面文件：当物理内存不足时，Windows 会使用页面文件（page file）作为辅助存储，存储不常用的数据或程序，以释放物理内存空间。</span><br><span class="line">内存压缩：在内存不足的情况下，Windows 还可以使用内存压缩技术，将部分数据压缩后存放在内存中，以提高内存的利用率。</span><br><span class="line">4. 保护机制</span><br><span class="line">内存保护：Windows 实现了内存保护机制，防止进程访问不属于它的内存空间。每个进程的虚拟地址空间是独立的，这样可以增加系统的稳定性和安全性。</span><br><span class="line">访问控制：通过访问控制机制，Windows 能够限制进程对内存的读写权限，从而避免恶意软件或错误代码造成的破坏。</span><br><span class="line">5. 共享内存</span><br><span class="line">共享内存：Windows 允许不同进程之间通过共享内存进行通信。共享内存区域可以被多个进程映射到其地址空间，从而实现数据共享。</span><br></pre></td></tr></table></figure>
+
+<p>64、strcpy和memcpy使用时的注意事项，strncpy、memcpy的区别</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">使用 strcpy 和 strncpy：在处理 C 字符串时，选择 strcpy 需要小心目标缓冲区的大小，使用 strncpy 则可以在一定程度上防止溢出，但要注意结束符问题。</span><br><span class="line">使用 memcpy：适用于需要复制固定字节的数据，但要确保内存区域不重叠且数据大小一致。对于字符串的处理，使用 memcpy 时需小心指定字节数，以避免潜在的问题。</span><br></pre></td></tr></table></figure>
+
+<p>65、const和static能同时修饰成员函数吗</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">可以同时修饰，表示该函数既是类的静态函数，也不能修改类静态成员的值。</span><br></pre></td></tr></table></figure>
+
+<p>66、何时编译器会自动生成默认构造函数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">你没写构造函数的时候</span><br></pre></td></tr></table></figure>
+
+<p>67、何时编译器会自动生成拷贝构造函数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">当类没有定义拷贝构造函数且至少有一个成员可以复制时，编译器会生成。</span><br></pre></td></tr></table></figure>
+
+<p>68、动态链接库和静态链接库的区别</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">动态链接库（dll）在运行时加载，节省内存；</span><br><span class="line">静态链接库（lib）在编译时包含在可执行文件中，相对较大。</span><br></pre></td></tr></table></figure>
+
+<p>69、描述一下函数调用的整个过程</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">参数传递，函数入栈，跳转函数，执行函数，返回值处理，函数出栈</span><br></pre></td></tr></table></figure>
+
+<p>70、C++ STL vector的实现机制</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">vector是向量的意思，这里是生成一个动态数组</span><br><span class="line">动态分配内存：vector 允许在运行时分配内存。它使用堆内存来存储元素，这样可以在元素数量变化时灵活调整大小。</span><br><span class="line">数组管理：内部使用一个指针来管理数组的基础内存，并保持当前元素的数量和容量。</span><br><span class="line">自动扩展：当元素数量超过当前容量时，vector 会自动扩展其容量。通常，扩展的策略是将容量加倍，这样可以减少内存重新分配的次数。</span><br><span class="line">元素构造与析构：当 vector 扩展或收缩时，元素的构造和析构会被自动处理。如果存储的是对象，vector 会调用构造函数和析构函数。</span><br><span class="line">随机访问：vector 提供了随机访问迭代器，允许通过下标直接访问元素，这使得访问效率与数组相同。</span><br><span class="line">支持 STL 算法：因为 vector 支持迭代器，它可以与标准模板库（STL）中的算法无缝集成。</span><br></pre></td></tr></table></figure>
+
+<p>71、面向对象是一种思想，如何使用C语言来实现</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">通过结构体模拟类，使用函数指针模拟虚函数，使用数据封装和模块化设计实现对象概念。</span><br></pre></td></tr></table></figure>
+
+<p>72、C++有哪些数据类型，为什么long和int都是4字节</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">包括基本类型（int、float、char）、复合类型（数组、结构体、联合体）、指针、引用等。</span><br><span class="line">大小具体依赖于编译器和平台，long有些也有8字节的</span><br></pre></td></tr></table></figure>
+
+<p>73、Java和C++的区别是什么，分别用在什么场景比较好</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">1. 语言类型</span><br><span class="line">Java: 是一种纯面向对象的编程语言，几乎所有的代码都在类中。Java 使用垃圾回收（Garbage Collection）来管理内存。</span><br><span class="line">C++: 是一种多范式语言，既支持面向对象编程，也支持过程式编程。C++ 提供了更直接的内存管理，允许程序员控制内存分配和释放。</span><br><span class="line">2. 编译和运行</span><br><span class="line">Java: 代码首先编译为字节码（bytecode），然后由 Java 虚拟机（JVM）解释执行，具有良好的跨平台性。</span><br><span class="line">C++: 代码编译为机器代码，直接运行在操作系统上，通常具有更高的性能，但缺乏跨平台性。</span><br><span class="line">3. 内存管理</span><br><span class="line">Java: 使用自动垃圾回收，开发者无需手动管理内存，减少内存泄露的风险。</span><br><span class="line">C++: 开发者必须手动管理内存，使用 new 和 delete 来分配和释放内存，增加了灵活性，但也带来了内存泄露和指针错误的风险。</span><br><span class="line">4. 库和框架</span><br><span class="line">Java: 拥有丰富的标准库和第三方库（如 Spring、Hibernate），适合开发企业级应用、Web 应用和移动应用（Android）。</span><br><span class="line">C++: 拥有强大的标准模板库（STL），适合开发高性能应用、游戏开发、系统软件和驱动程序。</span><br><span class="line">5. 性能</span><br><span class="line">Java: 虽然相对较慢，但随着技术的发展（如 JIT 编译），性能已大幅提高。适合开发对性能要求不是极端高的应用。</span><br><span class="line">C++: 通常性能更优，适合开发需要高效运算的应用（如游戏引擎、图形处理等）。</span><br><span class="line">6. 异常处理</span><br><span class="line">Java: 强制要求捕获或声明异常，提供了 checked 和 unchecked 异常机制，促进了更健壮的错误处理。</span><br><span class="line">C++: 提供了异常处理机制，但没有强制要求，开发者可以选择是否捕获异常。</span><br><span class="line">7. 多线程</span><br><span class="line">Java: 内置的多线程支持，使用 Thread 类和 Runnable 接口，提供了简化的线程管理。</span><br><span class="line">C++: 需要使用线程库（如 pthread 或 C++11 的 std::thread）进行多线程编程，可能相对复杂。</span><br><span class="line">应用场景</span><br><span class="line">Java 适用场景</span><br><span class="line">企业级应用: 由于其跨平台特性和强大的库支持，Java 被广泛应用于企业软件开发。</span><br><span class="line">Web 应用: Java 的 Servlet 和 JSP 技术使其在 Web 开发中非常流行。</span><br><span class="line">移动应用: Android 平台主要使用 Java 进行开发。</span><br><span class="line">大数据和云计算: Java 在大数据框架（如 Hadoop）和云计算环境中也被广泛使用。</span><br><span class="line">C++ 适用场景</span><br><span class="line">游戏开发: C++ 提供高性能和控制，适合游戏引擎的开发（如 Unreal Engine）。</span><br><span class="line">系统软件和驱动程序: C++ 的低级访问能力使其非常适合操作系统、设备驱动和嵌入式系统开发。</span><br><span class="line">图形处理: 许多图形库（如 OpenGL、DirectX）都使用 C++，适合图形和图像处理应用。</span><br><span class="line">高性能计算: C++ 是科学计算和工程应用中常用的语言</span><br></pre></td></tr></table></figure>
+
+<p>74、函数调用类型_cedecl,_stdcall,_fastcall</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">函数调用约定（calling convention）定义了函数如何接收参数、如何返回值以及栈的管理方式</span><br><span class="line">1. _cdecl</span><br><span class="line">默认方式：这是 C/C++ 的默认调用约定。</span><br><span class="line">参数传递：参数从右到左压入栈中。</span><br><span class="line">栈清理：调用函数后，由调用者负责清理栈。</span><br><span class="line">可变参数：支持可变参数函数（如 printf）。</span><br><span class="line">用途：广泛用于 C/C++ 中，尤其是在需要支持可变参数的情况下。</span><br><span class="line">2. _stdcall</span><br><span class="line">调用者清理栈：与 _cdecl 不同，_stdcall 是由被调用函数负责清理栈。</span><br><span class="line">参数传递：参数同样是从右到左压入栈中。</span><br><span class="line">不支持可变参数：不支持可变参数函数，通常用于 WinAPI 函数。</span><br><span class="line">用途：在 Windows API 和某些库中使用较多，因为它的栈清理方式可以避免在调用时出错。</span><br><span class="line">3. _fastcall</span><br><span class="line">参数传递：参数通过寄存器传递，通常是前两个或三个参数（具体取决于平台）通过寄存器，剩余参数通过栈传递。这种方式可以提高函数调用的效率。</span><br><span class="line">栈清理：由调用者负责清理栈。</span><br><span class="line">用途：常用于性能要求高的场景，尤其是在需要频繁调用函数的情况下。</span><br></pre></td></tr></table></figure>
+
+<p>75、什么是序列化和反序列化</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">序列化是将对象转换为可存储格式，反序列化则是将存储格式转换回对象。</span><br></pre></td></tr></table></figure>
+
+<p>76、用预处理指令声美一个常数，用以表明1年终有多少秒</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#define SECONDS_IN_A_YEAR (365 * 24 * 60 * 60)</span><br></pre></td></tr></table></figure>
+
+<p>77、strtok函数在使用上要注意什么问题</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">strtok 函数是 C 标准库中用于字符串分割的函数。使用 strtok 时，需要注意以下几个问题：</span><br><span class="line"></span><br><span class="line">1. 原地修改</span><br><span class="line">strtok 会直接修改输入的字符串，将分隔符替换为 \0（空字符），这意味着原字符串会被改变，因此如果需要保留原字符串，请先进行复制。</span><br><span class="line">2. 线程安全性</span><br><span class="line">strtok 不是线程安全的。它使用一个静态内部状态来跟踪当前的分割位置，因此在多线程环境中，最好使用 strtok_r（在 POSIX 系统中）或其他线程安全的替代方案。</span><br><span class="line">3. 多次调用</span><br><span class="line">第一次调用 strtok 时，需要传递待分割的字符串，之后的调用应将第一个参数设置为 NULL，以指示继续从上一个分割位置进行分割。</span><br><span class="line">4. 分隔符</span><br><span class="line">strtok 接受一个字符串作为分隔符，任何出现在该字符串中的字符都将被视为分隔符。如果有多个相邻的分隔符，strtok 会返回空字符串作为结果，需做好处理。</span><br><span class="line">5. 返回值</span><br><span class="line">如果没有找到更多的标记，strtok 会返回 NULL，需要在使用返回值前进行检查。</span><br><span class="line">6. 类型安全</span><br><span class="line">strtok 接受 char * 类型的参数，因此不适用于 const char * 类型的字符串，调用时需要保证传入的是可修改的字符串。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">现在用的少，不如其他办法</span><br><span class="line">例如：</span><br><span class="line"></span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;string&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">    string data = &quot;alexqfmm::123456::man::22&quot;;</span><br><span class="line">    size_t pos = 0;</span><br><span class="line">    string token;</span><br><span class="line">    </span><br><span class="line">    while ((pos = data.find(&quot;::&quot;)) != string::npos) &#123; // 查找分隔符</span><br><span class="line">        token = data.substr(0, pos); // 获取分隔符前的字符串</span><br><span class="line">        cout &lt;&lt; token &lt;&lt; endl; // 输出</span><br><span class="line">        data.erase(0, pos + 2); // 删除已处理部分</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; data &lt;&lt; endl; // 输出最后一个部分</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">或者用stringstream </span><br></pre></td></tr></table></figure>
+
+<p>78、char * const p ,char const * p, char const * const p区别</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">char * const p：指针常量，指向的内容可变。</span><br><span class="line">char const * p：指针指向内容常量，指针可变。</span><br><span class="line">char const * const p：指针和内容均不可变。</span><br></pre></td></tr></table></figure>
+
+<p>79、介绍一下右值引用和移动语义和完美转发</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">右值引用允许资源的“移动”，提高性能；</span><br><span class="line">移动语义是转移资源而不是复制（std::move）</span><br><span class="line">完美转发则使用 std::forward。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">为什么需要完美转发？</span><br><span class="line">在 C++ 中，值类别（左值和右值）影响对象的使用方式：</span><br><span class="line"></span><br><span class="line">左值：可以被取地址，表示一个持久对象，例如变量。</span><br><span class="line">右值：临时对象，不能被取地址，通常是表达式的结果，例如函数返回值。</span><br><span class="line">当我们在模板函数中传递参数时，可能希望根据参数的类型选择不同的处理方式。完美转发允许我们将参数的值类别保持不变，从而确保：</span><br><span class="line"></span><br><span class="line">如果参数是左值，传递给下一个函数时仍然是左值。</span><br><span class="line">如果参数是右值，传递给下一个函数时仍然是右值。</span><br></pre></td></tr></table></figure>
+
+<p>80、说说你使用的C++11的特性</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">自动类型推导（auto）、for-each、智能指针、std::thread、移动语义、Lambda 表达式等。</span><br></pre></td></tr></table></figure>
+
+<p>81、如何区分左值和右值</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">左值有持久地址，右值是临时对象或表达式；</span><br><span class="line">左值可以被赋值，右值通常用于移动或初始化。</span><br></pre></td></tr></table></figure>
+
+<p>82、为什么C++访问虚函数比访问普通函数慢</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">由于需通过虚表查找目标函数，增加了一次间接寻址的开销</span><br></pre></td></tr></table></figure>
+
+<p>83、为什么需要纯虚函数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">用于定义接口，确保派生类实现某些功能，形成抽象基类</span><br></pre></td></tr></table></figure>
+
+<p>84、内联函数、构造函数、静态成员函数可以是虚函数么</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">内联函数可以，是编译期优化；构造函数不应用于虚函数，静态成员函数一般不合适</span><br></pre></td></tr></table></figure>
+
+<p>85、析构函数可以调用虚函数，构造函数为什么不可以调用虚函数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">构造函数时派生类未构造完成，无法调用。</span><br></pre></td></tr></table></figure>
+
+<p>86、析构函数可以是纯虚的么</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">可以 表示抽象类，确保派生类必须实现析构逻辑</span><br></pre></td></tr></table></figure>
+
+<p>87、为什么需要虚继承，虚继承的实现原理</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">解决多重继承中“菱形继承”问题</span><br><span class="line">菱形继承发生在一个类同时从两个类继承同一个基类，而这个基类又作为第三个类的基类，这样可能导致多份基类子对象的创建，进而造成资源浪费和二义性。</span><br><span class="line">二义性：如果在 C 中访问 Base 的成员，编译器无法确定应该访问哪个 Base 的实例。</span><br><span class="line">资源浪费：多个 Base 的实例可能导致不必要的内存开销。</span><br><span class="line">虚基类指针：虚继承会引入一个额外的指针（通常叫做虚基指针）来指向共享的基类子对象。</span><br><span class="line">内存布局：当一个类使用虚继承时，编译器会在派生类中维护一个指向虚基类的指针，以便在访问虚基类的成员时能够正确定位。</span><br></pre></td></tr></table></figure>
+
+<p>88、迭代器和普通自指针有什么区别</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">迭代器是属于行为设计模式的一种，它提供统一的接口处理不同类型的容器，功能更丰富，更安全，能和STL库函数有相当多的配合</span><br><span class="line">自指针只是指向一片空间</span><br></pre></td></tr></table></figure>
+
+<p>89、C++4种类型转换</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">static_cast 用于类型安全的编译时转换，适合常见的类型转换。</span><br><span class="line">dynamic_cast 用于在多态情况下的安全类型转换，主要用于运行时类型检查。</span><br><span class="line">const_cast 用于去掉对象的常量性，允许修改 const 对象。</span><br><span class="line">reinterpret_cast 用于进行低级别的强制转换，使用时需谨慎，可能导致未定义行为。</span><br></pre></td></tr></table></figure>
+
+<p>90、如何定义一个只能在堆上创建的类，如何定义一个只能在栈上创建的类</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">只能在堆上创建的类：将构造函数设为 private，并提供一个静态成员函数来返回 new 创建的对象。（类似单例模式）</span><br><span class="line">只能在栈上创建的类：将析构函数设为 private，确保用户无法使用 delete，使其仅在作用域内存在。</span><br></pre></td></tr></table></figure>
+
+<p>91、标准库函数和系统调用的区别</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">标准库函数是编程语言提供的函数（如 C 标准库、C++ STL），系统调用是程序与操作系统之间的接口，允许程序请求操作系统执行特定的功能，如文件操作、进程管理、网络通信等。</span><br></pre></td></tr></table></figure>
+
+<p>92、如何区分一段代码是C++还是C代码编写的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C++ 代码使用类、命名空间、模板、引用，支持运算符重载；C 代码主要使用结构体、指针和函数。</span><br></pre></td></tr></table></figure>
+
+<p>93、什么是回调函数，回调函数的使用场景</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">回调函数是作为参数传递给其他函数的函数，使用场景包括异步操作、事件处理和库 API。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">举例：</span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line"></span><br><span class="line">// 定义一个回调函数类型</span><br><span class="line">using Callback = void(*)();</span><br><span class="line"></span><br><span class="line">// 一个接受回调函数的函数</span><br><span class="line">void performAction(Callback cb) &#123;</span><br><span class="line">    std::cout &lt;&lt; &quot;Performing some action...&quot; &lt;&lt; std::endl;</span><br><span class="line">    cb(); // 调用回调函数</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 一个示例回调函数</span><br><span class="line">void myCallback() &#123;</span><br><span class="line">    std::cout &lt;&lt; &quot;Callback function called!&quot; &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">    // 将 myCallback 作为参数传递给 performAction</span><br><span class="line">    performAction(myCallback);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>94、临时对象在什么时候会产生</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">临时对象在返回值优化、类型转换、函数调用时产生，或在表达式中使用对象时创建。</span><br></pre></td></tr></table></figure>
+
+<p>95、说一下C++的返回值优化</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">编译器通过消除不必要的拷贝，直接构造返回值于调用者的存储区域，提高性能。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">举例：</span><br><span class="line">MyClass createObject() &#123;</span><br><span class="line">    return MyClass(); // 返回一个 MyClass 对象</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">    MyClass obj = createObject(); // 这里应该触发 RVO，避免拷贝构造</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">虽然 createObject 函数返回一个 MyClass 对象，但如果编译器应用返回值优化，obj 会直接在调用者的存储区域构造，而不是先在 createObject 内部创建一个对象然后进行拷贝。</span><br></pre></td></tr></table></figure>
+
+<p>96、protected,public,private在继承中的可见性</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public：派生类可访问基类的公有成员。</span><br><span class="line">protected：派生类可访问基类的保护成员。</span><br><span class="line">private：派生类无法访问基类的私有成员。</span><br></pre></td></tr></table></figure>
+
+<p>97、C++中为什么用模板类</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">支持泛型编程，提供类型安全且灵活的代码复用，避免代码膨胀。</span><br></pre></td></tr></table></figure>
+
+<p>98、子类不能继承父类的函数有哪些</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">私有成员函数、构造函数和析构函数（只能通过友元或间接调用）</span><br></pre></td></tr></table></figure>
+
+<p>99、虚函数的内存结构，菱形继承的虚函数内存结构</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">存储在虚表中，虚表包含指向实际函数的指针。菱形继承中，每个子类拥有独立虚表，基类只存一份。</span><br></pre></td></tr></table></figure>
+
+<p>100、谈谈stl标准库的线程安全性</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">STL 容器通常在多线程环境中不是线程安全的。需要通过互斥量等手段实现同步。</span><br></pre></td></tr></table></figure>
+
+<p>101、成员函数里memset(this,0,sizeof(*this))会发生什么</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">会将当前对象的内存置零，导致未定义行为，特别是成员变量破坏后果及虚表指针丢失。</span><br></pre></td></tr></table></figure>
+
+<p>102、share_ptr的线程安全性</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shared_ptr 的控制块在多线程环境下是线程安全的，但对同一指针的操作（如引用计数）需要外部同步。</span><br></pre></td></tr></table></figure>
+
+<p>103、vector资源释放</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">std::vector 会在其析构时释放所有存储的元素和占用的内存。如果要显式释放，可以调用 clear() 和 shrink_to_fit()。</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="二、线程进程面试题总结"><a href="#二、线程进程面试题总结" class="headerlink" title="二、线程进程面试题总结"></a>二、线程进程面试题总结</h2><p>1、程序什么时候应该使用线程，什么时候单线程效率高</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">使用线程时适合I/O密集型任务（如网络请求、文件读取）或需要并发处理的场景；</span><br><span class="line">而在CPU密集型任务中（如图像处理、数据分析、科学模拟、机器学习、视频编码/解码），单线程效率可能更高，因为线程切换的开销较大。</span><br></pre></td></tr></table></figure>
+
+<p>2、惊群现象</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">惊群现象是指在高并发场景中，多个进程或线程因同一事件（如信号、网络请求）被唤醒，导致不必要的资源竞争和性能下降。</span><br></pre></td></tr></table></figure>
+
+<p>3、C++函数内的静态变量初始化以及线程安全问题</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C++11引入了一种线程安全的初始化方式，静态局部变量在第一次调用时自动初始化，但在多线程环境中仍需考虑避免重入和并发安全问题。</span><br></pre></td></tr></table></figure>
+
+<p>4、C++线程安全的单例类</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">采用懒汉式单例模式，结合std::call_once或使用std::mutex进行加锁，确保只初始化一次。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">举例：</span><br><span class="line"></span><br><span class="line">#include &lt;iostream&gt;  </span><br><span class="line">#include &lt;mutex&gt;  </span><br><span class="line"></span><br><span class="line">class Singleton &#123;  </span><br><span class="line">public:  </span><br><span class="line">    static Singleton&amp; getInstance() &#123;  </span><br><span class="line">        std::lock_guard&lt;std::mutex&gt; guard(mutex_);  </span><br><span class="line">        if (!instance) &#123;  </span><br><span class="line">            instance = new Singleton();  </span><br><span class="line">        &#125;  </span><br><span class="line">        return *instance;  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    void displayMessage() &#123;  </span><br><span class="line">        std::cout &lt;&lt; &quot;Hello from Singleton!&quot; &lt;&lt; std::endl;  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">private:  </span><br><span class="line">    Singleton() = default;  // 私有构造函数  </span><br><span class="line">    ~Singleton() = default; // 私有析构函数  </span><br><span class="line"></span><br><span class="line">    // 禁用拷贝构造和赋值运算符  </span><br><span class="line">    Singleton(const Singleton&amp;) = delete;  </span><br><span class="line">    Singleton&amp; operator=(const Singleton&amp;) = delete;  </span><br><span class="line"></span><br><span class="line">    static Singleton* instance;  </span><br><span class="line">    static std::mutex mutex_; // 互斥量，用于加锁  </span><br><span class="line">&#125;;  </span><br><span class="line"></span><br><span class="line">// 静态成员定义  </span><br><span class="line">Singleton* Singleton::instance = nullptr;  </span><br><span class="line">std::mutex Singleton::mutex_;  </span><br><span class="line"></span><br><span class="line">int main() &#123;  </span><br><span class="line">    Singleton::getInstance().displayMessage();  </span><br><span class="line">    return 0;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>5、多线程环境带有状态的对象的讨论</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">状态对象在多线程环境下可能导致数据竞争，需使用锁或其他同步机制确保安全访问。</span><br><span class="line"></span><br><span class="line">状态对象是指那些维护或表示内部状态的对象。这些对象通常包含与其行为相关的一些数据或变量，这些数据可以随时间变化。例如：</span><br><span class="line">计数器：跟踪完成任务的数量。</span><br><span class="line">配置设置：可以被不同线程修改的应用程序配置。</span><br><span class="line">用户会话信息：在网络服务器中维护用户的状态和会话数据。</span><br></pre></td></tr></table></figure>
+
+<p>6、C++多线程加volatile的错误认识</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">volatile关键字仅保证变量的可见性，不能保证原子性和同步，因此不应用于多线程中的数据共享。</span><br></pre></td></tr></table></figure>
+
+<p>7、并行编程中多进程和多线程，什么情况下多进程能解决的多线程无法解决</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">多进程能有效利用多核CPU，并能提供更高的隔离级别，适合涉及大量CPU密集型任务或避免内存共享问题的场景。</span><br><span class="line">多进程代表应用：浏览器</span><br></pre></td></tr></table></figure>
+
+<p>8、如何证明一个数据结构是线程安全的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">要证明一个数据结构是线程安全的，可以采用以下几种方法：</span><br><span class="line"></span><br><span class="line">静态分析：</span><br><span class="line"></span><br><span class="line">对数据结构的实现进行审查，确保使用了适当的同步机制，如锁、互斥量或原子操作。通过代码审查，可以识别潜在的并发问题。</span><br><span class="line">动态测试：</span><br><span class="line"></span><br><span class="line">单元测试：验证数据结构的基本操作是否如预期那样工作。</span><br><span class="line">负载测试：在高并发条件下执行多个操作，观察数据结构的行为，检查是否存在死锁、数据损坏或不一致等问题。</span><br><span class="line">正式验证：</span><br><span class="line"></span><br><span class="line">运用数学方法证明数据结构在所有可能的操作和状态变化下的正确性。这可能涉及模型检测或定理证明等技术。</span><br></pre></td></tr></table></figure>
+
+<p>9、lock-free的实现方式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Lock-free 是一种并发算法，确保至少有一个线程将在有限的步骤内取得进展。</span><br><span class="line">这种机制避免了多个线程之间的阻塞，从而保持系统的响应性，防止死锁。</span><br><span class="line">在高并发环境中，lock-free 实现通常可以提升性能，因为它减少了对锁等阻塞同步机制的需求。</span><br><span class="line"></span><br><span class="line">原子操作是指在执行过程中不被中断的操作，意味着一旦开始执行，会一直执行到完成，期间不会被其他线程干扰。在并发编程中，原子操作非常重要，可以确保在多线程环境下数据的一致性，而无需使用锁。</span><br><span class="line"></span><br><span class="line">CAS 是一种特定的原子操作，它比较一个变量的当前值与一个给定值，如果相等就将该变量修改为一个新值。CAS 通常用于实现无锁的数据结构和算法，允许线程在无锁的情况下以线程安全的方式修改共享变量，是同步的一种非阻塞手段。</span><br><span class="line"></span><br><span class="line">使用原子操作（如CAS）及设计数据结构时避免使用锁，确保在失败时可以重试，整个系统仍然可以进行其他操作。</span><br></pre></td></tr></table></figure>
+
+<p>10、锁的实现方式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">包括操作系统提供的互斥锁、读写锁、自旋锁等，通常利用原子操作和操作系统提供的同步原语实现。</span><br></pre></td></tr></table></figure>
+
+<p>11、多线程编程的时候，使用无锁结构会不会比有锁结构更加快</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">在高并发场景下，使用无锁结构可以减少上下文切换和锁争用导致的开销，但实现复杂，需根据具体场景决定。</span><br></pre></td></tr></table></figure>
+
+<p>12、linux线程是如何进行切换的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">通过调度算法（如轮转调度）管理时间片，线程状态被保存和恢复，切换时CPU上下文会被保存，线程状态信息更新。</span><br></pre></td></tr></table></figure>
+
+<p>13、Linux 开发，使用多线程还是用 IO 复用 select&#x2F;epoll</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">若I/O操作较多且并发量高，使用IO复用（如epoll）更为高效；多线程适合计算密集型任务或阻塞操作。</span><br></pre></td></tr></table></figure>
+
+<p>14、异步，多线程和并行的区别</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">异步处理为非阻塞执行，多线程指同时运行多个线程，而并行是多个任务同时在多个处理器上运行。</span><br></pre></td></tr></table></figure>
+
+<p>15、Linux 下多线程和多进程程序的优缺点，各自适合什么样的业务场景</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">多线程内存占用小、上下文切换快，但共享资源需同步；</span><br><span class="line">多进程更稳定、处理崩溃情况，但资源占用高。</span><br></pre></td></tr></table></figure>
+
+<p>16、开发多线程的程序应该注意哪些问题</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">线程同步、死锁、资源共享、可见性问题，合理设计数据结构并规范代码。</span><br></pre></td></tr></table></figure>
+
+<p>17、如何测试线程池的性能</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">使用压力测试工具监测响应时间、吞吐量和资源利用率，以评估线程池效率和扩展性。</span><br></pre></td></tr></table></figure>
+
+<p>18、死锁的原因和避免</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">由资源竞争和不当锁顺序引起，避免方式包括资源有序申请、使用超时机制等</span><br></pre></td></tr></table></figure>
+
+<p>19、如何理解互斥锁，条件锁，读写锁以及自旋锁</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">互斥锁用于确保互斥访问，</span><br><span class="line">条件锁允许线程等待特定条件，</span><br><span class="line">读写锁支持读者并发但限制写者，</span><br><span class="line">自旋锁适合快速锁定。</span><br></pre></td></tr></table></figure>
+
+<p>20、互斥锁，同步锁，临界区，互斥量，信号量，自旋锁之间联系是什么</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">都是用于控制对共享资源的访问，互斥锁和同步锁确保只有一个线程可以进入临界区，信号量用于控制可用资源，互斥量与自旋锁实现原理相似。</span><br></pre></td></tr></table></figure>
+
+<p>21、pthread_cond_wait 为什么需要传递 mutex 参数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">确保在等待条件变量时，自动释放和重新获取mutex，避免在等待状态下持有锁导致其他线程无法进入临界区。</span><br></pre></td></tr></table></figure>
+
+<p>22、多线程网络编程中如何合理地选择线程数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">根据硬件能力、并发量和I/O需求，通常选择的线程数为CPU核心数乘以2至4倍。</span><br></pre></td></tr></table></figure>
+
+<p>23、malloc和free是线程安全的吗，在多线程开发时用这两个函数应该注意什么</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">在现代malloc实现中是线程安全的，但使用时需避免频繁分配释放，影响性能和内存碎片。</span><br></pre></td></tr></table></figure>
+
+<p>24、僵尸进程和孤儿进程有什么区别、如何处理</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">僵尸进程是已终止但仍有父进程未回收资源的进程；孤儿进程是父进程已终止，由init进程收养。处理方式分别是wait和及时exit。</span><br></pre></td></tr></table></figure>
+
+<p>25、Linux系统中 进程 、线程 、时间片的关系</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">线程是进程的执行单元，时间片用于CPU调度，负责给每个进程分配时间运行。</span><br></pre></td></tr></table></figure>
+
+<p>26、在Linux系统中，对于用户创建的进程(线程)来说，CPU分配时间片的单位是线程还是进程</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">对于用户创建的进程（线程），CPU分配时间片的单位是线程，调度器基于线程进行调度。</span><br></pre></td></tr></table></figure>
+
+<p>27、内核级调度和用户级调度</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">内核级调度由操作系统管理，能更好地利用多处理器；用户级调度由应用程序管理，开销小但与操作系统无关。</span><br></pre></td></tr></table></figure>
+
+<p>28、Linux中进程具有父子层次结构，Windows中没有进程层次，这两种设计各有什么优劣</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">父子进程结构带来资源管理和继承便利，但较易导致复杂性增加；</span><br><span class="line">Windows的平面结构则简化了资源管理。</span><br></pre></td></tr></table></figure>
+
+<p>29、linux用户级进程跟内核线程（进程）有什么差别</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">用户级进程由用户程序控制，调度开销小；</span><br><span class="line">内核线程由内核管理，能更好地利用多核，但切换成本高。</span><br></pre></td></tr></table></figure>
+
+<p>30、为什么要区分用户态和内核态</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">提高系统的稳定性和安全性，隔离用户程序与内核操作，防止用户程序直接操作硬件。</span><br></pre></td></tr></table></figure>
+
+<p>31、从用户空间到内核空间有以下触发手段</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">触发手段包括系统调用、中断、异常和信号，这些机制允许用户程序请求内核服务或响应外部事件。</span><br></pre></td></tr></table></figure>
+
+<p>32、进程的内存空间布局</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">通常包括文本段（代码）、数据段（全局变量）、堆（动态分配）、栈（函数调用和局部变量），还包括映射的共享库。</span><br></pre></td></tr></table></figure>
+
+<p>33、进程间通信（IPC）方式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">主要方式包括管道、消息队列、共享内存、信号量、套接字等，允许不同进程之间交换数据。</span><br></pre></td></tr></table></figure>
+
+<p>34、进程空间和内核空间对内存的管理不同</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">进程空间使用虚拟地址管理自己的内存，不直接访问物理内存；</span><br><span class="line">内核空间管理所有进程的物理内存，处理高层次的内存分配和保护。</span><br></pre></td></tr></table></figure>
+
+<p>35、虚拟内存的作用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">提供每个进程独立的地址空间，允许使用比物理内存更大的地址空间，隔离进程，提高内存利用率和安全性。</span><br></pre></td></tr></table></figure>
+
+<p>36、虚拟内存的实现</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">通过页表将虚拟地址映射到物理地址，使用页替换算法管理内存；</span><br><span class="line">缺页中断机制用于在需要时加载页面到内存。</span><br></pre></td></tr></table></figure>
+
+<p>37、Linux的slab层</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">是内核的内存分配机制，管理对象缓存，提供快速分配与回收，减少内存碎片，并提高性能。</span><br></pre></td></tr></table></figure>
+
+<p>38、fork与vfork区别</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fork创建子进程并复制父进程的内存空间，</span><br><span class="line">而vfork不复制内存，子进程直接使用父进程的内存，直到调用exec或exit，提高创建速度。</span><br></pre></td></tr></table></figure>
+
+<p>39、exit()与_exit()区别</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exit()用于正常终止程序，执行清理；_exit()立即终止，不执行清理过程，适合子进程快速退出。</span><br></pre></td></tr></table></figure>
+
+<p>40、Linux是如何避免内存碎片的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">通过采用合适的内存管理算法（如伙伴系统、slab分配器）、合并相邻空闲块和使用内存池等技术来减小碎片。</span><br></pre></td></tr></table></figure>
+
+<p>41、共享内存的实现原理</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">通过在系统中创建一个可以被多个进程访问的内存段，使用系统调用（如shmget、shmat）创建和管理此段内存。</span><br></pre></td></tr></table></figure>
+
+<p>42、银行家算法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">是一种避免死锁的资源分配算法，通过计算当前资源分配和需要的安全性，确保每次请求都在安全状态下满足。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">工作原理：</span><br><span class="line">当进程请求资源时，系统首先评估满足该请求是否会保持系统在安全状态。</span><br><span class="line">使用以下关键数据结构：</span><br><span class="line">Max：每个进程所需的最大资源。</span><br><span class="line">Allocation：当前分配给每个进程的资源。</span><br><span class="line">Need：每个进程还需的资源（Max - Allocation）。</span><br><span class="line">Available：系统当前可用的资源。</span><br><span class="line"></span><br><span class="line">实施步骤：</span><br><span class="line">检查请求是否可以用可用资源满足。</span><br><span class="line">暂时分配资源，并更新 Allocation 和 Need 矩阵。</span><br><span class="line">使用安全性算法检查系统是否仍处于安全状态。</span><br><span class="line">如果安全，则正式分配资源；如果不安全，则回滚资源分配。</span><br></pre></td></tr></table></figure>
+
+<p>43、linux中断响应机制</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">通过中断请求（IRQ）信号中断当前执行的进程，由内核保存状态，处理完中断后恢复执行。</span><br></pre></td></tr></table></figure>
+
+<p>44、如何实现守护进程</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">守护进程（Daemon Process）是指在后台独立运行且不依赖用户界面的进程。它通常在系统启动时启动，并持续运行以执行无需用户干预的任务。</span><br><span class="line"></span><br><span class="line">特点：</span><br><span class="line">守护进程在后台运行，等待执行其任务。</span><br><span class="line">负责处理系统或服务相关的功能，如管理资源、监控系统性能或处理网络请求。</span><br><span class="line">通常以特权权限运行，设计用于处理各种事件和请求。</span><br><span class="line"></span><br><span class="line">常见用途：</span><br><span class="line">系统服务（如 web 服务器、数据库服务器）。</span><br><span class="line">定期任务（如安排任务的定时作业）。</span><br><span class="line">网络服务（如处理传入连接）。</span><br><span class="line"></span><br><span class="line">创建后台进程，通常通过fork分离父进程，然后调用setsid()成为新会话领导，关闭标准输入输出，运行任务。</span><br></pre></td></tr></table></figure>
+
+<p>45、32位系统一个进程最多有多少堆内存</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">理论上，32位系统最多可寻址4GB内存，实际有效用户空间一般为2GB（用户空间与Kernel空间分配），堆的大小通常受可用内存限制。</span><br></pre></td></tr></table></figure>
+
+<p>46、线程安全和不安全的讨论</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">线程安全指在多线程环境中能不产生数据竞争或错误；不安全则可能导致共享状态不一致，需通过同步机制来保障安全。</span><br></pre></td></tr></table></figure>
+
+<p>47、可重入函数与线程安全的区别与联系</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">可重入函数在被中断后可以安全重入，不依赖全局数据；</span><br><span class="line">线程安全函数可以在多线程环境下安全调用，两者均避免数据竞争。</span><br></pre></td></tr></table></figure>
+
+<p>48、双重检查锁定模式(DCLP)的风险</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">DCLP 的工作原理：</span><br><span class="line">通常用于懒初始化的上下文中，即对象仅在需要时创建。具体步骤如下：</span><br><span class="line"></span><br><span class="line">首先检查实例是否已初始化（第一次检查）。</span><br><span class="line">如果未初始化，获取锁。</span><br><span class="line">在获取锁后再次检查实例是否已初始化（第二次检查）。</span><br><span class="line">如果仍未初始化，则创建实例并释放锁。</span><br><span class="line"></span><br><span class="line">DCLP 的风险：</span><br><span class="line">编译器优化和重排序：由于编译器和 CPU 的优化，代码可能会被重排序，导致实例看似已初始化（其引用已设置），即使其构造函数尚未完成，这会导致多个线程看到该实例已经初始化并尝试使用它。</span><br><span class="line">内存可见性问题：在没有适当同步机制（如内存屏障或原子操作）的情况下，线程可能因为缓存或编译器优化而看不到变量的正确状态。</span><br></pre></td></tr></table></figure>
+
+<p>49、内存屏障详解</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">内存屏障（Memory Barrier）是一种同步机制，在并发编程中用于防止编译器和处理器对读写操作的重排序。它确保在屏障之前的所有内存操作都已完成，阻止屏障之后的操作在其之前执行。</span><br><span class="line"></span><br><span class="line">目的：</span><br><span class="line">防止重排序：内存屏障确保编译器和 CPU 不会在屏障周围重排序指令，这在多线程环境中对于保证执行顺序和数据一致性至关重要。</span><br><span class="line">操作的可见性：屏障确保一个线程所做的更改对其他线程可见。如果没有屏障，一个线程可能缓存某个值，而其他线程将无法看到该值的最新状态。</span><br><span class="line">类型：</span><br><span class="line">加载屏障（Load Barrier）：确保在屏障之前的所有加载操作（读取）完成后，才允许在屏障后执行任何加载操作。</span><br><span class="line">存储屏障（Store Barrier）：确保在屏障之前的所有存储操作（写入）完成后，才允许在屏障后执行任何存储操作。</span><br><span class="line">完全屏障（Full Barrier）：确保在屏障之前的所有加载和存储操作完成后，才允许执行屏障之后的操作。</span><br></pre></td></tr></table></figure>
+
+<p>50、原子操作原理</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">原子操作是不可分割的操作，通常通过硬件提供的原子指令（如CAS）实现，确保在多线程环境下的操作原子性。</span><br></pre></td></tr></table></figure>
+
+<p>51、Linux有内核级线程么</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">内核级线程（Kernel-Level Threads）是由操作系统内核直接管理的线程。在这种模型中，内核负责线程的调度、管理和执行。</span><br><span class="line"></span><br><span class="line">特点：</span><br><span class="line">直接调度：内核调度线程的执行，了解系统中的所有线程，并能够管理它们的执行上下文。</span><br><span class="line">并发性：内核级线程可以在多个处理器上并发执行，在多核系统中提供更好的性能。</span><br><span class="line">资源管理：内核负责分配给每个线程的资源，维护它们的状态，并允许高效的线程间通信。</span><br><span class="line">优势：</span><br><span class="line">系统级管理：内核可以根据线程的优先级和资源需求调度它们的执行，导致更高效的资源利用。</span><br><span class="line">故障隔离：如果一个线程失败，整个进程不一定会崩溃，内核可以处理故障，并可能只重启受影响的线程。</span><br><span class="line">在Linux中的示例：</span><br><span class="line">在Linux中，可以使用 pthread 库创建线程，该库提供了一个用于处理内核级线程的 API。每个线程都有自己的堆栈和寄存器，但共享同一进程的内存空间。</span><br><span class="line"></span><br><span class="line">Linux支持内核级线程，内核负责线程调度与管理，并能在不同的处理器上并发执行。</span><br></pre></td></tr></table></figure>
+
+<p>52、使用线程是如何防止出现大的波峰</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">通过限制并发线程数、使用负载均衡策略、采用线程池等方式减少短时间内的高峰负载。</span><br></pre></td></tr></table></figure>
+
+<p>53、操作系统中进程调度策略有哪几种</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">主要包括先来先服务（FCFS）、最短作业优先（SJF）、轮转调度（RR）、优先级调度以及多级反馈队列等。</span><br></pre></td></tr></table></figure>
+
+<p>54、线程与进程的区别和联系 线程是否具有相同的堆栈 dll是否有独立的堆栈</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">进程是资源分配的基本单位，线程是CPU调度的基本单位。线程间共享进程的堆栈空间，DLL通常会有一个堆栈供线程使用。</span><br></pre></td></tr></table></figure>
+
+<p>55、读者-写者问题</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">读者：多个读者可以同时读取资源，而不会互相干扰。</span><br><span class="line">写者：在写者写入时，只有一个写者可以写入资源，并且没有读者可以同时访问资源。</span><br><span class="line">挑战：</span><br><span class="line">竞争条件：如果没有正确的同步机制，多个读者和写者的并发访问可能会导致数据不一致或出现竞争条件。</span><br><span class="line">饥饿：写者可能会因读者不断访问资源而受到饥饿。</span><br><span class="line">公平性：确保读者和写者对资源的访问是公平的，以防止无限期的推迟。</span><br><span class="line">解决方案：</span><br><span class="line">可以采用多种同步机制：</span><br><span class="line">读写锁：这些锁允许多个读者或一次一个写者，管理访问的语义通过特定的方法。</span><br><span class="line">信号量：利用信号量管理访问资源的读者和写者的数量。</span><br><span class="line">互斥锁：结合互斥锁以确保在写者写入时独占访问，同时允许读者共享访问。</span><br></pre></td></tr></table></figure>
+
+<p>56、哲学家进餐问题</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">问题陈述：</span><br><span class="line">有五位哲学家坐在圆桌旁。每位哲学家交替进行思考和进餐。要进餐，哲学家需要左右两边的叉子（或筷子）。如果哲学家不能同时拿到两个叉子，他们必须等待。</span><br><span class="line">挑战：</span><br><span class="line">死锁：如果每位哲学家同时拿起左边的叉子，他们将各自等待右边的叉子，从而导致死锁，无法进餐。</span><br><span class="line">饥饿：哲学家可能会无限期等待进餐，如果其他人总是先拿到叉子，造成资源分配不公平。</span><br><span class="line">并发性：确保哲学家能够进餐，同时管理有限的资源（叉子），而不导致竞争条件或不一致性。</span><br><span class="line">解决方案：</span><br><span class="line">资源层次结构：对叉子编号，让哲学家先拿低编号的叉子，从而防止循环等待条件。</span><br><span class="line">限制并发哲学家数：在任何给定时间，只允许一定数量的哲学家尝试进餐。</span><br><span class="line">非对称解决方案：让一位哲学家先拿右边的叉子，然后再拿左边的叉子，打破对称性以防止死锁。</span><br></pre></td></tr></table></figure>
+
+<p>57、进程状态的切换图</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">进程状态通常包括就绪、运行、阻塞等，状态转换依赖于事件（如I/O完成、时间片耗尽等）。</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="三、TCP-IP网络编程面试题总结"><a href="#三、TCP-IP网络编程面试题总结" class="headerlink" title="三、TCP&#x2F;IP网络编程面试题总结"></a>三、TCP&#x2F;IP网络编程面试题总结</h2><p>1、网络体系结构</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">常见的网络体系结构有OSI模型、TCP/IP模型。</span><br><span class="line">OSI模型分为七层：物理层、数据链路层、网络层、传输层、会话层、表示层、应用层。</span><br><span class="line">TCP/IP模型主要分为四层：链路层、互联网层、传输层和应用层。</span><br></pre></td></tr></table></figure>
+
+<p>2、TCP和UDP有什么区别</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">TCP是安全可靠的连接，需要三次握手</span><br><span class="line">UDP是不安全的，但是无需三次握手，快</span><br></pre></td></tr></table></figure>
+
+<p>3、编写socket套接字的步骤</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">创建socket</span><br><span class="line">绑定socket到地址</span><br><span class="line">监听连接（仅服务器）</span><br><span class="line">接受连接（仅服务器）</span><br><span class="line">发送和接收数据</span><br><span class="line">关闭socket</span><br></pre></td></tr></table></figure>
+
+<p>4、TCP三次握手和四次挥手，以及各个状态的作用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">三次握手：</span><br><span class="line">客户端发送SYN请求连接。</span><br><span class="line">服务器回应SYN-ACK确认。</span><br><span class="line">客户端发送ACK确认连接建立。</span><br><span class="line"></span><br><span class="line">四次挥手：</span><br><span class="line">主动关闭方发送FIN。</span><br><span class="line">被动关闭方回应ACK。</span><br><span class="line">被动关闭方发送FIN。</span><br><span class="line">主动关闭方回应ACK关闭连接。</span><br></pre></td></tr></table></figure>
+
+<p>5、Http协议和TCP的区别</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HTTP是应用层协议，基于TCP协议进行数据传输。</span><br><span class="line">TCP提供可靠的字节流服务，而HTTP定义了请求和响应的格式。</span><br></pre></td></tr></table></figure>
+
+<p>6、同步IO和异步IO的区别</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">同步IO：调用阻塞，直到IO操作完成。</span><br><span class="line">异步IO：调用非阻塞，返回后可以继续执行，IO操作完成时会通过回调通知。</span><br></pre></td></tr></table></figure>
+
+<p>7、什么是IOCP</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">IOCP（I/O Completion Port）是Windows中一种高效的异步IO处理机制，可以让多个线程处理多个IO请求高效轮询。</span><br></pre></td></tr></table></figure>
+
+<p>8、什么是网络套接字(Socket)?流套接字(SOCK_STREAM)基于什么协议</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">网络套接字(Socket)：是一种用于网络通信的端点，流套接字(SOCK_STREAM)基于TCP协议。</span><br></pre></td></tr></table></figure>
+
+<p>9、IP首部、TCP首部、UDP首部、以太网首部</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">IP首部：包含源/目的IP地址、版本、头部长度、协议等。</span><br><span class="line">TCP首部：包含源/目的端口、序列号、确认号、标志位等。</span><br><span class="line">UDP首部：包含源/目的端口、长度、校验和。</span><br><span class="line">以太网首部：包含目的MAC地址、源MAC地址、类型。</span><br></pre></td></tr></table></figure>
+
+<p>10、TCP和UDP的应用场景</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">TCP：网页浏览、文件传输、电子邮件等。</span><br><span class="line">UDP：实时音视频、在线游戏、DNS查询等。</span><br></pre></td></tr></table></figure>
+
+<p>11、如何实现可靠的UDP</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">可以通过重传机制、序列号、确认应答和流量控制实现。</span><br></pre></td></tr></table></figure>
+
+<p>12、详细说明TCP状态迁移过程</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">TCP状态列表</span><br><span class="line">CLOSED：初始状态，表示没有活动的连接。</span><br><span class="line">LISTEN：服务器端等待连接请求的状态。</span><br><span class="line">SYN_SENT：客户端发送SYN请求后，等待服务器确认的状态。</span><br><span class="line">SYN_RECEIVED：服务器接收到SYN请求并发送SYN-ACK后，处于此状态。</span><br><span class="line">ESTABLISHED：连接已建立，数据可以双向传输。</span><br><span class="line">FIN_WAIT_1：主动关闭连接的一方发送FIN后，等待确认的状态。</span><br><span class="line">FIN_WAIT_2：在FIN_WAIT_1状态收到对方的ACK后，进入此状态，等待对方发送FIN的状态。</span><br><span class="line">CLOSE_WAIT：被动关闭连接的一方接收到FIN后，等待应用程序关闭连接的状态。</span><br><span class="line">LAST_ACK：被动关闭连接的一方发送FIN后，等待确认的状态。</span><br><span class="line">TIME_WAIT：连接关闭后，等待足够的时间以确保对方接收到最后的ACK。</span><br><span class="line">2. 状态迁移过程</span><br><span class="line">连接建立（握手过程）：</span><br><span class="line"></span><br><span class="line">CLOSED → LISTEN：</span><br><span class="line"></span><br><span class="line">服务器调用listen()，进入LISTEN状态，准备接受连接请求。</span><br><span class="line">LISTEN → SYN_RECEIVED：</span><br><span class="line"></span><br><span class="line">客户端发送SYN包请求建立连接，服务器接收到后，回复SYN-ACK包，进入SYN_RECEIVED状态。</span><br><span class="line">SYN_SENT → ESTABLISHED：</span><br><span class="line"></span><br><span class="line">客户端收到SYN-ACK包后，发送ACK包确认，进入ESTABLISHED状态，连接成功建立。</span><br><span class="line">SYN_RECEIVED → ESTABLISHED：</span><br><span class="line"></span><br><span class="line">服务器接收到ACK包后，也进入ESTABLISHED状态，连接成功建立。</span><br><span class="line">连接终止（挥手过程）：</span><br><span class="line"></span><br><span class="line">ESTABLISHED → FIN_WAIT_1：</span><br><span class="line"></span><br><span class="line">主动关闭连接的一方发送FIN包，进入FIN_WAIT_1状态。</span><br><span class="line">FIN_WAIT_1 → FIN_WAIT_2：</span><br><span class="line"></span><br><span class="line">被动方接收到FIN包后，发送ACK包确认，主动方进入FIN_WAIT_2状态。</span><br><span class="line">FIN_WAIT_2 → TIME_WAIT：</span><br><span class="line"></span><br><span class="line">被动方发送FIN包，主动方接收到后，发送ACK包确认，进入TIME_WAIT状态。</span><br><span class="line">CLOSE_WAIT → LAST_ACK：</span><br><span class="line"></span><br><span class="line">被动关闭连接的一方在接收到FIN包后，发送FIN包，进入LAST_ACK状态。</span><br><span class="line">LAST_ACK → CLOSED：</span><br><span class="line"></span><br><span class="line">主动方接收到最后的ACK包后，连接完全关闭，进入CLOSED状态。</span><br><span class="line">TIME_WAIT → CLOSED：</span><br><span class="line"></span><br><span class="line">在TIME_WAIT状态保持一段时间后，确保所有数据包都被处理后，进入CLOSED状态</span><br></pre></td></tr></table></figure>
+
+<p>13、2MSL是什么状态？作用是什么</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2MSL是指TCP连接关闭后的一个状态，连接在TIME_WAIT状态存在2个MSL（最大分段生存时间），以确保数据包的正确性与完整性。</span><br></pre></td></tr></table></figure>
+
+<p>14、三次握手为什么不是两次或者四次</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">两次握手可能导致不可靠的连接，四次握手增加了额外的延迟和复杂度，三次握手在保证安全性同时也能确保连接的可靠性。</span><br></pre></td></tr></table></figure>
+
+<p>15、TCP重发机制</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TCP使用超时和重复确认来判断丢包，如果在超时时间内没有收到数据确认，将重新发送数据。</span><br></pre></td></tr></table></figure>
+
+<p>16、说说Nagle算法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Nagle算法用于减少小数据包的数量，通过将小包合并成一个大包以减少网络拥塞。</span><br><span class="line"></span><br><span class="line">当发送数据时，Nagle算法会检查是否已经发送了一个ACK（确认应答）。</span><br><span class="line">如果已经收到ACK，算法将会发送当前缓存的小数据包。</span><br><span class="line">如果当前没有收到ACK，算法会缓存数据，直到大于一个MSS（最大报文段大小）或经过某个时间延迟（通常是200毫秒）后再发送。</span><br><span class="line">优点</span><br><span class="line">减少包的数量：合并小包可以显著降低网络上的数据包数量，避免频繁的网络请求带来的拥堵，从而提高整体传输效率。</span><br><span class="line">提高带宽利用率：通过合并小包，Nagle算法更有效地利用了网络带宽，减少了传输开销。</span><br><span class="line">缺点</span><br><span class="line">引入延迟：由于小包可能会在发送之前被缓存，导致延迟增加，尤其是对于需要实时交互的应用程序（如网络游戏和视频聊天）。</span><br><span class="line">对实时应用的不利影响：在某些情况下（如实时通信），Nagle算法可能会对用户体验造成负面影响，造成明显的输入延迟。</span><br></pre></td></tr></table></figure>
+
+<p>17、TCP拥塞控制</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">采用慢启动、拥塞避免、快速重传和快速恢复等机制动态调整发送速率。</span><br></pre></td></tr></table></figure>
+
+<p>18、TCP的滑动窗口</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TCP滑动窗口协议允许发送方在等待确认的同时发送多个数据包，以提高信道利用率。</span><br></pre></td></tr></table></figure>
+
+<p>19、域名解析的过程</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">输入URL → DNS查询 → 获取IP → 建立连接（TCP或UDP） → 发送请求。</span><br></pre></td></tr></table></figure>
+
+<p>20、ARP的机制</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">地址解析协议（ARP）通过广播请求获取目标IP地址对应的MAC地址，确定同一局域网内的设备。</span><br></pre></td></tr></table></figure>
+
+<p>21、RARP的实现</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">反向地址解析协议（RARP）允许设备通过其MAC地址请求IP地址</span><br></pre></td></tr></table></figure>
+
+<p>22、http&#x2F;https 1.0 1.1 2.0的特点和区别</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1.0：简单的请求与响应，不支持持久连接。</span><br><span class="line">1.1：支持持久连接、管道化、分块传输等。</span><br><span class="line">2.0：基于二进制传输，多路复用性强，压缩头部，效率更高。</span><br></pre></td></tr></table></figure>
+
+<p>23、Get&#x2F;post的区别</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GET用于请求数据，通常缓存，对URL长度有限制，数据在URL中可见；</span><br><span class="line">POST用于提交数据，数据在请求体中，适合传输大量数据。</span><br></pre></td></tr></table></figure>
+
+<p>24、Http返回状态码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">常见状态码有200（成功），404（未找到），500（服务器错误），301（永久重定向），302（临时重定向）。</span><br></pre></td></tr></table></figure>
+
+<p>25、Http协议相关头</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">Content-Type：</span><br><span class="line">功能：指定发送内容的媒体类型（MIME类型），例如text/html（HTML文档）、application/json（JSON格式）、image/png（PNG图像）等。</span><br><span class="line">示例：Content-Type: application/json</span><br><span class="line"></span><br><span class="line">Content-Length：</span><br><span class="line">功能：表示消息体的大小，以字节为单位，便于接收方知道如何读取消息体。</span><br><span class="line">示例：Content-Length: 348（表示消息体长度为348字节）</span><br><span class="line"></span><br><span class="line">User-Agent：</span><br><span class="line">功能：包含发送请求的客户端软件的名称和版本信息，常用于服务器识别客户端，并做出适当的响应。</span><br><span class="line">示例：User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36</span><br><span class="line"></span><br><span class="line">Accept：</span><br><span class="line">功能：指出客户端能够处理的媒体类型，可以包含优先级，以告诉服务器返回什么格式的响应。</span><br><span class="line">示例：Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8（表示优先接受HTML和XML等）</span><br><span class="line"></span><br><span class="line">Host：</span><br><span class="line">功能：指明请求的目标主机名以及可选的端口号。这是HTTP/1.1中必须包含的头部，因为一台服务器可能托管多个网站。</span><br><span class="line">示例：Host: www.example.com</span><br></pre></td></tr></table></figure>
+
+<p>26、浏览器中输入一个URL发生什么，用到那些协议</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">输入URL时，浏览器会进行DNS解析，建立TCP连接，通过HTTP/HTTPS协议发送请求，获取数据并呈现。</span><br></pre></td></tr></table></figure>
+
+<p>27、五种IO模型</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">阻塞IO、非阻塞IO、IO多路复用（select/poll/epoll）、信号驱动IO、异步IO。</span><br></pre></td></tr></table></figure>
+
+<p>28、select,poll,epoll的区别</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">都属于IO多路复用；</span><br><span class="line">select有最大文件描述符限制（集合），poll不受限制但性能较差（数组），epoll性能高且支持边缘触发和水平触发。</span><br></pre></td></tr></table></figure>
+
+<p>29、UDP中一个包的大小最大能多大</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">在IPv4下，UDP包的最大大小为65507字节（68字节为UDP头部）。</span><br></pre></td></tr></table></figure>
+
+<p>30、Time_wait,close_wait状态产生的原因，keeplive</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Time_wait是因主动关闭方等待，确保数据传输完成；</span><br><span class="line">Close_wait是因被动关闭方还未完全关闭连接。</span><br><span class="line">Keepalive是用来保持长时间未传输的TCP连接。</span><br></pre></td></tr></table></figure>
+
+<p>31、列举你所知道的TCP选项</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">最大段大小（MSS - Maximum Segment Size）：</span><br><span class="line">功能：指定TCP连接中单个数据段的最大字节数。通过这个选项，双方可以确定可发送的最大数据段大小，从而避免在传输过程中出现分片。</span><br><span class="line">应用：在三次握手中的SYN包时进行协商，以确保双方均能处理相同大小的数据段。</span><br><span class="line"></span><br><span class="line">窗口扩大选项（Window Scale）：</span><br><span class="line">功能：用于TCP窗口大小的大规模扩展，解决了在高速网络中TCP窗口大小限制的问题。默认情况下，TCP窗口大小最多为65,535字节，使用窗口扩大选项后，可以将窗口缩放到更大。</span><br><span class="line">应用：通过在SYN包中协商窗口缩放因子的值，以提高高速连接的性能。</span><br><span class="line"></span><br><span class="line">时间戳（Timestamp）：</span><br><span class="line">功能：提供更精确的RTT（往返时间）测量和序列号保护（防止序列号重利用问题）。时间戳选项具有两个字段：一个用于发送时间戳，一个用于回送时间戳。</span><br><span class="line">应用：可以在数据包中准确记录发送时间，帮助优化网络延时计算和TCP性能。</span><br><span class="line"></span><br><span class="line">选择确认（SACK - Selective Acknowledgment）：</span><br><span class="line">功能：允许接收方在丢包的情况下，告知发送方哪些数据已经成功接收，哪些数据仍未接收到。这样可以避免重复发送已接收的数据，提高传输效率。</span><br><span class="line">应用：特别在高延迟或高丢包率的网络中，让TCP更高效地重传丢失的数据。</span><br><span class="line"></span><br><span class="line">TCP快速打开（TFO - TCP Fast Open）：</span><br><span class="line">功能：允许数据在TCP连接的建立过程中就可以开始传输，从而减少延迟。客户端在SYN包中包含数据，服务器可以在返回SYN-ACK包时直接处理这些数据。</span><br><span class="line">应用：用于减少应用层握手延迟，提升重连时的性能，特别适用于需要频繁建立连接的场景。</span><br><span class="line"></span><br><span class="line">保活（Keepalive）：</span><br><span class="line">功能：用于在TCP连接空闲时定期发送探测消息，以检测对方是否仍然可用。如果对方没有响应，连接会被认为已关闭。</span><br><span class="line">应用：在长时间未发送数据的连接中，确保连接的活性，避免因网络问题导致的长时间挂起情况。</span><br><span class="line"></span><br><span class="line">结束时间（End Time）：</span><br><span class="line">功能：并不是正式的TCP选项，但在某些TCP实现中，可能用于指示连接的结束时间或关闭的计划时间。一般在特定应用层协议中使用，通常不是标准的TCP选项。</span><br><span class="line">应用：根据实现的不同，可能会针对连接的预期关闭时间进行相关配置。</span><br></pre></td></tr></table></figure>
+
+<p>32、Connect会阻塞检测及防止，socket什么情况下可读</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">connect在尝试建立连接时会阻塞，直到连接成功或超时。</span><br><span class="line">socket可读的条件包括：有数据可读、连接关闭、或者发生错误。</span><br></pre></td></tr></table></figure>
+
+<p>33、如果select返回可读，结果只读到0字节，什么情况</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">这通常意味着对方已正常关闭连接，导致recv返回0字节，表示EOF（文件结束）</span><br></pre></td></tr></table></figure>
+
+<p>34、socket什么情况下可读</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">socket可读的条件包括：有数据可读、连接关闭、或者发生错误。</span><br></pre></td></tr></table></figure>
+
+<p>35、Keepalive是什么东西，如何使用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Keepalive是TCP的一种机制，用于维持长时间不活动的连接。可以通过设置socket选项（如SO_KEEPALIVE）来启用。</span><br></pre></td></tr></table></figure>
+
+<p>36、UDP使用connect的好处</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">使用connect后，UDP可以简化sendto调用，避免每次调用都需指定目的地址，同时也可以实现远程主机的错误检查。</span><br></pre></td></tr></table></figure>
+
+<p>37、各层对应的网络设备（路由器、交换机、网关、网桥、集线器等），各层对应的协议</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">物理层：集线器、调制解调器（无协议）</span><br><span class="line">数据链路层：交换机、网桥（以太网、PPP等）</span><br><span class="line">网络层：路由器（IP协议）</span><br><span class="line">传输层：无专门设备（TCP、UDP）</span><br><span class="line">应用层：网关（HTTP、FTP、SMTP等）</span><br></pre></td></tr></table></figure>
+
+<p>38、数据链路层的CSMA&#x2F;CD协议</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CSMA/CD（载波监听多路访问/碰撞检测）是一种网络协议，用于以太网中，设备在发送前监听信道是否空闲，发生碰撞则进行重传。</span><br></pre></td></tr></table></figure>
+
+<p>39、IP地址的分类，子网划分</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">类A、B、C、D、E地址。类A（1.0.0.0到126.0.0.0）、类B（128.0.0.0到191.255.0.0）、类C（192.0.0.0到223.255.255.0）、类D（224.0.0.0到239.255.255.255）用于多播，类E（240.0.0.0到255.255.255.255）保留。子网划分通过掩码帮助组织和管理IP地址。</span><br></pre></td></tr></table></figure>
+
+<p>40、TCP精髓问题：停止等待协议、连续ARQ协议</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">1. 停止等待协议（Stop-and-Wait ARQ）</span><br><span class="line">工作原理：</span><br><span class="line">停止等待协议是一种简单的自动重传请求（ARQ）协议。发送方在发送每个数据帧后，必须等待接收方的确认（ACK）后才能发送下一个帧。这意味着每次都需要进行确认，造成发送方在等待时的空闲。</span><br><span class="line"></span><br><span class="line">流程：</span><br><span class="line">发送方发送一个数据帧。</span><br><span class="line">发送方停止发送，等待接收方的ACK。</span><br><span class="line">如果接收到ACK，发送下一个数据帧；如果未接收到ACK（可能因丢包等原因），重新发送已发送的帧。</span><br><span class="line"></span><br><span class="line">优点：</span><br><span class="line">简单易于实现，适合小数据量传输。</span><br><span class="line">维护状态较少，资源占用较低。</span><br><span class="line"></span><br><span class="line">缺点：</span><br><span class="line">效率低下：等待确认时浪费了发送时间，特别是在高延迟网络中，其性能尤其明显。</span><br><span class="line">比如如果RTT（往返时间）较长，发送方在等待确认期间处于空闲状态。</span><br><span class="line"></span><br><span class="line">2. 连续ARQ协议（Go-Back-N ARQ / Selective Repeat ARQ）</span><br><span class="line">工作原理：</span><br><span class="line">连续ARQ协议允许发送方在未收到确认前，连续发送多个数据帧。接收方可以接收乱序到达的数据，并根据协议类型的不同进行处理。</span><br><span class="line"></span><br><span class="line">流程：</span><br><span class="line"></span><br><span class="line">Go-Back-N ARQ：</span><br><span class="line">发送方发送N个数据帧，设置一个窗口（窗口大小为N）。</span><br><span class="line">接收方只确认接收到的最后一个数据帧，并可能丢弃后续帧（乱序）。</span><br><span class="line">如果发生错误，发送方需回退到错误发生前的帧，重新发送所有后续帧。</span><br><span class="line"></span><br><span class="line">Selective Repeat ARQ：</span><br><span class="line">类似于Go-Back-N，发送方也发送多个帧。</span><br><span class="line">接收方对每个接收到的帧发送ACK，即使那些帧是乱序接收的。</span><br><span class="line">发送方只需重传那些未被确认的帧，而不是所有后续帧。</span><br><span class="line"></span><br><span class="line">优点：</span><br><span class="line">提高传输效率和带宽利用率：发送多个帧而不等待每个的确认。</span><br><span class="line">尤其在高延迟或高带宽的网络环境中，能够最大化传输速率。</span><br><span class="line"></span><br><span class="line">缺点：</span><br><span class="line">实现复杂度增加，需要管理更多的状态与缓冲。</span><br><span class="line">可能导致更高的内存和网络资源需求。</span><br></pre></td></tr></table></figure>
+
+<p>41、HTTP缓存机制（cache-control、Expires之类的一系列请求与相应的报头字段</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">Cache-Control：</span><br><span class="line">功能：用于指定缓存策略，控制请求和响应的缓存行为。这个字段可以出现在请求和响应中。</span><br><span class="line">常见指令：</span><br><span class="line">no-cache：强制要求重新验证缓存的内容。</span><br><span class="line">no-store：不缓存任何内容。</span><br><span class="line">public：响应可以被任何缓存存储。</span><br><span class="line">private：响应仅可被单个用户的缓存存储，不能被共享缓存存储。</span><br><span class="line">max-age=&lt;seconds&gt;：指定响应的最大有效时间（秒），超过此时间后需重新请求。</span><br><span class="line">示例：Cache-Control: max-age=3600（该响应在1小时内有效）</span><br><span class="line"></span><br><span class="line">Expires：</span><br><span class="line">功能：指定响应的过期时间，表示在此时间之前，缓存的内容是有效的。Expires字段使用绝对时间格式。</span><br><span class="line">示例：Expires: Wed, 21 Oct 2024 07:28:00 GMT（表示该响应在该时间之前有效）</span><br><span class="line">注意：Expires字段在HTTP/1.1中被Cache-Control字段所取代，但仍然被广泛使用。</span><br><span class="line"></span><br><span class="line">ETag（实体标签）：</span><br><span class="line">功能：为特定版本的资源提供唯一标识符。服务器可以使用ETag来判断客户端缓存的内容是否是最新的。</span><br><span class="line">用法：客户端在请求中可以使用If-None-Match头字段来携带ETag值，服务器可以根据该值判断资源是否被修改。</span><br><span class="line">示例：ETag: &quot;abc123&quot;（表示资源的唯一标识符）</span><br><span class="line"></span><br><span class="line">Last-Modified（最后修改时间）：</span><br><span class="line">功能：指示资源最后一次被修改的时间。客户端可以使用If-Modified-Since请求头来询问服务器该资源自最后修改以来是否有更新。</span><br><span class="line">示例：Last-Modified: Tue, 20 Oct 2024 12:00:00 GMT（表示资源最后修改的时间）</span><br><span class="line">注意：与ETag一起使用时，可以提供更灵活的缓存验证机制。</span><br></pre></td></tr></table></figure>
+
+<p>42、session和cookied 区别，禁用cookie后怎么办</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Cookie存储在客户端，session存储在服务器。</span><br><span class="line">禁用cookie时，可以使用URL参数及基于session的访问存储方式。</span><br></pre></td></tr></table></figure>
+
+<p>43、常用协议的端口</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">HTTP: 80</span><br><span class="line">HTTPS: 443</span><br><span class="line">FTP: 21</span><br><span class="line">SSH: 22</span><br><span class="line">SMTP: 25</span><br><span class="line">DNS: 53</span><br></pre></td></tr></table></figure>
+
+<p>44、三层交换机和路由器的区别</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">三层交换机在数据链路层和网络层工作，支持路由功能，处理速度快。主要用于局域网（LAN）内部的高效数据转发，能够快速处理VLAN（虚拟局域网）间的数据包。</span><br><span class="line">路由器主要用于不同网络间的数据转发，具备复杂的路由协议。</span><br></pre></td></tr></table></figure>
+
+<p>45、什么是TCP的自连接，如何解决</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TCP自连接指的是客户端和服务器使用同一个socket同时接收和发送数据。这通常会导致数据混乱。解决方法是使用不同的socket进行连接。</span><br></pre></td></tr></table></figure>
+
+<p>46、单播、多播（组播）和广播的区别</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">单播：一对一传输。</span><br><span class="line">多播：一对多，只发送给特定组的主机。</span><br><span class="line">广播：一对所有主机发送。</span><br></pre></td></tr></table></figure>
+
+<p>47、当应用程序调用Send之后怎么判断对方是否成功接收</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">通过接收方发送的ACK确认来判断，或使用TCP的重传机制。</span><br></pre></td></tr></table></figure>
+
+<p>48、静态路由和动态路由各自的优缺点</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">静态路由：配置简单，稳定性高，但不适应网络变化。</span><br><span class="line">动态路由：能够自动适应网络变化，但配置复杂，开销较大。</span><br></pre></td></tr></table></figure>
+
+<p>49、路由器和交换机的不同之处有哪些</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">路由器工作在网络层，处理不同网络之间的数据转发。</span><br><span class="line">交换机工作在数据链路层，主要处理同一网络内的设备。</span><br></pre></td></tr></table></figure>
+
+<p>50、为什么有时ping服务器第一包丢失</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">可能是由于网络延迟、服务器负载过高、ICMP请求被防火墙丢弃等原因。</span><br></pre></td></tr></table></figure>
+
+<p>51、tcp 阻塞socket send recv需要注意的操作</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">需处理阻塞带来的响应时间，适时调整发送和接收缓冲区，注意网络延迟和异常处理。</span><br></pre></td></tr></table></figure>
+
+<p>52、TCP封包和拆包</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">封包是将多条数据合并为一条TCP数据流，拆包是将接收的TCP数据流分解为多条数据。需要处理数据完整性和顺序。</span><br></pre></td></tr></table></figure>
+
+<p>53、怎样理解阻塞非阻塞与同步异步的区别</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">阻塞与非阻塞：指调用操作是否会阻塞进程。</span><br><span class="line">同步与异步：指操作的结果是否在调用返回时可用。</span><br></pre></td></tr></table></figure>
+
+<p>54、epoll：EPOLLLT和EPOLLET的区别</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">EPOLLLT（水平触发）：只要可读可写事件存在，epoll会不断通知；</span><br><span class="line">EPOLLET（边缘触发）：只在状态改变时通知，要结合非阻塞IO使用，避免未处理的事件丢失。</span><br></pre></td></tr></table></figure>
+
+<p>55、epoll事件驱动框架使用注意事项</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">确保在读取数据时及时处理所有事件以避免丢失，合理设置超时时间，把事件处理逻辑放入专门的处理函数。</span><br></pre></td></tr></table></figure>
+
+<p>56、Linux-socket的close和shutdown区别及应用场景</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">close关闭socket并释放资源，shutdown可以部分或完全关闭一个连接。</span><br><span class="line">shutdown适用于需要以特定方式关闭连接时。</span><br></pre></td></tr></table></figure>
+
+<p>57、TCP带外数据</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TCP带外数据允许在正常数据流之外传输特殊数据，通常用于紧急情况，需特别设置。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 发送正常数据  </span><br><span class="line">send(sock, &quot;NORMAL_COMMAND&quot;, strlen(&quot;NORMAL_COMMAND&quot;), 0);  </span><br><span class="line"></span><br><span class="line">// 发送带外数据（紧急停止命令）  </span><br><span class="line">send(sock, &quot;STOP&quot;, strlen(&quot;STOP&quot;), MSG_OOB);  </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">recv(sock, buffer, sizeof(buffer), 0);  </span><br><span class="line"></span><br><span class="line">// 接收带外数据  </span><br><span class="line">recv(sock, buffer, sizeof(buffer), MSG_OOB); // 优先处理带外数据  </span><br><span class="line"></span><br><span class="line">if (strcmp(buffer, &quot;STOP&quot;) == 0) &#123;  </span><br><span class="line">   // 执行紧急停止  </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+
+<p>58、网桥的作用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">网桥连接两个或多个网络段，转发数据包并过滤流量，提高网络的整体性能和安全性。</span><br></pre></td></tr></table></figure>
+
+<p>59、防火墙的端口防护</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">防火墙通过策略限制特定端口的流量，防止未授权访问，提高网络安全性。</span><br></pre></td></tr></table></figure>
+
+<p>60、有哪些私有保留地址</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">类A（10.0.0.0到10.255.255.255）、</span><br><span class="line">类B（172.16.0.0到172.31.255.255）、</span><br><span class="line">类C（192.168.0.0到192.168.255.255）。</span><br></pre></td></tr></table></figure>
+
+<p>61、Ping命令使用的那种报文</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Ping命令使用的是ICMP（Internet Control Message Protocol）协议报文，通常是ICMP Echo Request和Echo Reply消息。</span><br></pre></td></tr></table></figure>
+
+<p>62、两台笔记本电脑连起来后ping不通，你觉得有哪些问题造成的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">物理连接问题（如网线故障）、IP地址配置错误、子网掩码设置不当、操作系统防火墙设置、网络适配器驱动问题、或者网络协议未正确启用。</span><br></pre></td></tr></table></figure>
+
+<p>63、Vlan的特点</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">逻辑分割网络、提高网络安全、减小广播域、增强网络管理与灵活性、可跨交换机进行配置。</span><br></pre></td></tr></table></figure>
+
+<p>64、ICMP是属于什么协议，处于那一层</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ICMP（互联网控制消息协议）是网络层协议，用于传递控制消息和错误报告。</span><br></pre></td></tr></table></figure>
+
+<p>65、IP组播有什么好处</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">减少带宽消耗、提高网络效率、同时向多个接收者传输数据、适用于视频会议和实时流媒体传输。</span><br></pre></td></tr></table></figure>
+
+<p>66、DNS欺骗的方式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">伪造DNS响应、利用缓存投毒、DNS重定向、请求伪装、或中间人攻击等。</span><br></pre></td></tr></table></figure>
+
+<p>67、reactor和proactor的区别</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">Reactor模型</span><br><span class="line">Reactor是一种事件处理模型，涉及事件的监听和分发，主要用于高并发的应用中。其工作机制如下：</span><br><span class="line"></span><br><span class="line">事件循环：主线程监听事件源（如文件描述符、网络连接等）并在事件发生时进行分发。</span><br><span class="line">异步处理：当事件到达时，主线程将这些事件分发给合适的事件处理程序。</span><br><span class="line">IO多路复用：通常结合 select、poll 或 epoll 等系统调用，实现高效的IO操作。</span><br><span class="line">优点：</span><br><span class="line">高效处理并发：适合处理大量并发连接，减少线程/进程创建开销。</span><br><span class="line">资源利用率高：通过事件循环和多路复用机制，资源利用更加高效。</span><br><span class="line">缺点：</span><br><span class="line">复杂性：处理回调和状态管理可能会导致复杂的代码结构。</span><br><span class="line">阻塞问题：与IO相关的处理如果发生阻塞，会影响整个事件循环。</span><br><span class="line"></span><br><span class="line">Proactor模型</span><br><span class="line">Proactor是一种将事件处理的完成交给操作系统的模型，通常用于异步IO操作，其核心机制如下：</span><br><span class="line"></span><br><span class="line">异步操作：应用程序发起异步IO操作时，将任务交给操作系统。</span><br><span class="line">事件完成处理：操作系统在IO完成时会发出通知（通常是信号或消息），应用程序接收到后处理相应的完成事件。</span><br><span class="line">无阻塞处理：应用层线程在等待事件完成时可以进行其他操作，不必阻塞在IO调用上。</span><br><span class="line">优点：</span><br><span class="line">更适合高延迟操作：适合处理需要长时间等待的IO操作（如网络请求、文件读取等）。</span><br><span class="line">简化应用层逻辑：应用层只需关注处理已经完成的操作，代码结构较为简单。</span><br><span class="line">缺点：</span><br><span class="line">依赖操作系统支持：需要操作系统对异步IO的支持，对于某些平台来说可能存在限制。</span><br><span class="line">资源消耗：可能在资源管理上相对Reactor模型增加了复杂性。</span><br><span class="line"></span><br><span class="line">对比总结</span><br><span class="line"></span><br><span class="line">使用场景：</span><br><span class="line">Reactor：适合高并发、低延迟的应用，如Web服务器、实时通信系统等。</span><br><span class="line">Proactor：适合需要处理长时间IO操作的场景，如文件下载、网络服务等。</span><br><span class="line"></span><br><span class="line">复杂性：</span><br><span class="line">Reactor：可能面临复杂的回调和状态管理。</span><br><span class="line">Proactor：逻辑较为清晰，但需要检测操作系统支持。</span><br><span class="line"></span><br><span class="line">性能：</span><br><span class="line">Reactor：在大量短期IO操作时性能较高。</span><br><span class="line">Proactor：在长时间的异步操作中可能表现更佳。</span><br></pre></td></tr></table></figure>
+
+<p>68、两台机器A-B进行TCP通讯</p>
+<p>​	进程崩溃会怎么样？</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">连接终止，数据丢失，任务需要重新开始</span><br><span class="line"></span><br><span class="line">查看操作系统的日志，确认崩溃的进程信息。</span><br></pre></td></tr></table></figure>
+
+<p>​	进程死锁会怎么样？</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">连接还在，但进程遭到阻塞，虽然会因为超时而重传，但因为阻塞也不会收到响应。</span><br><span class="line">需要手动查看进程状态（top或者ps），确认死锁</span><br></pre></td></tr></table></figure>
+
+<p>​	进程或机器过载，反应变慢会怎么样？</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">高延迟，接受到的数据量超过缓冲区容量，导致溢出，数据包丢失，另一方因为延迟触发超时，最后关闭连接</span><br><span class="line">通过性能监控工具（如 top、htop 或 vmstat）检查cpu和内存使用情况</span><br></pre></td></tr></table></figure>
+
+<p>​	进程死循环，拼命发消息会怎么样？</p>
+<p>​	会怎么样？</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">因为不停的发消息导致网络拥堵，消耗cpu资源，导致网络通信超时和系统性能下降</span><br><span class="line">使用网络检测工具（wireshark）分析流量</span><br></pre></td></tr></table></figure>
+
+<p>​	机器重启、死机会怎么样？</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">和第一个进程奔溃一样，连接终止，数据丢失，任务需要从头开始</span><br><span class="line">查看日志</span><br></pre></td></tr></table></figure>
+
+<p>​	机器网卡抽风，丢包严重会怎么样？</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">数据包丢失，连接不稳定导致多次重传，性能下降</span><br><span class="line">通过检测工具（如 ping 或 traceroute）检查丢包率</span><br></pre></td></tr></table></figure>
+
+<p>​	交换机或路由器坏了或过载会怎么样？</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">连接终端，数据包中断，增加网络延迟</span><br><span class="line">使用网络监测工具（如 ping 或 traceroute）检查网络路径和设备状态。</span><br></pre></td></tr></table></figure>
+
+<p>​	路由器过热重启会怎么样？</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">连接中断，重新开始连接</span><br></pre></td></tr></table></figure>
+
+<p>​	A和B之间的带宽被别的服务占用了会怎么样？</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">高延迟，不稳定，重传次数变多</span><br></pre></td></tr></table></figure>
+
+<p>​	如何诊断以上这些情况。</p>
+<p>​	如果A和B之间有防火墙，还会出哪些情况。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">连接被阻止：防火墙可能会阻止某些端口或协议的流量，导致连接无法建立。</span><br><span class="line">数据包丢失：防火墙可能会丢弃不符合规则的数据包，造成数据包丢失。</span><br><span class="line">延迟增加：防火墙的检查和过滤过程可能增加数据包的处理时间，导致延迟。</span><br></pre></td></tr></table></figure>
+
+<p>69、Linux 中每个 TCP 连接最少占用多少内存</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TCP连接的内存占用因系统和配置不同而异，至少需占用几百字节用于TCP控制块（TCB）及缓冲区。</span><br></pre></td></tr></table></figure>
+
+<p>70、TCP 能否发送0字节的数据包</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TCP可以发送0字节的数据包，通常用于心跳包或连接保持。</span><br></pre></td></tr></table></figure>
+
+<p>71、tcp 协议中为什么syn会消耗一个序号</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SYN报文是TCP连接建立的一部分，必须保证连接的可靠性和顺序，因此SYN也需要一个序列号</span><br></pre></td></tr></table></figure>
+
+<p>72、tcp&#x2F;ip数据包在互联网传输过程中，有哪些头会保持不变</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">IP头部在转发时保持不变，TCP头部中的源、目的IP和端口通常保持不变。</span><br></pre></td></tr></table></figure>
+
+<p>73、linux&#x2F;unix socket编程并发时什么时候用进程（fork），什么时候用线程（池）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">使用进程（fork）适合独立任务且需要更高隔离；使用线程（池）适合需要高并发且共享资源的场景。</span><br></pre></td></tr></table></figure>
+
+<p>74、如何测量网络发送速度</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">使用工具如iperf，测量数据传输时间和数据量，计算带宽（数据量/时间）。</span><br></pre></td></tr></table></figure>
+
+<p>75、如果将同一个listening socket加入多个epoll， 是不是一种合理的设计？</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">不合理，同一个socket在多个epoll实例中可能造成重复事件处理，应创建独立的accept处理逻辑。</span><br></pre></td></tr></table></figure>
+
+<p>76、Tcp客户端的正确关闭方式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">通过发送FIN报文，然后等待ACK，最终关闭socket。</span><br></pre></td></tr></table></figure>
+
+<p>77、对一个已经关闭了的socket 的Server 调用write操作</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">会返回错误（如EPIPE），表示连接已关闭，无法发送数据。</span><br></pre></td></tr></table></figure>
+
+<p>78、怎样实时判断socket链接状态</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">可以使用socket的ioctl/getsockopt或发送心跳包来检测连接状态。</span><br></pre></td></tr></table></figure>
+
+<p>79、socket套接字在多线程发送数据时要加锁吗</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">要加锁，防止多个线程同时操作socket导致数据冲突或不一致。</span><br></pre></td></tr></table></figure>
+
+<p>80、TCP中已有SO_KEEPALIVE选项，为什么还要在应用层加入心跳包机制</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SO_KEEPALIVE用于长时间无数据的连接保持；</span><br><span class="line">应用层心跳包可用于应用逻辑层面，确保双方都在线，能及时发现故障。</span><br></pre></td></tr></table></figure>
+
+<p>81、TCP 协议下 socket 有可能丢包吗</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">理论上TCP应确保可靠传输，但在极端情况下（如资源耗尽、网络拥塞），TCP仍可能出现丢包。</span><br></pre></td></tr></table></figure>
+
+<p>82、如何理解 TCP&#x2F;IP, SPDY, WebSocket 三者之间的关系</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">TCP/IP是基础传输协议，</span><br><span class="line">SPDY（后来的HTTP/2）用于提升HTTP性能，</span><br><span class="line">WebSocket建立在TCP之上，提供双向通信。</span><br></pre></td></tr></table></figure>
+
+<p>83、为什么每台电脑都要设置子网掩码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">子网掩码用于定义网络地址和主机地址，确保在局域网内的设备能够正确通信。</span><br></pre></td></tr></table></figure>
+
+<p>84、为什么以太网无法接收大于1500字节的数据包</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">由于以太网的最大传输单元（MTU）通常是1500字节，超过这个限制的数据包会被分段或丢弃。</span><br></pre></td></tr></table></figure>
+
+<p>85、OSI七层模型中，每一层的数据包都是谁生成和解包的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">应用层：数据</span><br><span class="line">表示层：数据</span><br><span class="line">会话层：数据</span><br><span class="line">传输层：段</span><br><span class="line">网络层：包</span><br><span class="line">数据链路层：帧</span><br><span class="line">物理层：比特流</span><br></pre></td></tr></table></figure>
+
+<p>86、为什么网关与主机可以不在同一个网段</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">网关的主要职责是路由流量，能够跨不同网络进行通讯，无需在同一网段。</span><br></pre></td></tr></table></figure>
+
+<p>87、NAT和DHCP 的区别是什么</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">NAT（网络地址转换）用于通过单一IP地址共享访问互联网，</span><br><span class="line">而DHCP（动态主机配置协议）自动分配局域网内IP地址。</span><br></pre></td></tr></table></figure>
+
+<p>88、OSI模型中，一个协议应该属于哪一层是以什么为标准划分的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">协议的功能和服务类型为标准，包括数据的封装方式、传输机制和交互形式等。</span><br></pre></td></tr></table></figure>
+
+<p>101、TCP三次握手的过程，seq的变化是一直都是加1吗</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1. 客户端发送SYN，seq=x，</span><br><span class="line">2. 服务器回复SYN-ACK，seq=y，ack=x+1，</span><br><span class="line">3. 客户端回复ACK，seq=x+1，ack=y+1。</span><br><span class="line">seq不一定每次都加1，取决于前后对话状态。</span><br></pre></td></tr></table></figure>
+
+<p>102、使用Linuxepoll模型，水平触发模式；</p>
+<h2 id="四、Linux操作面试题"><a href="#四、Linux操作面试题" class="headerlink" title="四、Linux操作面试题"></a>四、Linux操作面试题</h2><p>1、与CPU、内存、磁盘相关的命令（top free df fdisk）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">top: 实时监控CPU和内存使用</span><br><span class="line">free: 显示内存使用情况</span><br><span class="line">df: 查看磁盘空间使用</span><br><span class="line">fdisk: 磁盘分区管理</span><br></pre></td></tr></table></figure>
+
+<p>2、与网络相关的命令netstat , tcpdump等</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">netstat: 查看网络连接和状态</span><br><span class="line">tcpdump: 网络数据包分析</span><br></pre></td></tr></table></figure>
+
+<p>3、sek，awk,grep三个强大的命名，分别用与格式化修改，统计，和正则查找</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sed: 流编辑器，用于文本处理和格式化，可以执行替换、插入和删除等操作。</span><br><span class="line">awk: 主要用于文本处理和数据提取，对数据进行分析、统计和格式化表现等。</span><br><span class="line">grep: 用于搜索文本，支持正则表达式，可以查找包含特定模式的行。</span><br></pre></td></tr></table></figure>
+
+<p>4、ipcs和ipcrm命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ipcs: 查看系统中的进程间通讯（IPC）资源信息，如共享内存段、消息队列和信号量等。</span><br><span class="line">ipcrm: 删除指定的IPC资源，比如删除共享内存段或消息队列。</span><br></pre></td></tr></table></figure>
+
+<p>5、查找当前目录以及字母下以.c结尾的文件，且文件中包含”hello world”的文件的路径</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find . -name &quot;*.c&quot; -exec grep -l &quot;hello world&quot; &#123;&#125; \;</span><br></pre></td></tr></table></figure>
+
+<p>6、创建定时任务</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">使用 crontab -e 命令进入编辑界面，设置定时任务，格式为: * * * * * command，其中每个星号代表不同的时间单位（分钟、小时、日、月、星期）。</span><br></pre></td></tr></table></figure>
+
+<p>7、gdb用法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">启动时使用 gdb &lt;program&gt; 形式，常用命令包括 run（运行程序）、break（设置断点）、next（执行下一行）、print（打印变量值）。</span><br></pre></td></tr></table></figure>
+
+<p>8、linux的内存管理机制</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Linux内存管理利用虚拟内存和物理内存的结合，通过分页、分段等技术来优化内存使用，支持内存共享和保护。</span><br></pre></td></tr></table></figure>
+
+<p>9、&#x2F;proc存在哪里</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/proc 是一个虚拟文件系统，位于 Linux 文件系统的根目录，用于提供内核和进程信息。</span><br></pre></td></tr></table></figure>
+
+<p>10、Linux状态分析：CPU（top）、内存（top和free，注意buffer和cache区别）、磁盘（fdisk和df）、IO（iostat）等</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CPU: 使用 top 命令实时监控CPU使用情况。</span><br><span class="line">内存: 使用 top 和 free 分析内存状态，注意buffer和cache的区别。</span><br><span class="line">磁盘: 使用 fdisk 查看分区，使用 df 查看磁盘空间。</span><br><span class="line">IO: 使用 iostat 监控输入输出状态。</span><br></pre></td></tr></table></figure>
+
+<p>11、shell脚本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Shell脚本是一个包含多个Linux命令的文本文件，可以实现自动化操作，使用 sh 或 bash 等执行</span><br></pre></td></tr></table></figure>
+
+<p>12、Linux目录结构</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Linux目录结构通常从根目录 / 开始，包含 /bin、/etc、/home、/var、/usr 等多个重要目录。</span><br></pre></td></tr></table></figure>
+
+<p>13、linux中断响应机制</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">中断响应机制允许硬件设备向CPU发送中断信号，CPU根据中断优先级进行处理，确保系统能够及时响应外部事件。</span><br></pre></td></tr></table></figure>
+
+<p>14、linux文件系统结构和启动流程</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">启动流程包括BIOS/UEFI引导、加载引导加载程序（如GRUB），然后加载Linux内核，最终挂载文件系统。</span><br></pre></td></tr></table></figure>
+
+<p>15、防火墙iptables</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables 是Linux内核的一个包过滤框架，提供网络流量监控和控制功能，通过设置规则来允许或拒绝数据包。</span><br></pre></td></tr></table></figure>
+
+<p>16、轮询任务调度和抢占式任务调度的区别</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">轮询调度固定时间片轮流调度任务，而抢占式调度在任务之间动态分配执行权，优先级高的任务可以中断低优先级任务。</span><br></pre></td></tr></table></figure>
+
+<p>17、查看进程ps ps aux</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ps 命令用于列出当前运行的进程，</span><br><span class="line"></span><br><span class="line">ps aux 提供更详细的信息，包括所有用户的进程。</span><br></pre></td></tr></table></figure>
+
+<p>18、删除进程kill -9</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kill -9 &lt;pid&gt; 强制终止指定PID的进程，-9 是SIGKILL信号。</span><br></pre></td></tr></table></figure>
+
+<p>19、查看进程树pstree</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pstree 显示进程的树状结构，清晰显示父子进程之间的关系。</span><br></pre></td></tr></table></figure>
+
+<p>20、查看占用端口的进程netstat netstat -anp | grep port</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">使用 netstat -anp | grep &lt;port&gt; 查看占用特定端口的进程信息。</span><br></pre></td></tr></table></figure>
+
+<p>21、正则表达式grep printf awk</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">grep 用于文本查找，支持正则表达式</span><br><span class="line"></span><br><span class="line">；awk 用于文本处理和数据统计。</span><br></pre></td></tr></table></figure>
+
+<p>22、管线指令 ls -al &#x2F;etc | less</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">使用管道将 ls -al /etc 的输出通过 less 命令分页显示。</span><br></pre></td></tr></table></figure>
+
+<p>23、sort 进行排序</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sort 命令用于对文本行进行排序，可以使用多种选项自定义排序方式。</span><br></pre></td></tr></table></figure>
+
+<p>24、双向输出重定向</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">command &gt; file 2&gt;&amp;1 可以重定向标准输出和标准错误输出到同一文件。</span><br></pre></td></tr></table></figure>
+
+<p>25、打包压缩</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">使用 tar 命令进行打包和压缩，常用命令如 tar -czvf archive.tar.gz /path/to/directory。</span><br></pre></td></tr></table></figure>
+
+<p>26、目录的 inode 与 block</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">inode 是文件系统用于存储文件元数据的数据结构，block 则是存储实际文件数据的单位。</span><br></pre></td></tr></table></figure>
+
+<p>27、实体链接与符号链接</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">实体链接直接指向文件的物理存储，</span><br><span class="line"></span><br><span class="line">符号链接是指向另一个文件名的快捷方式。</span><br></pre></td></tr></table></figure>
+
+<p>28、文件系统的组成</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">文件系统通常由超级块、inode表、数据块、目录信息等组成。</span><br></pre></td></tr></table></figure>
+
+<p>29、文件与目录的基本操作</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">基本操作包括创建、删除、重命名、移动、复制等。</span><br></pre></td></tr></table></figure>
+
+<p>30、文件属性以及权限的修改</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">使用 chmod 修改文件权限，使用 chown 修改文件属主和属组。</span><br></pre></td></tr></table></figure>
+
+<p>31、分区</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">磁盘分区用于将一块物理磁盘划分为多个逻辑部分，便于管理。</span><br></pre></td></tr></table></figure>
+
+<p>32、内核模块的位置在哪里</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">内核模块通常存放在 /lib/modules/$(uname -r)/ 目录下。</span><br></pre></td></tr></table></figure>
+
+<p>33、SMTP, DNS, FTP, DHCP, SSH 和 squid 使用的默认端口号是哪些</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SMTP: 25</span><br><span class="line">DNS: 53</span><br><span class="line">FTP: 21</span><br><span class="line">DHCP: 67, 68</span><br><span class="line">SSH: 22</span><br><span class="line">Squid: 3128</span><br></pre></td></tr></table></figure>
+
+<p>34、Linux中不同的网络绑定模式有哪些</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">单播、广播和组播等多种绑定模式。</span><br></pre></td></tr></table></figure>
+
+<p>35、如何检查默认路由以及路由表</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">使用 route -n 或 ip route 命令查看路由表以及默认路由。</span><br></pre></td></tr></table></figure>
+
+<p>36、在Linux 中什么是平均负载</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">平均负载是系统在一段时间内的平均活跃进程数，通常在1分钟、5分钟和15分钟的区间平均值。</span><br></pre></td></tr></table></figure>
+
+<p>37、请描述Linux系统优化的12个步骤</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">更新系统、定期清理无用文件、配置内核参数、优化网络设置、监控系统性能、优化服务和进程、调整磁盘I/O、使用适当的文件系统、使用负载均衡、限制用户访问、增加硬件资源、定期备份数据等</span><br></pre></td></tr></table></figure>
+
+<p>38、描述Linux下软链接和硬链接的区别</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">硬链接是指向文件数据块的引用，软链接是指向文件路径的引用，删除原文件后硬链接仍然有效，软链接则失效。</span><br></pre></td></tr></table></figure>
+
+<p>39、描述Linux下文件删除的原理</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">删除文件时，更新文件系统的inode，将文件的链接计数减一，当链接计数为零时释放数据块。</span><br></pre></td></tr></table></figure>
+
+<p>40、给出正确的关机和重启服务器的命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">关机：shutdown -h now 或 poweroff</span><br><span class="line">重启：shutdown -r now 或 reboot</span><br></pre></td></tr></table></figure>
+
+<p>41、请简述修改&#x2F;etc&#x2F;sudoers配置文件的注意事项</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">使用 visudo 命令进行编辑，以避免语法错误导致的问题。</span><br></pre></td></tr></table></figure>
+
+<p>42、如果一台办公室内主机无法上网（打不开网站），请给出你的排查步骤</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">检查网络连接、检查IP配置、检查网关设置、尝试ping外部地址、检查防火墙设置、检查DNS配置等。</span><br></pre></td></tr></table></figure>
+
+<p>43、请简述Linux启动过程中几个重要配置文件的执行过程</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">启动过程中加载BIOS、引导加载程序（如GRUB）、内核、初始RAMdisk、运行级别启动脚本等。</span><br></pre></td></tr></table></figure>
+
+<p>44、请输出你知道的20 个LINUX 命令及作用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">ls: 列出文件和目录</span><br><span class="line">cd: 切换目录</span><br><span class="line">pwd: 显示当前目录</span><br><span class="line">mkdir: 创建目录</span><br><span class="line">rmdir: 删除空目录</span><br><span class="line">cp: 复制文件或目录</span><br><span class="line">mv: 移动或重命名文件</span><br><span class="line">rm: 删除文件或目录</span><br><span class="line">cat: 显示文件内容</span><br><span class="line">echo: 打印文本到标准输出</span><br><span class="line">chmod: 修改文件权限</span><br><span class="line">chown: 修改文件属主和属组</span><br><span class="line">find: 查找文件</span><br><span class="line">grep: 搜索文本</span><br><span class="line">top: 监控系统进程</span><br><span class="line">ps: 查看运行中的进程</span><br><span class="line">kill: 终止进程</span><br><span class="line">df: 查看磁盘使用情况</span><br><span class="line">free: 查看内存使用情况</span><br><span class="line">tar: 打包和压缩文件</span><br><span class="line">wget: 下载文件。</span><br></pre></td></tr></table></figure>
+
+<p>45、企业中Linux服务器系统分区标准是什么</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">通常包括根分区、交换分区、用户数据分区、日志分区等。</span><br></pre></td></tr></table></figure>
+
+<p>46、某一天突然发现Linux系统文件只读，该怎么办呢？完整操作步骤</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">检查磁盘空间是否已满，检查文件系统是否损坏，使用 fsck 修复，尝试 remount 文件系统为读写模式。</span><br></pre></td></tr></table></figure>
+
+<p>47、某一天误操作，执行了rm-rf* ，会有哪些情况发生？请举例</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">会删除当前目录下的所有文件和子目录，可能导致重要数据丢失，须谨慎使用。</span><br></pre></td></tr></table></figure>
+
+<p>48、一般可以使用什么软件远程linux服务器？通过什么上传文件和下载文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">putty , sercureCRT</span><br></pre></td></tr></table></figure>
+
+<p>49、Linux内核引导时，从哪个文件中读取要加载的文件系统</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">从引导加载程序（如GRUB）指定的内核映像文件和根文件系统的参数中读取。</span><br></pre></td></tr></table></figure>
+
+<p>50、Linux文件系统中每个文件用 i节点 来标识</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">每个文件都有一个唯一的inode，用于存储文件的元数据，如权限、大小、时间戳等。</span><br></pre></td></tr></table></figure>
+
+<p>51、简述网络文件系统NFS，并说明其作用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NFS允许不同主机之间共享文件系统，用户能够像访问本地文件一样访问网络上的文件。</span><br></pre></td></tr></table></figure>
+
+<p>52、简述DNS进行域名解析的过程</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">用户请求解析域名，DNS服务器查询其缓存或向根域名服务器查询层级DNS，最终返回对应的IP地址。</span><br></pre></td></tr></table></figure>
+
+<p>53、简述Linux文件系统通过i节点把文件的逻辑结构和物理结构转换的工作过程</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">文件的逻辑结构（文件名、目录结构）通过inode与其对应的数据块连接，inode包含文件的物理存储信息。</span><br></pre></td></tr></table></figure>
+
+<p>54、nfs 协议用于实现Unix（&#x2F;linux）主机之间的文件系统共享</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NFS通过网络允许不同主机共享和访问文件系统，与传统文件系统操作无异。</span><br></pre></td></tr></table></figure>
+
+<p>55、欲发送10个分组报文测试与主机abc.tuu.edu.cn的连通性，应使用的命令和参数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">使用 ping -c 10 abc.tuu.edu.cn 发送10个ICMP请求包进行测试。</span><br></pre></td></tr></table></figure>
+
+<p>56、进程的运行有两种方式，即独立运行和使用父进程运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">它可以是一个独立的进程（如用户启动的应用程序），也可以是子进程（由另一个进程创建）。</span><br></pre></td></tr></table></figure>
+
+<p>57、vi编辑器具有两种工作模式命令模式和输入模式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">命令模式用于执行命令，输入模式用于输入文本。</span><br></pre></td></tr></table></figure>
+
+<p>58、vi的使用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">使用 vi filename 打开文件，按i进入输入模式，按Esc返回命令模式，使用 :wq 保存并退出。</span><br></pre></td></tr></table></figure>
+
+<p>59、内核分为进程管理系统内存管理系统I&#x2F;O管理系统和文件管理系统等四个子系统</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">每个子系统负责不同的资源管理和调度。</span><br></pre></td></tr></table></figure>
+
+<p>60、安装Linux系统对硬盘分区时，必须有两种分区类型：文件系统分区和交换分区</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">文件系统分区用于存储数据，交换分区用于虚拟内存管理，提高内存使用效率。</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="五、数据结构与算法"><a href="#五、数据结构与算法" class="headerlink" title="五、数据结构与算法"></a><strong>五、数据结构与算法</strong></h2><p>1、单链表的逆置</p>
+<p>2、常见排序算法和稳定性，效率分析</p>
+<p>3、静态链接和动态链表的区别</p>
+<p>4、海量数据处理的知识点</p>
+<p>5、AVL树和R-B树的查找，插入，删除的效率,区别 &#x2F;&#x2F;数据结构的内容</p>
+<p>6、判断一个链表是否存在循环</p>
+<p>7、寻找最大的K个数</p>
+<p>8、统计数组中出现最多的数</p>
+<p>9、字符串匹配</p>
+<p>10、二分查找</p>
+<p>11、实现Strcpy</p>
+<p>12、实现快速排序</p>
+<p>13、建堆，建堆的时间复杂度</p>
+<p>14、HASH策略常见的有哪些</p>
+<p>15、HASH表实现</p>
+<p>16、二叉树结构，二叉查找树的实现</p>
+<p>17、二叉树的六种遍历</p>
+<p>18、二叉树的按层遍历</p>
+<p>19、编写简单的String类</p>
+<p>20、编写strcpy、strcat、strcmp、memcpy、memmove</p>
+<p>21、求二叉树的深度</p>
+<p>22、判断一棵二叉树是否是平衡二叉树</p>
+<p>23、求二叉树第K层节点个数</p>
+<p>24、求二叉树中两个节点的最大距离</p>
+<p>25、判断一棵二叉树是否为完全二叉树</p>
+<p>26、重建二叉树，依据前序遍历结果和中序遍历结果</p>
+<p>27、实现简单的智能指针</p>
+<p>28、实现stl::string的写时copy</p>
+<p>29、什么是大小端模式，编写代码区分大小端</p>
+<p>30、链表的插入删除、单向链表、双向链表</p>
+<p>31、反向打印链表</p>
+<p>32、打印倒数第K个节点</p>
+<p>33、链表是否有环</p>
+<p>34、冒泡、选择、插入、快速、归并、堆排序、希尔、桶</p>
+<p>35、背包问题</p>
+<p>36、深度优先、广度优先、单源最小路径、任意两点最小路径</p>
+<p>37、最大堆、最小堆、堆如何调整</p>
+<p>38、两个有序数组求中位数</p>
+<p>39、最长上升子序列</p>
+<p>40、海量数据排序</p>
+<p>41、链表翻转</p>
+<p>42、最长公共子序列</p>
+<p>43、海量数据topk问题</p>
+<p>44、蓄水池抽样算法</p>
+<p>45、排序算法性能比较，时间复杂度、稳定性、比较</p>
+<p>46、1-100之间所有素数之和</p>
+<p>47、队列的实现</p>
+<p>48、字符串匹配</p>
+<p>49、数组存储超大数</p>
+<p>50、回文字符串</p>
+<p>51、判断两个数组是否有相同的数字</p>
+<p>52、大数据中找中位数</p>
+<p>53、B树、B+树、红黑树、AVL树</p>
+<p>54、单链表排序</p>
+<p>55、查找链表中间节点</p>
+<p>56、删除无头非尾节点</p>
+<p>57、约瑟夫环</p>
+<p>58、如何从100万个数中找出最大的前100个数</p>
+<p>59、找出数组中重复的数字</p>
+<p>60、计算斐波那契数列</p>
+<p>61、滑动窗口的最大值</p>
+<p>62、0~n-1 中缺失的数字</p>
+<p>63、连续子数组的最大和</p>
+<p>64、删除链表中重复的节点</p>
+<p>65、矩阵中的路径</p>
+<p>66、调整数组顺序使奇数位于偶数前面</p>
+<p>67、最长不重复子串</p>
+<p>68、天平不平衡找假币问题</p>
+<p>69、栈的逆序</p>
+<p>70、数组的逆序对</p>
+<p>71、二叉搜索树的第K个节点</p>
+<p>72、树上最远距离</p>
+<p>73、折纸问题</p>
+<p>74、根据前序和中序遍历求后序</p>
+<p>75、完全二叉树判断、平衡二叉树判断、二叉查找树判断</p>
+<p>76、荷兰国旗问题</p>
+<p>77、字符串-全排列问题</p>
+<p>78、无环链表判断相交</p>
+<p>79、用两个栈实现队列</p>
+<p>80、最大连续数列和</p>
+<p>81、矩阵取值问题</p>
+<p>82、最大和子矩阵</p>
+<p>83、最长公共子序列和最长递增子序列</p>
+<p>84、最小编辑代价</p>
+<p>85、动态规划和递归-魔术索引</p>
+<p>86、确定字符串互异</p>
+<p>87、基本字符压缩</p>
+<p>88、空格替换</p>
+<p>89、确定两个字符串乱序同构</p>
+<p>90、A+B问题</p>
+<p>91、尾部的零</p>
+<p>92、第K大元素</p>
+<p>93、有一座高度是10级台阶的楼梯，从下往上走，每跨一步只能向上1级或者2级台阶。要求用程序，来求出一共有多少种走法。</p>
+<p>94、一个有getMin功能的栈</p>
+<p>95、从上往下打印二叉树的每个节点，同层节点从左到右</p>
+<p>96、最长单词（Lintcode）</p>
+<p>97、单例（Lintcode）</p>
+<p>98、Fizz Buzz问题（LintCode）</p>
+<p>99、二分查找</p>
+<p>100、N皇后问题</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag"># 面试</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/10/13/%E7%94%B5%E5%BD%B1%E6%8E%A8%E8%8D%90%E7%AE%97%E6%B3%95/" rel="prev" title="电影推荐算法">
+      <i class="fa fa-chevron-left"></i> 电影推荐算法
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text">面试题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81C-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93"><span class="nav-number">1.1.</span> <span class="nav-text">一、C++基础知识面试题总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E7%BA%BF%E7%A8%8B%E8%BF%9B%E7%A8%8B%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93"><span class="nav-number">1.2.</span> <span class="nav-text">二、线程进程面试题总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81TCP-IP%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93"><span class="nav-number">1.3.</span> <span class="nav-text">三、TCP&#x2F;IP网络编程面试题总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81Linux%E6%93%8D%E4%BD%9C%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="nav-number">1.4.</span> <span class="nav-text">四、Linux操作面试题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95"><span class="nav-number">1.5.</span> <span class="nav-text">五、数据结构与算法</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="AlexQFMM"
+      src="/images/Avatar.jpg">
+  <p class="site-author-name" itemprop="name">AlexQFMM</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://qexo-ten-roan.vercel.app/" title="控制中心 → https:&#x2F;&#x2F;qexo-ten-roan.vercel.app&#x2F;" rel="noopener" target="_blank">控制中心</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AlexQFMM</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : 'UaEUwcYLlkREnSn9jPNe0oRf-gzGzoHsz',
+      appKey     : '5d7KwGdf31jiCBxBobH0wVk6',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/assets/miku.model.json"},"display":{"position":"left","width":200,"height":400},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

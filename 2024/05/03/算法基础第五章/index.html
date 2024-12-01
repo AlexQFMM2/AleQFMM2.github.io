@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="动态规划">
+<meta property="og:type" content="article">
+<meta property="og:title" content="动态规划（ACwing）">
+<meta property="og:url" content="http://example.com/2024/05/03/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%AB%A0/index.html">
+<meta property="og:site_name" content="AlexHome">
+<meta property="og:description" content="动态规划">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-05-03T14:28:45.000Z">
+<meta property="article:modified_time" content="2024-12-01T13:58:43.022Z">
+<meta property="article:author" content="AlexQFMM">
+<meta property="article:tag" content="算法基础">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2024/05/03/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%AB%A0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>动态规划（ACwing） | AlexHome</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">AlexHome</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-guestbook">
+
+    <a href="/guestbook/" rel="section"><i class="fa fa-book fa-fw"></i>留言</a>
+
+  </li>
+        <li class="menu-item menu-item-mypage">
+
+    <a href="/MYHTML/test/index.html" rel="section"><i class="fas fa-file-user fa-fw"></i>myPage</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/05/03/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%AB%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/Avatar.jpg">
+      <meta itemprop="name" content="AlexQFMM">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AlexHome">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          动态规划（ACwing）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-05-03 14:28:45" itemprop="dateCreated datePublished" datetime="2024-05-03T14:28:45+00:00">2024-05-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-12-01 13:58:43" itemprop="dateModified" datetime="2024-12-01T13:58:43+00:00">2024-12-01</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ACWing/" itemprop="url" rel="index"><span itemprop="name">ACWing</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2024/05/03/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%AB%A0/" class="post-meta-item leancloud_visitors" data-flag-title="动态规划（ACwing）" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2024/05/03/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%AB%A0/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2024/05/03/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%AB%A0/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h1><span id="more"></span>
+
+<h1 id="一、背包问题"><a href="#一、背包问题" class="headerlink" title="一、背包问题"></a>一、背包问题</h1><table>
+<thead>
+<tr>
+<th>背包问题类型</th>
+<th>物品选择次数</th>
+<th>物品遍历顺序</th>
+<th>背包容量遍历方向</th>
+<th>次数遍历方向</th>
+<th>外层循环遍历</th>
+<th>内层循环遍历</th>
+<th>循环顺序是否可交换</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0-1 背包</td>
+<td>0 或 1</td>
+<td>正序</td>
+<td>逆序</td>
+<td>-</td>
+<td>物品</td>
+<td>背包容量</td>
+<td>是</td>
+</tr>
+<tr>
+<td>完全背包</td>
+<td>0 到 无限次</td>
+<td>正序</td>
+<td>正序</td>
+<td>-</td>
+<td>物品</td>
+<td>背包容量</td>
+<td>是</td>
+</tr>
+<tr>
+<td>多重背包</td>
+<td>0 到 k 次</td>
+<td>正序</td>
+<td>正序</td>
+<td>逆序</td>
+<td>物品</td>
+<td>背包</td>
+<td>否</td>
+</tr>
+</tbody></table>
+<h6 id="核心代码"><a href="#核心代码" class="headerlink" title="核心代码"></a>核心代码</h6><h2 id="01背包"><a href="#01背包" class="headerlink" title="01背包"></a>01背包</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;int&gt;weight(n+1,0);//物品i的重量为weight[i]</span><br><span class="line">vector&lt;int&gt;value(n+1,0);//物品i的价值为values[i]</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;int&gt; dp(v+1, 0); // dp[j]表示容量为j的背包所能装的最大价值</span><br><span class="line"></span><br><span class="line">    for(int i=1;i&lt;=n;i++)&#123; // 遍历物品</span><br><span class="line">        for(int j=v;j&gt;=weight[i];j--)&#123; // 正序背包容量</span><br><span class="line">            dp[j] = max(dp[j], dp[j-weight[i]] + value[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>扩展：假如拿取这个动作有次数限制</p>
+<p>例：选10个不同的正整数组合成 n，问有多少种可能性</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">using ll = long long;</span><br><span class="line">const int N =2023;</span><br><span class="line">const int CNT = 11;</span><br><span class="line">ll dp[N][CNT]; //最多拿j次组成i的可能性有dp[i][j] </span><br><span class="line">int main()&#123;</span><br><span class="line">	int n =2022,num=10;</span><br><span class="line">	dp[0][0] = 1;</span><br><span class="line">	for(int i=1;i&lt;=n;i++)&#123;</span><br><span class="line">		for(int k=10;k&gt;=1;k--)&#123;</span><br><span class="line">			for(int j=i;j&lt;=n;j++)&#123;</span><br><span class="line">				dp[j][k] += dp[j-i][k-1];</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	cout &lt;&lt; dp[2022][10] &lt;&lt; endl;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="完全背包"><a href="#完全背包" class="headerlink" title="完全背包"></a>完全背包</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;int&gt;weight(n+1,0);//物品i的重量为weight[i]</span><br><span class="line">vector&lt;int&gt;value(n+1,0);//物品i的价值为values[i]</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;int&gt;dp(v+1,0);</span><br><span class="line">    for(int i=1;i&lt;=n;++i)&#123;</span><br><span class="line">        for(int j=weight[i];j&lt;=v;j++)&#123;//正序遍历背包</span><br><span class="line">            dp[j] = max(dp[j],dp[j-weight[i]]+value[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; dp[v] &lt;&lt; endl;</span><br></pre></td></tr></table></figure>
+
+<p>例：求n能由多少个素数之和组成</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">using ll = long long;</span><br><span class="line">const int N = 1e3+1;</span><br><span class="line">vector&lt;int&gt;Prime;//素数表 </span><br><span class="line">ll dp[N];</span><br><span class="line"></span><br><span class="line">void init()&#123;</span><br><span class="line">	bool tmp[N]=&#123;false&#125;;</span><br><span class="line">	for(int i=2;i&lt;=N;i++)</span><br><span class="line">		for(int j=i*2;j&lt;=N;j+=i)</span><br><span class="line">			tmp[j] = 1;</span><br><span class="line">	for(int i=2;i&lt;=N;i++)</span><br><span class="line">		if(tmp[i] == 0) Prime.push_back(i);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">	init();</span><br><span class="line">	int n;</span><br><span class="line">	cin &gt;&gt; n;</span><br><span class="line">	dp[0] = 1; </span><br><span class="line">	</span><br><span class="line">	for(int i=0;i&lt;Prime.size();i++)&#123;</span><br><span class="line">		for(int j=Prime[i];j&lt;=n;j++)&#123;</span><br><span class="line">			dp[j] += dp[j-Prime[i]];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	cout &lt;&lt; dp[n] &lt;&lt; endl;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>例</p>
+<h2 id="多重背包"><a href="#多重背包" class="headerlink" title="多重背包"></a>多重背包</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;int&gt;weight(n+1,0);//物品i的重量为weight[i]</span><br><span class="line">vector&lt;int&gt;values(n+1,0);//物品i的价值为values[i]</span><br><span class="line">vector&lt;int&gt;nums(n+1,0);//物品i的数量为nums[i]</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;int&gt;dp(v+1,0);//体积为j的背包价值最高为dp[j]</span><br><span class="line"></span><br><span class="line">   for(int i=1;i&lt;=n;i++)&#123;</span><br><span class="line">       for(int j=v;j&gt;=weight[i];j--)&#123;</span><br><span class="line">           for(int k=0;k&lt;=nums[i] &amp;&amp; k*weight[i]&lt;=j;k++)&#123;//拿k个</span><br><span class="line">               dp[j] = max(dp[j], dp[j-k*weight[i]] + k*values[i]);</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="多重背包二进制优化"><a href="#多重背包二进制优化" class="headerlink" title="多重背包二进制优化"></a>多重背包二进制优化</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;int&gt;dp(v+1,0);//体积为i的背包价值最高为dp[i]</span><br><span class="line"></span><br><span class="line">    for(int i=1;i&lt;=n;i++)&#123;</span><br><span class="line">        if(nums[i]*weight[i] &gt;= v)&#123; // 如果物品i数量*物品i重量大于等于v，直接当做完全背包处理</span><br><span class="line">            for(int j=weight[i];j&lt;=v;j++)&#123;</span><br><span class="line">                dp[j] = max(dp[j], dp[j-weight[i]] + values[i]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;else&#123; // 否则使用二进制优化方法</span><br><span class="line">            int k = 1;</span><br><span class="line">            while(k &lt; nums[i])&#123;</span><br><span class="line">                for(int j=v;j&gt;=k*weight[i];j--)&#123;</span><br><span class="line">                    dp[j] = max(dp[j], dp[j-k*weight[i]] + k*values[i]);</span><br><span class="line">                &#125;</span><br><span class="line">                nums[i] -= k;</span><br><span class="line">                k *= 2;</span><br><span class="line">            &#125;</span><br><span class="line">            for(int j=v;j&gt;=nums[i]*weight[i];j--)&#123;</span><br><span class="line">                dp[j] = max(dp[j], dp[j-nums[i]*weight[i]] + nums[i]*values[i]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="分组背包"><a href="#分组背包" class="headerlink" title="分组背包"></a>分组背包</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;int&gt; weight[N];</span><br><span class="line">vector&lt;int&gt; values[N];</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">for(int i = 1; i &lt;= n; i++)&#123;</span><br><span class="line">        int num;</span><br><span class="line">        cin &gt;&gt; num;</span><br><span class="line">        for(int j = 1; j &lt;= num; j++)&#123;</span><br><span class="line">            int x, y;</span><br><span class="line">            cin &gt;&gt; x &gt;&gt; y;</span><br><span class="line">            weight[i].push_back(x);</span><br><span class="line">            values[i].push_back(y);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    vector&lt;int&gt; dp(v+1, 0);</span><br><span class="line"></span><br><span class="line">    for(int i = 1; i &lt;= n; i++)&#123;//物品</span><br><span class="line">        for(int j = v; j &gt;= 0; j--)&#123;//倒序背包容量</span><br><span class="line">            for(int k = 0; k &lt; weight[i].size(); k++)&#123;//正序遍历每一组的数量</span><br><span class="line">                if(j &gt;= weight[i][k])&#123;</span><br><span class="line">                    dp[j] = max(dp[j], dp[j - weight[i][k]] + values[i][k]);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="二、子序列问题"><a href="#二、子序列问题" class="headerlink" title="二、子序列问题"></a>二、子序列问题</h1><h2 id="1、最长上升子序列"><a href="#1、最长上升子序列" class="headerlink" title="1、最长上升子序列"></a>1、最长上升子序列</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int search(vector&lt;int&gt;&amp; tails,int l,int r,int target)&#123;//查找第一个大于等于target的值</span><br><span class="line">	while(l&lt;r)&#123;</span><br><span class="line">		int mid = l+r &gt;&gt; 1;</span><br><span class="line">		if(tails[mid] &lt; target) l=mid+1;</span><br><span class="line">		else r=mid;</span><br><span class="line">	&#125;</span><br><span class="line">	return r;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    int n;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    vector&lt;int&gt; nums(n);</span><br><span class="line">    for(int i = 0; i &lt; n; i++)</span><br><span class="line">        cin &gt;&gt; nums[i];</span><br><span class="line"></span><br><span class="line">    vector&lt;int&gt; tails(n);//记录最长单调递增子序列</span><br><span class="line">    tails[0] = nums[0];</span><br><span class="line">	int td = 0;</span><br><span class="line">	</span><br><span class="line">    for(int i = 1; i &lt; n; i++)&#123;</span><br><span class="line">        if(nums[i] &gt; tails[td])&#123;</span><br><span class="line">            tails[++td] = nums[i];</span><br><span class="line">        &#125; else &#123;//二分查找并替换第一个大于等于nums[i]的值</span><br><span class="line">            int idx = search(tails,0,td,nums[i]);</span><br><span class="line">            tails[idx] = nums[i];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    cout &lt;&lt; td+1 &lt;&lt; endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>动态规划做法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">using ll = long long;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">	int n;</span><br><span class="line">	cin &gt;&gt; n;</span><br><span class="line">	vector&lt;int&gt;nums(n);</span><br><span class="line">	for(int i=0;i&lt;n;i++) cin &gt;&gt; nums[i];</span><br><span class="line">	vector&lt;int&gt;dp(n,1);//1~i中有dp[i]长度的递增子序列 </span><br><span class="line">	</span><br><span class="line">	for(int i=1;i&lt;=n;i++)&#123;</span><br><span class="line">		for(int j=0;j&lt;i;j++)&#123;</span><br><span class="line">			if(nums[j] &lt; nums[i])&#123;</span><br><span class="line">				dp[i] = max(dp[i],dp[j]+1);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	int ans =0;</span><br><span class="line">	for(int i:dp)&#123;</span><br><span class="line">		ans = max(ans,i);</span><br><span class="line">	&#125; </span><br><span class="line">	cout &lt;&lt; ans &lt;&lt; endl;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="2、最长公共子序列"><a href="#2、最长公共子序列" class="headerlink" title="2、最长公共子序列"></a>2、最长公共子序列</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;vector&gt;</span><br><span class="line">#include &lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">    int len1, len2;</span><br><span class="line">    string s1, s2;</span><br><span class="line">    cin &gt;&gt; len1 &gt;&gt; len2 &gt;&gt; s1 &gt;&gt; s2;</span><br><span class="line"></span><br><span class="line">    // s1 的前 i 个字符和字符串 s2 的前 j 个字符的最长公共子序列长度为dp[i][j]</span><br><span class="line">    vector&lt;vector&lt;int&gt;&gt; dp(len1 + 1, vector&lt;int&gt;(len2 + 1, 0));</span><br><span class="line"></span><br><span class="line">    // 填充动态规划数组</span><br><span class="line">    for (int i = 1; i &lt;= len1; ++i) &#123;</span><br><span class="line">        for (int j = 1; j &lt;= len2; ++j) &#123;</span><br><span class="line">            if (s1[i - 1] == s2[j - 1]) &#123;</span><br><span class="line">                dp[i][j] = dp[i - 1][j - 1] + 1;</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    cout &lt;&lt; dp[len1][len2] &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="3、编辑距离"><a href="#3、编辑距离" class="headerlink" title="3、编辑距离"></a>3、编辑距离</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">const int N = 11;</span><br><span class="line"></span><br><span class="line">int dp[N][N];//不放全局会超时</span><br><span class="line"></span><br><span class="line">bool change(const string&amp; s1,const string&amp; s2,int times)&#123;//统计s1-&gt;s2所需要的次数</span><br><span class="line">    int len1 = s1.size(),len2 = s2.size();</span><br><span class="line"></span><br><span class="line">    for(int i=0;i&lt;=len1;i++) dp[i][0] = i;//s1(1~i)变成空字符串要进行i次删除操作</span><br><span class="line">    for(int j=0;j&lt;=len2;j++) dp[0][j] = j;//s2(1~j)变成空字符串要进行j次删除操作</span><br><span class="line"></span><br><span class="line">    for(int i=1;i&lt;=len1;i++)&#123;</span><br><span class="line">        for(int j=1;j&lt;=len2;j++)&#123;</span><br><span class="line">            if(s1[i-1] == s2[j-1])</span><br><span class="line">                dp[i][j] = dp[i-1][j-1];</span><br><span class="line">            else//依次是插入，删除，替换</span><br><span class="line">                dp[i][j] = min(dp[i][j-1]+1,min(dp[i-1][j]+1,dp[i-1][j-1]+1));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if(dp[len1][len2] &lt;= times)</span><br><span class="line">        return true;</span><br><span class="line">    else </span><br><span class="line">        return false;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    int n,m;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    vector&lt;string&gt;str(n);</span><br><span class="line">    for(int i=0;i&lt;n;i++)</span><br><span class="line">        cin &gt;&gt; str[i];</span><br><span class="line"></span><br><span class="line">    for(int i=0;i&lt;m;i++)&#123;</span><br><span class="line">        string s1;</span><br><span class="line">        int t,cnt=0;</span><br><span class="line">        cin &gt;&gt; s1 &gt;&gt; t;</span><br><span class="line">        for(const string&amp; s:str)&#123;</span><br><span class="line">            if(change(s,s1,t)) ++cnt;//看能不能在t次能完成字符串转换</span><br><span class="line">        &#125;</span><br><span class="line">        cout &lt;&lt; cnt &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="4、子序列的个数"><a href="#4、子序列的个数" class="headerlink" title="4、子序列的个数"></a>4、子序列的个数</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s1中有多少子序列等于s2</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;bits/stdc++.h&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">typedef long long ll;</span><br><span class="line">const int N = 2024;</span><br><span class="line">const int M = 5;</span><br><span class="line"></span><br><span class="line">ll dp[N*N][M]; // s1(1~i)中拥有dp[i][j]个s2(1~j)</span><br><span class="line">ll count(const string&amp; s1,const string&amp; s2)&#123;//计算s1中有子序列s2多个 </span><br><span class="line">	int n=s1.size();</span><br><span class="line">    int m=s2.size();</span><br><span class="line">    dp[0][0]=1;//空字符串 A 包含空字符串 B 的子序列个数为 1</span><br><span class="line">    </span><br><span class="line">    for(int i=1;i&lt;=n;i++)&#123;</span><br><span class="line">        dp[i][0]=1;//A 的前 i 个字符中包含空字符串 B 的子序列个数为 1</span><br><span class="line">        for(int j=1;j&lt;=m;j++)&#123;  </span><br><span class="line">            if(s1[i-1]==s2[j-1])&#123; </span><br><span class="line">                dp[i][j]=dp[i-1][j]+dp[i-1][j-1];//拿当前字符的情况是dp[i-1][j-1]，不拿就是dp[i-1][j]，只有相等才能拿; </span><br><span class="line">            &#125;else&#123;</span><br><span class="line">            	dp[i][j]=dp[i-1][j];</span><br><span class="line">			&#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return dp[n][m];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="三、区间dp"><a href="#三、区间dp" class="headerlink" title="三、区间dp"></a>三、区间dp</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">设有 N堆石子排成一排，其编号为 1,2,3,…,N</span><br><span class="line">每次只能合并相邻的两堆，合并的代价为这两堆石子的质量之和</span><br><span class="line">找出一种合理的方法，使总的代价最小，输出最小代价。</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">const int N = 301;</span><br><span class="line">int dp[N][N]; // dp[i][j] 表示将区间 [i, j] 的石子合并成一堆所需要的最小代价</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    int n;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    vector&lt;int&gt; nums(n);</span><br><span class="line">    vector&lt;int&gt; sum(n + 1, 0); // 前缀和</span><br><span class="line">    for(int i = 0; i &lt; n; i++) &#123;</span><br><span class="line">        cin &gt;&gt; nums[i];</span><br><span class="line">        sum[i + 1] = sum[i] + nums[i]; // 计算前缀和</span><br><span class="line">    &#125; </span><br><span class="line">    </span><br><span class="line">    for(int len = 2; len &lt;= n; len++) &#123;// 枚举区间长度</span><br><span class="line">        </span><br><span class="line">        for(int i = 1; i + len - 1 &lt;= n; i++) &#123;// 枚举区间起点</span><br><span class="line">            int j = i + len - 1; // 区间终点</span><br><span class="line">            dp[i][j] = 1e9; // 初始化为一个很大的值</span><br><span class="line"></span><br><span class="line">            for(int k = i; k &lt; j; k++) &#123;// 枚举分割点</span><br><span class="line">                dp[i][j] = min(dp[i][j], dp[i][k] + dp[k + 1][j] + sum[j] - sum[i - 1]);// 更新最小代价</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    cout &lt;&lt; dp[1][n] &lt;&lt; endl; // 输出合并所有石子的最小代价</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="四、计数DP"><a href="#四、计数DP" class="headerlink" title="四、计数DP"></a>四、计数DP</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">一个正整数 n</span><br><span class="line"> 可以表示成若干个正整数之和，形如：n=n1+n2+…+nk</span><br><span class="line">，其中 n1≥n2≥…≥nk,k≥1</span><br><span class="line">。</span><br><span class="line"></span><br><span class="line">我们将这样的一种表示称为正整数 n</span><br><span class="line"> 的一种划分。</span><br><span class="line"></span><br><span class="line">现在给定一个正整数 n</span><br><span class="line">，请你求出 n</span><br><span class="line"> 共有多少种不同的划分方法。</span><br><span class="line"></span><br><span class="line">输入格式</span><br><span class="line">共一行，包含一个整数 n</span><br><span class="line">。</span><br><span class="line"></span><br><span class="line">输出格式</span><br><span class="line">共一行，包含一个整数，表示总划分数量。</span><br><span class="line"></span><br><span class="line">由于答案可能很大，输出结果请对 109+7</span><br><span class="line"> 取模。</span><br><span class="line"></span><br><span class="line">数据范围</span><br><span class="line">1≤n≤1000</span><br><span class="line">输入样例:</span><br><span class="line">5</span><br><span class="line">输出样例：</span><br><span class="line">7</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">const int N = 1001;</span><br><span class="line">const int mod = 1e9+7;</span><br><span class="line">int dp[N]; //表示正整数 i 可以表示成若干个正整数之和的划分方法数</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">    int n;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    dp[0] = 1;</span><br><span class="line">    </span><br><span class="line">    for(int i=1;i&lt;=n;i++)&#123;</span><br><span class="line">        for(int j=i;j&lt;=n;j++)&#123;</span><br><span class="line">            dp[j] = (dp[j]+dp[j-i])%mod;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; dp[n] &lt;&lt; endl; </span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="五、树形dp"><a href="#五、树形dp" class="headerlink" title="五、树形dp"></a>五、树形dp</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">285. 没有上司的舞会</span><br><span class="line">   题目</span><br><span class="line">   提交记录</span><br><span class="line">   讨论</span><br><span class="line">   题解</span><br><span class="line">   视频讲解</span><br><span class="line"></span><br><span class="line">Ural 大学有 N</span><br><span class="line"> 名职员，编号为 1∼N</span><br><span class="line">。</span><br><span class="line"></span><br><span class="line">他们的关系就像一棵以校长为根的树，父节点就是子节点的直接上司。</span><br><span class="line"></span><br><span class="line">每个职员有一个快乐指数，用整数 Hi</span><br><span class="line"> 给出，其中 1≤i≤N</span><br><span class="line">。</span><br><span class="line"></span><br><span class="line">现在要召开一场周年庆宴会，不过，没有职员愿意和直接上司一起参会。</span><br><span class="line"></span><br><span class="line">在满足这个条件的前提下，主办方希望邀请一部分职员参会，使得所有参会职员的快乐指数总和最大，求这个最大值。</span><br><span class="line"></span><br><span class="line">输入格式</span><br><span class="line">第一行一个整数 N</span><br><span class="line">。</span><br><span class="line"></span><br><span class="line">接下来 N</span><br><span class="line"> 行，第 i</span><br><span class="line"> 行表示 i</span><br><span class="line"> 号职员的快乐指数 Hi</span><br><span class="line">。</span><br><span class="line"></span><br><span class="line">接下来 N−1</span><br><span class="line"> 行，每行输入一对整数 L,K</span><br><span class="line">，表示 K</span><br><span class="line"> 是 L</span><br><span class="line"> 的直接上司。（注意一下，后一个数是前一个数的父节点，不要搞反）。</span><br><span class="line"></span><br><span class="line">输出格式</span><br><span class="line">输出最大的快乐指数。</span><br><span class="line"></span><br><span class="line">数据范围</span><br><span class="line">1≤N≤6000</span><br><span class="line">,</span><br><span class="line">−128≤Hi≤127</span><br><span class="line">输入样例：</span><br><span class="line">7</span><br><span class="line">1</span><br><span class="line">1</span><br><span class="line">1</span><br><span class="line">1</span><br><span class="line">1</span><br><span class="line">1</span><br><span class="line">1</span><br><span class="line">1 3</span><br><span class="line">2 3</span><br><span class="line">6 4</span><br><span class="line">7 4</span><br><span class="line">4 5</span><br><span class="line">3 5</span><br><span class="line">输出样例：</span><br><span class="line">5</span><br></pre></td></tr></table></figure>
+
+<p>代码实现</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">const int N = 6001;</span><br><span class="line">int happy[N];</span><br><span class="line">vector&lt;int&gt;tree[N];</span><br><span class="line">bool hsFa[N]=&#123;false&#125;;</span><br><span class="line">int dp[N][2];</span><br><span class="line"></span><br><span class="line">void dfs(int u)&#123;</span><br><span class="line">    dp[u][1] = happy[u];</span><br><span class="line">    </span><br><span class="line">    for(int v:tree[u])&#123;</span><br><span class="line">        dfs(v);</span><br><span class="line">        dp[u][1] += dp[v][0];</span><br><span class="line">        dp[u][0] += max(dp[v][0],dp[v][1]);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    int n;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    for(int i=1;i&lt;=n;i++) cin &gt;&gt; happy[i];</span><br><span class="line">    for(int i=1;i&lt;=n-1;i++)&#123;</span><br><span class="line">        int x,y;</span><br><span class="line">        cin &gt;&gt; x &gt;&gt; y;</span><br><span class="line">        tree[y].push_back(x);</span><br><span class="line">        hsFa[x] = true;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    int root = 1;</span><br><span class="line">    while(hsFa[root]) ++root;</span><br><span class="line">    dfs(root);</span><br><span class="line">    </span><br><span class="line">    cout &lt;&lt; max(dp[root][0],dp[root][1]) &lt;&lt; endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="六、记忆化搜索"><a href="#六、记忆化搜索" class="headerlink" title="六、记忆化搜索"></a>六、记忆化搜索</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">给定一个 R</span><br><span class="line"> 行 C</span><br><span class="line"> 列的矩阵，表示一个矩形网格滑雪场。</span><br><span class="line"></span><br><span class="line">矩阵中第 i</span><br><span class="line"> 行第 j</span><br><span class="line"> 列的点表示滑雪场的第 i</span><br><span class="line"> 行第 j</span><br><span class="line"> 列区域的高度。</span><br><span class="line"></span><br><span class="line">一个人从滑雪场中的某个区域内出发，每次可以向上下左右任意一个方向滑动一个单位距离。</span><br><span class="line"></span><br><span class="line">当然，一个人能够滑动到某相邻区域的前提是该区域的高度低于自己目前所在区域的高度。</span><br><span class="line"></span><br><span class="line">下面给出一个矩阵作为例子：</span><br><span class="line"></span><br><span class="line"> 1  2  3  4 5</span><br><span class="line"></span><br><span class="line">16 17 18 19 6</span><br><span class="line"></span><br><span class="line">15 24 25 20 7</span><br><span class="line"></span><br><span class="line">14 23 22 21 8</span><br><span class="line"></span><br><span class="line">13 12 11 10 9</span><br><span class="line">在给定矩阵中，一条可行的滑行轨迹为 24−17−2−1</span><br><span class="line">。</span><br><span class="line"></span><br><span class="line">在给定矩阵中，最长的滑行轨迹为 25−24−23−…−3−2−1</span><br><span class="line">，沿途共经过 25</span><br><span class="line"> 个区域。</span><br><span class="line"></span><br><span class="line">现在给定你一个二维矩阵表示滑雪场各区域的高度，请你找出在该滑雪场中能够完成的最长滑雪轨迹，并输出其长度(可经过最大区域数)。</span><br><span class="line"></span><br><span class="line">输入格式</span><br><span class="line">第一行包含两个整数 R</span><br><span class="line"> 和 C</span><br><span class="line">。</span><br><span class="line"></span><br><span class="line">接下来 R</span><br><span class="line"> 行，每行包含 C</span><br><span class="line"> 个整数，表示完整的二维矩阵。</span><br><span class="line"></span><br><span class="line">输出格式</span><br><span class="line">输出一个整数，表示可完成的最长滑雪长度。</span><br><span class="line"></span><br><span class="line">数据范围</span><br><span class="line">1≤R,C≤300</span><br><span class="line">,</span><br><span class="line">0≤矩阵中整数≤10000</span><br><span class="line">输入样例：</span><br><span class="line">5 5</span><br><span class="line">1 2 3 4 5</span><br><span class="line">16 17 18 19 6</span><br><span class="line">15 24 25 20 7</span><br><span class="line">14 23 22 21 8</span><br><span class="line">13 12 11 10 9</span><br><span class="line">输出样例：</span><br><span class="line">25</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;queue&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">const int N = 310;</span><br><span class="line">int n,m;</span><br><span class="line">int grid[N][N];</span><br><span class="line">int dp[N][N]; // 使用dp数组记录已计算的结果，初始值默认为0</span><br><span class="line">int dir[4][2] = &#123;&#123;-1,0&#125;,&#123;1,0&#125;,&#123;0,-1&#125;,&#123;0,1&#125;&#125;;</span><br><span class="line"></span><br><span class="line">int dfs(int i, int j) &#123;</span><br><span class="line">    </span><br><span class="line">    if (dp[i][j] != 0) return dp[i][j];// 如果当前位置已经计算过结果，直接返回结果</span><br><span class="line">    </span><br><span class="line">    int res = 1; // 初始距离为1</span><br><span class="line">    for(int k = 0; k &lt; 4; k++) &#123;</span><br><span class="line">        int nx = i + dir[k][0], ny = j + dir[k][1];</span><br><span class="line">        if(nx &lt; 1 || ny &lt; 1 || nx &gt; n || ny &gt; m) continue;</span><br><span class="line">        if(grid[nx][ny] &gt;= grid[i][j]) continue;</span><br><span class="line">        res = max(res, dfs(nx, ny) + 1); // 更新结果为相邻格子的最大距离+1</span><br><span class="line">    &#125;</span><br><span class="line">   </span><br><span class="line">    return dp[i][j] = res; // 记录结果到dp数组中</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    for(int i = 1; i &lt;= n; i++) &#123;</span><br><span class="line">        for(int j = 1; j &lt;= m; j++) &#123;</span><br><span class="line">            cin &gt;&gt; grid[i][j];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    int ans = 0;</span><br><span class="line">    for(int i = 1; i &lt;= n; i++) &#123;</span><br><span class="line">        for(int j = 1; j &lt;= m; j++) &#123;</span><br><span class="line">            ans = max(ans, dfs(i, j));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; ans;</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="七、状态压缩"><a href="#七、状态压缩" class="headerlink" title="七、状态压缩"></a>七、状态压缩</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">给定一张 n</span><br><span class="line"> 个点的带权无向图，点从 0∼n−1</span><br><span class="line"> 标号，求起点 0</span><br><span class="line"> 到终点 n−1</span><br><span class="line"> 的最短 Hamilton 路径。</span><br><span class="line"></span><br><span class="line">Hamilton 路径的定义是从 0</span><br><span class="line"> 到 n−1</span><br><span class="line"> 不重不漏地经过每个点恰好一次。</span><br><span class="line"></span><br><span class="line">输入格式</span><br><span class="line">第一行输入整数 n</span><br><span class="line">。</span><br><span class="line"></span><br><span class="line">接下来 n</span><br><span class="line"> 行每行 n</span><br><span class="line"> 个整数，其中第 i</span><br><span class="line"> 行第 j</span><br><span class="line"> 个整数表示点 i</span><br><span class="line"> 到 j</span><br><span class="line"> 的距离（记为 a[i,j]</span><br><span class="line">）。</span><br><span class="line"></span><br><span class="line">对于任意的 x,y,z</span><br><span class="line">，数据保证 a[x,x]=0，a[x,y]=a[y,x]</span><br><span class="line"> 并且 a[x,y]+a[y,z]≥a[x,z]</span><br><span class="line">。</span><br><span class="line"></span><br><span class="line">输出格式</span><br><span class="line">输出一个整数，表示最短 Hamilton 路径的长度。</span><br><span class="line"></span><br><span class="line">数据范围</span><br><span class="line">1≤n≤20</span><br><span class="line"></span><br><span class="line">0≤a[i,j]≤107</span><br><span class="line">输入样例：</span><br><span class="line">5</span><br><span class="line">0 2 4 5 1</span><br><span class="line">2 0 6 5 3</span><br><span class="line">4 6 0 8 3</span><br><span class="line">5 5 8 0 5</span><br><span class="line">1 3 3 5 0</span><br><span class="line">输出样例：</span><br><span class="line">18</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">也可用用来求图的最短路，必须经过所有点的最短路线</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;cstring&gt;</span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;algorithm&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">const int N = 20, M = 1 &lt;&lt; N;//2的n次方</span><br><span class="line"></span><br><span class="line">int n;</span><br><span class="line">int grid[N][N];</span><br><span class="line">int dp[M][N]; //i(B)状态下的01串，0表示未经过，1表示经过;根据这个路径i到达结点j的最短路径未dp[i][j];</span><br><span class="line">//int dp[M][N][N] //从状态 i 出发，经过节点 j 到达节点 k 的最短路径长度</span><br><span class="line">int main() &#123;</span><br><span class="line">	cin &gt;&gt; n;</span><br><span class="line">	int size = 1&lt;&lt;n;</span><br><span class="line">	for (int i=0;i&lt;n;i++ )</span><br><span class="line">		for (int j=0;j&lt;n;j++)</span><br><span class="line">			cin &gt;&gt; grid[i][j];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	memset(dp, 0x3f, sizeof dp);//0x3f : 无穷大</span><br><span class="line">	dp[1][0] = 0; // 初始状态为1，表示只经过0节点，距离为0</span><br><span class="line"></span><br><span class="line">	for(int i=0;i&lt;size;++i)&#123;//遍历所有状态</span><br><span class="line">		for(int j=0;j&lt;n;++j)&#123;//遍历所有结点</span><br><span class="line">			if(i&gt;&gt;j &amp; 1)&#123;//将状态 i 中的第 j 位提取出来，看看能不能走</span><br><span class="line">			    </span><br><span class="line">				for(int k=0;k&lt;n;k++)&#123;//经过中间结点k</span><br><span class="line">				</span><br><span class="line">					if(i&gt;&gt;k &amp; 1)&#123;//将状态 i 中的第 k 位提取出来，看看能不能走</span><br><span class="line">						dp[i][j] = min(dp[i][j],dp[i-(1&lt;&lt;j)][k] + grid[k][j]);</span><br><span class="line">					&#125;</span><br><span class="line">					</span><br><span class="line">				&#125;</span><br><span class="line">				</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	cout &lt;&lt; dp[size - 1][n - 1]; // 输出结果，最终状态为经过所有节点的状态</span><br><span class="line"></span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/" rel="tag"># 算法基础</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/05/03/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E7%AC%AC%E5%85%AD%E7%AB%A0/" rel="prev" title="贪心算法（ACwing）">
+      <i class="fa fa-chevron-left"></i> 贪心算法（ACwing）
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/05/27/%E6%A8%A1%E6%9D%BF%E5%A4%A7%E5%85%A8/" rel="next" title="模板大全">
+      模板大全 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92"><span class="nav-number">1.</span> <span class="nav-text">动态规划</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">一、背包问题</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E4%BB%A3%E7%A0%81"><span class="nav-number">2.0.0.0.0.1.</span> <span class="nav-text">核心代码</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#01%E8%83%8C%E5%8C%85"><span class="nav-number">2.1.</span> <span class="nav-text">01背包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%8C%E5%85%A8%E8%83%8C%E5%8C%85"><span class="nav-number">2.2.</span> <span class="nav-text">完全背包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E9%87%8D%E8%83%8C%E5%8C%85"><span class="nav-number">2.3.</span> <span class="nav-text">多重背包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E9%87%8D%E8%83%8C%E5%8C%85%E4%BA%8C%E8%BF%9B%E5%88%B6%E4%BC%98%E5%8C%96"><span class="nav-number">2.4.</span> <span class="nav-text">多重背包二进制优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E7%BB%84%E8%83%8C%E5%8C%85"><span class="nav-number">2.5.</span> <span class="nav-text">分组背包</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%AD%90%E5%BA%8F%E5%88%97%E9%97%AE%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">二、子序列问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81%E6%9C%80%E9%95%BF%E4%B8%8A%E5%8D%87%E5%AD%90%E5%BA%8F%E5%88%97"><span class="nav-number">3.1.</span> <span class="nav-text">1、最长上升子序列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E5%BA%8F%E5%88%97"><span class="nav-number">3.2.</span> <span class="nav-text">2、最长公共子序列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%E3%80%81%E7%BC%96%E8%BE%91%E8%B7%9D%E7%A6%BB"><span class="nav-number">3.3.</span> <span class="nav-text">3、编辑距离</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4%E3%80%81%E5%AD%90%E5%BA%8F%E5%88%97%E7%9A%84%E4%B8%AA%E6%95%B0"><span class="nav-number">3.4.</span> <span class="nav-text">4、子序列的个数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%8C%BA%E9%97%B4dp"><span class="nav-number">4.</span> <span class="nav-text">三、区间dp</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E8%AE%A1%E6%95%B0DP"><span class="nav-number">5.</span> <span class="nav-text">四、计数DP</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E6%A0%91%E5%BD%A2dp"><span class="nav-number">6.</span> <span class="nav-text">五、树形dp</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E8%AE%B0%E5%BF%86%E5%8C%96%E6%90%9C%E7%B4%A2"><span class="nav-number">7.</span> <span class="nav-text">六、记忆化搜索</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E7%8A%B6%E6%80%81%E5%8E%8B%E7%BC%A9"><span class="nav-number">8.</span> <span class="nav-text">七、状态压缩</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="AlexQFMM"
+      src="/images/Avatar.jpg">
+  <p class="site-author-name" itemprop="name">AlexQFMM</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://qexo-ten-roan.vercel.app/" title="控制中心 → https:&#x2F;&#x2F;qexo-ten-roan.vercel.app&#x2F;" rel="noopener" target="_blank">控制中心</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AlexQFMM</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : 'UaEUwcYLlkREnSn9jPNe0oRf-gzGzoHsz',
+      appKey     : '5d7KwGdf31jiCBxBobH0wVk6',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/assets/miku.model.json"},"display":{"position":"left","width":200,"height":400},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

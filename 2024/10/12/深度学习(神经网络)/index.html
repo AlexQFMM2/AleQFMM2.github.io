@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="深度学习(神经网络)神经网络和传统机器学习的区别主要体现在以下几个方面：  模型结构： 神经网络：由多个层（输入层、隐藏层、输出层）组成，层与层之间由神经元连接，能够自动学习输入数据的特征表示。 传统机器学习：模型通常较为简单，如线性回归、决策树、支持向量机等，依赖于特征工程，手动提取特征。   特征提取： 神经网络：具备自动特征提取能力，能够从原始数据中自动学习到有用的特征，尤其在图像、语音等复">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深度学习(神经网络)">
+<meta property="og:url" content="http://example.com/2024/10/12/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0(%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C)/index.html">
+<meta property="og:site_name" content="AlexHome">
+<meta property="og:description" content="深度学习(神经网络)神经网络和传统机器学习的区别主要体现在以下几个方面：  模型结构： 神经网络：由多个层（输入层、隐藏层、输出层）组成，层与层之间由神经元连接，能够自动学习输入数据的特征表示。 传统机器学习：模型通常较为简单，如线性回归、决策树、支持向量机等，依赖于特征工程，手动提取特征。   特征提取： 神经网络：具备自动特征提取能力，能够从原始数据中自动学习到有用的特征，尤其在图像、语音等复">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-10-12T10:20:45.000Z">
+<meta property="article:modified_time" content="2024-12-01T13:58:43.018Z">
+<meta property="article:author" content="AlexQFMM">
+<meta property="article:tag" content="人工智能">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2024/10/12/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0(%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C)/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>深度学习(神经网络) | AlexHome</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">AlexHome</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-guestbook">
+
+    <a href="/guestbook/" rel="section"><i class="fa fa-book fa-fw"></i>留言</a>
+
+  </li>
+        <li class="menu-item menu-item-mypage">
+
+    <a href="/MYHTML/test/index.html" rel="section"><i class="fas fa-file-user fa-fw"></i>myPage</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/10/12/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0(%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/Avatar.jpg">
+      <meta itemprop="name" content="AlexQFMM">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AlexHome">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          深度学习(神经网络)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-10-12 10:20:45" itemprop="dateCreated datePublished" datetime="2024-10-12T10:20:45+00:00">2024-10-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-12-01 13:58:43" itemprop="dateModified" datetime="2024-12-01T13:58:43+00:00">2024-12-01</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2024/10/12/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0(%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C)/" class="post-meta-item leancloud_visitors" data-flag-title="深度学习(神经网络)" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2024/10/12/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0(%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C)/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2024/10/12/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0(%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C)/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="深度学习-神经网络"><a href="#深度学习-神经网络" class="headerlink" title="深度学习(神经网络)"></a>深度学习(神经网络)</h1><p>神经网络和传统机器学习的区别主要体现在以下几个方面：</p>
+<ol>
+<li><strong>模型结构</strong>：<ul>
+<li><strong>神经网络</strong>：由多个层（输入层、隐藏层、输出层）组成，层与层之间由神经元连接，能够自动学习输入数据的特征表示。</li>
+<li><strong>传统机器学习</strong>：模型通常较为简单，如线性回归、决策树、支持向量机等，依赖于特征工程，手动提取特征。</li>
+</ul>
+</li>
+<li><strong>特征提取</strong>：<ul>
+<li><strong>神经网络</strong>：具备自动特征提取能力，能够从原始数据中自动学习到有用的特征，尤其在图像、语音等复杂数据上表现突出。</li>
+<li><strong>传统机器学习</strong>：通常需要专家手动进行特征选择和提取，过程中容易受到主观因素的影响。</li>
+</ul>
+</li>
+<li><strong>处理数据的能力</strong>：<ul>
+<li><strong>神经网络</strong>：适用于大规模数据，可以处理高维的数据，如图像和音频，适合深度学习任务。</li>
+<li><strong>传统机器学习</strong>：在小规模数据上通常表现良好，但在数据量极大时可能效果不佳。</li>
+</ul>
+</li>
+<li><strong>训练过程</strong>：<ul>
+<li><strong>神经网络</strong>：通过反向传播算法进行训练，通常需要更多的计算资源和时间，但能够在复杂任务中取得更好的性能。</li>
+<li><strong>传统机器学习</strong>：训练通常较快，可以使用较少的计算资源，适用于线性或结构简单的任务。</li>
+</ul>
+</li>
+<li><strong>泛化能力</strong>：<ul>
+<li><strong>神经网络</strong>：由于模型复杂度高，容易出现过拟合现象，因此需要正则化和更多的数据来提升泛化能力。</li>
+<li><strong>传统机器学习</strong>：在数据量较少时，通常能更好地泛化，但也容易受到特征选择的影响。</li>
+</ul>
+</li>
+</ol>
+<span id="more"></span>
+
+<h1 id="神经网络中的层"><a href="#神经网络中的层" class="headerlink" title="神经网络中的层"></a>神经网络中的层</h1><p>神经网络的层是组成神经网络模型的基本单元，每一层由多个神经元（或节点）组成。这些层通常可以分为以下几种类型：</p>
+<ol>
+<li><strong>输入层</strong>（Input Layer）：<ul>
+<li>这是神经网络的第一层，用于接收输入数据。每个输入特征对应一个神经元。输入层不进行任何计算，它只负责将数据传递给下一个层。</li>
+</ul>
+</li>
+<li><strong>隐藏层</strong>（Hidden Layers）：<ul>
+<li>输入层和输出层之间的层称为隐藏层。可以有多个隐藏层，每一层由多个神经元组成。隐藏层通过加权和激活函数对输入数据进行处理和转换，提取数据中的特征。隐藏层的数量和神经元的数量会影响网络的学习能力和表达能力。</li>
+</ul>
+</li>
+<li><strong>输出层</strong>（Output Layer）：<ul>
+<li>这是神经网络的最后一层，用于生成模型的输出结果。输出层的神经元数量通常与目标变量的数量相对应。在分类任务中，输出层可能使用softmax激活函数以生成概率分布；在回归任务中，可能使用线性激活函数以输出连续值。</li>
+</ul>
+</li>
+</ol>
+<h3 id="激活函数"><a href="#激活函数" class="headerlink" title="激活函数"></a>激活函数</h3><p>每一层的神经元通常会经过激活函数进行非线性转换。常见的激活函数包括：</p>
+<ul>
+<li><strong>Sigmoid</strong>：将输出限制在（0, 1）之间，常用于二分类任务。</li>
+<li><strong>ReLU（Rectified Linear Unit）</strong>：在输入大于0时输出自身，否则输出0，通常用于隐藏层。</li>
+<li><strong>Tanh</strong>：将输出限制在（-1, 1）之间，常用于结果需要 标准化的任务。</li>
+</ul>
+<h3 id="层的类型"><a href="#层的类型" class="headerlink" title="层的类型"></a>层的类型</h3><p>除了基本的输入、隐藏和输出层，还有其他特殊类型的层：</p>
+<ul>
+<li><strong>卷积层（Convolutional Layer）</strong>：用于处理图像数据，具有局部连接和权重共享特性。</li>
+<li><strong>池化层（Pooling Layer）</strong>：用于降低特征的维度和计算复杂度，常用于卷积神经网络中。</li>
+<li><strong>递归层（Recurrent Layer）</strong>：用于处理序列数据，具有记忆特性，如LSTM（长短期记忆）和GRU（门控递归单元）。</li>
+<li><strong>全连接层（Fully Connected Layer）</strong>：每个神经元与前一层的所有神经元相连，通常用于连接输入和输出。</li>
+</ul>
+<p>我们用以下形式表达神经网路层号<br>$$<br>w^{[i]}<br>$$<br>这代表第i层</p>
+<h3 id="推理：向前传播"><a href="#推理：向前传播" class="headerlink" title="推理：向前传播"></a>推理：向前传播</h3><p>推理或向前传播是神经网络从输入到输出的过程。在这个过程中，输入数据通过网络的每一层，逐层进行计算，直到产生最终输出。</p>
+<p>在Python中实现前向传播时，需定义一个稠密函数</p>
+<h4 id="稠密函数"><a href="#稠密函数" class="headerlink" title="稠密函数"></a>稠密函数</h4><p>是神经网络中的基本组成部分之一，用于将输入数据的所有特征与输出层的每个神经元相连接</p>
+<p>神经网络的前向传播过程中，通常会先通过稠密函数（即全连接层）对输入进行线性变换，然后再通过激活函数将输出转换为非线性形式。</p>
+<ul>
+<li><strong>权重与偏置</strong>：可以提及权重和偏置在稠密函数中的重要性，权重决定了特征的重要性，偏置则有助于更好地调整模型的输出。</li>
+</ul>
+<h3 id="训练：反向传播"><a href="#训练：反向传播" class="headerlink" title="训练：反向传播"></a>训练：反向传播</h3><p>反向传播是训练神经网络的关键步骤，通过计算损失函数相对于权重的梯度，根据计算的梯度来更新权重。</p>
+<p>反向传播是训练神经网络的关键步骤，通过计算损失函数相对于权重的梯度，根据计算的梯度来更新权重。</p>
+<h1 id="整体流程框架"><a href="#整体流程框架" class="headerlink" title="整体流程框架"></a>整体流程框架</h1><p>以下是使用 <strong>PyTorch</strong> 框架进行推理流程、数据处理和构建神经网络的基本步骤。</p>
+<h3 id="1-数据处理"><a href="#1-数据处理" class="headerlink" title="1. 数据处理"></a>1. 数据处理</h3><p>在使用 PyTorch 进行深度学习时，数据准备是重要的第一步。通常包括以下几个步骤：</p>
+<ul>
+<li><strong>导入必要的库</strong>：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import torch  </span><br><span class="line">from torchvision import datasets, transforms  </span><br><span class="line">from torch.utils.data import DataLoader  </span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>数据预处理</strong>：</li>
+</ul>
+<p>通过 <code>torchvision</code> 的 <code>transforms</code> 工具进行数据转换（如归一化、数据增强等）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">transform = transforms.Compose([  </span><br><span class="line">    transforms.Resize((28, 28)),  </span><br><span class="line">    transforms.ToTensor(),  </span><br><span class="line">    transforms.Normalize((0.5,), (0.5,))  # 对于单通道灰度图像  </span><br><span class="line">])  </span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>加载数据集</strong>：</li>
+</ul>
+<p>使用 <code>datasets</code> 获取数据，并使用 <code>DataLoader</code> 创建数据加载器。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">train_dataset = datasets.MNIST(root=&#x27;data&#x27;, train=True, download=True, transform=transform)  </span><br><span class="line">train_loader = DataLoader(dataset=train_dataset, batch_size=64, shuffle=True)  </span><br><span class="line"></span><br><span class="line">test_dataset = datasets.MNIST(root=&#x27;data&#x27;, train=False, download=True, transform=transform)  </span><br><span class="line">test_loader = DataLoader(dataset=test_dataset, batch_size=64, shuffle=False)  </span><br></pre></td></tr></table></figure>
+
+<h3 id="2-数据的格式"><a href="#2-数据的格式" class="headerlink" title="2.数据的格式"></a>2.数据的格式</h3><p>在 PyTorch 中，数据通常以张量（tensor）的形式表示。</p>
+<ul>
+<li><strong>0维张量</strong>（标量）：一个独立的珠子（单个值）。</li>
+<li><strong>1维张量</strong>（向量）：一条线上的珠子（一个一维数组）。</li>
+<li><strong>2维张量</strong>（矩阵）：一张表格，行和列都放了珠子（一个二维数组）。</li>
+<li><strong>3维张量</strong>：一个立方体的珠子（一个包含多个表格的三维结构）。</li>
+</ul>
+<h3 id="3-构建神经网络"><a href="#3-构建神经网络" class="headerlink" title="3. 构建神经网络"></a>3. 构建神经网络</h3><p>使用 PyTorch 的 <code>nn</code> 模块来构建神经网络。以下是一个简单的完全连接的神经网络示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">import torch.nn as nn  </span><br><span class="line">import torch.nn.functional as F  </span><br><span class="line"></span><br><span class="line">class SimpleNN(nn.Module):  </span><br><span class="line">    def __init__(self):  </span><br><span class="line">        super(SimpleNN, self).__init__()  </span><br><span class="line">        self.fc1 = nn.Linear(28 * 28, 128)  # 输入层到隐藏层  </span><br><span class="line">        self.fc2 = nn.Linear(128, 64)        # 隐藏层到隐藏层  </span><br><span class="line">        self.fc3 = nn.Linear(64, 10)         # 隐藏层到输出层  </span><br><span class="line"></span><br><span class="line">    def forward(self, x):  </span><br><span class="line">        x = x.view(-1, 28 * 28)  # 展平输入  </span><br><span class="line">        x = F.relu(self.fc1(x))   # 第一层激活  </span><br><span class="line">        x = F.relu(self.fc2(x))   # 第二层激活  </span><br><span class="line">        x = self.fc3(x)           # 输出层  </span><br><span class="line">        return x  </span><br><span class="line"></span><br><span class="line">model = SimpleNN()  </span><br></pre></td></tr></table></figure>
+
+<h3 id="3-推理流程（向前传播）"><a href="#3-推理流程（向前传播）" class="headerlink" title="3. 推理流程（向前传播）"></a>3. 推理流程（向前传播）</h3><p>在模型训练之后，可以通过推理得到模型的 输出。以下是推理的步骤：</p>
+<ul>
+<li><strong>模型设为评估模式</strong>：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">model.eval()  # 设定模型为评估模式  </span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>进行推理</strong>：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">with torch.no_grad():  # 不需要计算梯度  </span><br><span class="line">    for images, labels in test_loader:  </span><br><span class="line">        outputs = model(images)  # 向前传播  </span><br><span class="line">        # 处理输出，例如计算预测类、准确度等  </span><br></pre></td></tr></table></figure>
+
+<h3 id="4-反向传播"><a href="#4-反向传播" class="headerlink" title="4. 反向传播"></a>4. 反向传播</h3><p>在训练中，模型需要通过反向传播来更新权重。以下是训练的基本步骤：</p>
+<ul>
+<li><strong>损失函数和优化器设置</strong>：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">criterion = nn.CrossEntropyLoss()  # 损失函数  </span><br><span class="line">optimizer = torch.optim.Adam(model.parameters(), lr=0.001)  # 优化器  </span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>训练循环</strong>：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">num_epochs = 5  # 设定训练的轮数  </span><br><span class="line"></span><br><span class="line">for epoch in range(num_epochs):  </span><br><span class="line">    model.train()  # 设定模型为训练模式  </span><br><span class="line">    for images, labels in train_loader:  </span><br><span class="line">        optimizer.zero_grad()  # 清零梯度  </span><br><span class="line"></span><br><span class="line">        outputs = model(images)  # 向前传播  </span><br><span class="line">        loss = criterion(outputs, labels)  # 计算损失  </span><br><span class="line">        loss.backward()  # 反向传播  </span><br><span class="line">        optimizer.step()  # 更新权重  </span><br></pre></td></tr></table></figure>
+
+<p>以上是使用 PyTorch 进行推理流程、数据处理和构建神经网络的基本步骤。</p>
+<h2 id="扩展："><a href="#扩展：" class="headerlink" title="扩展："></a>扩展：</h2><p><strong>Ai可以分为ANI和AGI两部分</strong></p>
+<h3 id="ANI（窄域人工智能）"><a href="#ANI（窄域人工智能）" class="headerlink" title="ANI（窄域人工智能）"></a>ANI（窄域人工智能）</h3><ol>
+<li><strong>定义</strong>：<ul>
+<li>ANI是指专门为特定任务或应用设计的人工智能系统。它们在某一特定领域具有高度的专业能力，但无法超出该领域执行其他任务。</li>
+</ul>
+</li>
+<li><strong>特征</strong>：<ul>
+<li><strong>任务专注</strong>：ANI系统能够在特定的任务中表现得比人类更优秀，例如图像识别、语音识别、自然语言处理等。</li>
+<li><strong>有限性</strong>：虽然能力强，但对新环境或新任务的适应性差。ANI无法从一个任务泛化到另一任务。</li>
+<li><strong>实例</strong>：常见的 ANI 应用包括聊天机器人、推荐系统（如Netflix和Spotify的推荐引擎）、语音助手（如Siri和Alexa）等。</li>
+</ul>
+</li>
+<li><strong>局限性</strong>：<ul>
+<li>ANI缺乏理解、意识和自主决策的能力，只是按照预设的算法和数据进行操作。</li>
+</ul>
+</li>
+</ol>
+<h3 id="AGI（通用人工智能）"><a href="#AGI（通用人工智能）" class="headerlink" title="AGI（通用人工智能）"></a>AGI（通用人工智能）</h3><ol>
+<li><strong>定义</strong>：<ul>
+<li>AGI是指能够理解、学习、适应以及在各种任务中以人类水平或超越人类水平表现的人工智能系统。AGI具有人类智力的广泛特征。</li>
+</ul>
+</li>
+<li><strong>特征</strong>：<ul>
+<li><strong>灵活性</strong>：AGI能够处理各种不同的任务，包括学习新任务和环境，而不仅仅局限于特定领域。</li>
+<li><strong>自主性</strong>：AGI能够进行抽象思维、自主决策和解决问题。</li>
+<li><strong>实例</strong>：目前还没有真正实现的 AGI，理论上，AGI可以像人类一样工作、学习和社交。</li>
+</ul>
+</li>
+<li><strong>挑战</strong>：<ul>
+<li>AGI的实现面临许多技术和伦理挑战，包括如何设计具有复杂推理和自我意识的系统。</li>
+<li>还有关于安全性、控制问题和潜在的社会影响等方面的讨论。</li>
+</ul>
+</li>
+</ol>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><ul>
+<li><strong>ANI</strong> 和 <strong>AGI</strong> 代表了当前人工智能研究中的两种不同层级。ANI专注于特定领域的能力，而AGI则旨在创建可以像人类一样进行通用智能任务的系统。</li>
+<li>ANI 是目前实际应用中存在的类型，而 AGI 仍然是科学家和研究者希望实现的目标。</li>
+</ul>
+<h1 id="矩阵相关"><a href="#矩阵相关" class="headerlink" title="矩阵相关"></a>矩阵相关</h1><h2 id="矩阵的乘法"><a href="#矩阵的乘法" class="headerlink" title="矩阵的乘法"></a>矩阵的乘法</h2><h3 id="运算规则"><a href="#运算规则" class="headerlink" title="运算规则"></a>运算规则</h3><p>矩阵A * 矩阵 B &#x3D; 矩阵 C</p>
+<p>用i表示行，j表示列<br>$$<br>C_{[i][j]} &#x3D; A_{[i][:]} \cdot B_{[:][j]}<br>$$</p>
+<h3 id="运算的前提"><a href="#运算的前提" class="headerlink" title="运算的前提"></a><strong>运算的前提</strong></h3><p>A矩阵的列号必须等于B矩阵的行号<br>$$<br>A_{a,b} \cdot B_{b,c} &#x3D; C_{a,c}<br>$$</p>
+<h3 id="乘法的运算顺序"><a href="#乘法的运算顺序" class="headerlink" title="乘法的运算顺序"></a><strong>乘法的运算顺序</strong></h3><ul>
+<li>矩阵乘法是<strong>不可交换</strong>的，即 A<em>⋅</em>B*!&#x3D;<em>B</em>⋅*A，除非在特定情况下（如当两个矩阵是对称矩阵时）。</li>
+</ul>
+<h3 id="乘法的结合律与分配律"><a href="#乘法的结合律与分配律" class="headerlink" title="乘法的结合律与分配律"></a><strong>乘法的结合律与分配律</strong></h3><ul>
+<li>矩阵乘法有如下性质：<ul>
+<li><strong>结合律</strong>：<em>A</em>⋅(<em>B</em>⋅<em>C</em>)&#x3D;(<em>A</em>⋅<em>B</em>)⋅<em>C</em></li>
+<li><strong>分配律</strong>：<em>A</em>⋅(<em>B</em>+<em>C</em>)&#x3D;<em>A</em>⋅<em>B</em>+<em>A</em>⋅<em>C</em></li>
+</ul>
+</li>
+</ul>
+<h2 id="矩阵的转置"><a href="#矩阵的转置" class="headerlink" title="矩阵的转置"></a>矩阵的转置</h2><p>其实就是行列转换用T表示<br>$$<br>A^T<br>$$</p>
+<h3 id="运算律"><a href="#运算律" class="headerlink" title="运算律"></a>运算律</h3><p>$$<br>C^T &#x3D; (A \cdot B)^T &#x3D; B^T \cdot A^T<br>$$</p>
+<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">import torch  </span><br><span class="line"></span><br><span class="line"># 定义矩阵 A (3x2)  </span><br><span class="line">A = torch.tensor([[1, 2],   </span><br><span class="line">                  [3, 4],   </span><br><span class="line">                  [5, 6]])  </span><br><span class="line"></span><br><span class="line"># 定义矩阵 B (2x3)  </span><br><span class="line">B = torch.tensor([[6, 5, 4],   </span><br><span class="line">                  [3, 2, 1]])  </span><br><span class="line"></span><br><span class="line"># 矩阵的乘法  </span><br><span class="line">C = torch.matmul(A, B)  </span><br><span class="line">#print(f&#x27;C = A * B\n&#x27;, C)</span><br><span class="line"></span><br><span class="line">#矩阵的转置,只有一行的矩阵被视为行向量)</span><br><span class="line">A_T = A.t()</span><br><span class="line">#print(f&#x27;A^T = &#x27;,A_T)</span><br></pre></td></tr></table></figure>
+
+<h1 id="训练神经网络"><a href="#训练神经网络" class="headerlink" title="训练神经网络"></a><strong>训练神经网络</strong></h1><p><strong>训练神经网络的基本步骤</strong></p>
+<ul>
+<li><strong>定义输出</strong>：确定如何通过输入特征和模型参数计算输出。</li>
+<li>损失函数和成本函数<ul>
+<li><strong>损失函数</strong>：评估模型在个别训练示例上的表现，通过比较模型输出和真实标签计算错误程度。</li>
+<li><strong>成本函数</strong>：所有训练示例损失的平均值，反映模型整体性能。</li>
+</ul>
+</li>
+</ul>
+<p><strong>使用梯度下降法优化模型</strong></p>
+<ul>
+<li>包含几个关键步骤：指定输出计算、定义损失函数及最小化成本函数。</li>
+<li><strong>模型编译</strong>：选择合适的损失函数（如二元交叉熵）来评估神经网络的性能。</li>
+</ul>
+<p><strong>参数和损失函数的明确</strong></p>
+<ul>
+<li>在神经网络构建过程中，必须明确模型的参数和损失函数，以确保 PyTorch 能有效计算输出并优化模型。</li>
+</ul>
+<p><strong>回归问题的损失函数</strong></p>
+<ul>
+<li>通过使用<strong>均方误差损失函数</strong>来最小化误差，优化模型参数以提升预测准确性。</li>
+<li>交叉熵损失函数适用于二元分类任务，强调输出的准确性。</li>
+</ul>
+<p><strong>反向传播算法和优化</strong></p>
+<ul>
+<li>神经网络的训练依赖于反向传播算法，PyTorch 提供了高效的实现方式，通过 <code>torch.autograd</code> 实现自动微分。</li>
+<li>利用梯度下降法计算偏导数，用户可高效调整模型参数。</li>
+</ul>
+<p><strong>深度学习库的演变</strong></p>
+<ul>
+<li>随着技术的进步，数据科学家和工程师更倾向于使用成熟的深度学习库（如 PyTorch），而不是从头实现。</li>
+<li>理解深度学习库的内部机制有助于开发者在遇到问题时更有效地调试和修复。</li>
+</ul>
+<h1 id="激活函数-1"><a href="#激活函数-1" class="headerlink" title="激活函数"></a>激活函数</h1><h2 id="1-激活函数的重要性"><a href="#1-激活函数的重要性" class="headerlink" title="1. 激活函数的重要性"></a>1. 激活函数的重要性</h2><ul>
+<li>激活函数在神经网络中至关重要，直接影响模型的有效性和准确性。适当选择激活函数可以显著提升模型的学习能力和最终预测结果。</li>
+</ul>
+<h2 id="2-激活函数的应用"><a href="#2-激活函数的应用" class="headerlink" title="2. 激活函数的应用"></a>2. 激活函数的应用</h2><ul>
+<li>输出层<ul>
+<li><strong>二进制分类问题</strong>：建议使用 Sigmoid 激活函数，有效预测 y&#x3D;1 的概率。</li>
+<li><strong>回归问题</strong>：推荐线性激活函数，以更好地反映连续变量变化（如股票价格）。</li>
+<li><strong>非负值预测</strong>（如房价）：使用 ReLU 激活函数，确保输出非负值。</li>
+</ul>
+</li>
+<li>隐藏层<ul>
+<li>默认选择为 ReLU 激活函数，因其高计算效率和快速收敛性。虽然 Sigmoid 在某些情况下有效，但 ReLU 通常表现更优。</li>
+</ul>
+</li>
+</ul>
+<p>ps: ReLU 激活函数有效防止网络隐藏层线性化，提升模型学习能力及特征表达能力，允许处理更复杂的特征和分类问题。</p>
+<h2 id="3-学习速度与效率"><a href="#3-学习速度与效率" class="headerlink" title="3. 学习速度与效率"></a>3. 学习速度与效率</h2><ul>
+<li>使用 ReLU 激活函数有助于加快学习速度，特别是在使用梯度下降法的训练过程中。理解学习速度的变化有助于进一步优化训练效率。</li>
+</ul>
+<h2 id="4-激活函数的多样化"><a href="#4-激活函数的多样化" class="headerlink" title="4. 激活函数的多样化"></a>4. 激活函数的多样化</h2><ul>
+<li>尝试多种激活函数（如 Tanh 和泄漏 ReLU）可以提高模型的表现，帮助神经网络处理复杂模式和数据。激活函数的关键在于引入非线性特征。</li>
+</ul>
+<h2 id="5-激活函数的局限性"><a href="#5-激活函数的局限性" class="headerlink" title="5. 激活函数的局限性"></a>5. 激活函数的局限性</h2><ul>
+<li>激活函数是神经网络的核心；若所有神经元使用线性激活函数，整个网络仅表现为线性回归模型，无法处理复杂数据。</li>
+<li>线性激活函数限制了网络的表达能力，输入和输出仅呈线性关系，导致模型无法拟合复杂数据分布。</li>
+</ul>
+<h2 id="6-多分类问题的扩展"><a href="#6-多分类问题的扩展" class="headerlink" title="6. 多分类问题的扩展"></a>6. 多分类问题的扩展</h2><ul>
+<li>神经网络不仅可用于二进制分类，还可拓展到多分类问题。理解如何设计网络以处理多分类任务是构建复杂模型的关键。</li>
+</ul>
+<h1 id="多类"><a href="#多类" class="headerlink" title="多类"></a>多类</h1><p>多类分类问题是指输出标签不止两个的分类问题，例如识别手写数字或分类患者的疾病。</p>
+<p>与二元分类不同，多类分类允许y有多个离散类别。通过使用<strong>softmax</strong>回归算法，可以估计每个类别的概率，并将数据集划分为多个类别。<br>       -手写数字识别是多类分类问题的一个例子。在这个场景中，我们需要识别十个不同的数字，这与只区分两个类别的二元分类不同。<br>       -在医疗领域，多类分类可以用于诊断多种疾病。例如，医生可以根据症状判断患者是否可能患有三种或五种不同的疾病，这也是多类分类问题的体现。<br>       -工业检测中，视觉缺陷检测是另一个多类分类应用。工厂可以通过图像识别不同类型的缺陷，如划痕、变色或缺口，以确保产品质量。</p>
+<h2 id="softmax"><a href="#softmax" class="headerlink" title="softmax"></a>softmax</h2><p><strong>定义</strong>：Softmax回归（也称为多项逻辑回归）用于处理多分类问题。它将每个类别的线性组合映射到一个概率值，所有类别的概率和为1。</p>
+<p><strong>数学原理</strong>：</p>
+<ul>
+<li>假设有K个类别，对于输入特征向量<strong>x</strong>，softmax函数定义如下：</li>
+</ul>
+<p>$$<br>P(y &#x3D; k | x) &#x3D; \frac {e^{w_k^Tx}} {\sum_{j &#x3D; 1}^{K} e^{w_k^Tx}}<br>$$</p>
+<ul>
+<li>确保了每个类别的输出概率在0到1之间，且所有类别的概率和为1。</li>
+</ul>
+<p><strong>参数选择的重要性</strong>：</p>
+<ul>
+<li>模型的表现依赖于参数 <em>w</em> 和 <em>b</em> 的选择，合理的参数设置可以提高分类的准确性。</li>
+<li>Softmax回归模型可以在给定输入特征时评估各个类别的预测概率，从而做出更明智的决策。</li>
+</ul>
+<p><strong>损失函数</strong>：</p>
+<ul>
+<li>Softmax回归使用负对数损失函数来优化模型，使得预测的概率尽可能接近真实标签。</li>
+<li>损失函数的定义帮助量化模型的错误程度，对于优化算法的选择和训练效果至关重要。</li>
+</ul>
+<p><strong>在神经网络中的应用</strong>：</p>
+<ul>
+<li>Softmax回归为神经网络中的多类分类问题提供了基础。</li>
+<li>融合Softmax回归到神经网络中，可以提升模型的复杂性与泛化能力，从而实现更高的分类精度。</li>
+</ul>
+<h1 id="多标签类"><a href="#多标签类" class="headerlink" title="多标签类"></a>多标签类</h1><p>在多标签分类问题中，每个样本可以同时属于多个类别。任务是为每个样本生成一个类别标签的集合。例如，对于一个新闻文章，可能同时标记为“政治”、“经济”和“国际”，即一个样本可以有多个标签。</p>
+<h3 id="输出层设计"><a href="#输出层设计" class="headerlink" title="输出层设计"></a>输出层设计</h3><ul>
+<li><strong>多类分类</strong>：输出层通常使用SoftMax激活函数，以输出每个类别的概率分布，并且概率总和为1。</li>
+<li><strong>多标签分类</strong>：输出层通常使用Sigmoid激活函数，以便独立地计算每个类别的概率。这使得每个类别之间相互独立，概率可以超过1。</li>
+</ul>
+<h3 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h3><ul>
+<li><strong>多类分类</strong>：常用的损失函数是交叉熵损失（Categorical Crossentropy），用于评估模型对单一正确类别的预测能力。</li>
+<li><strong>多标签分类</strong>：损失函数通常使用二进制交叉熵（Binary Crossentropy），因为每个标签是一个独立的二分类问题。</li>
+</ul>
+<h3 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h3><ul>
+<li><strong>多类分类</strong>：适用于只需从多个排他类别中选择一种情况，如手写数字识别、物体识别、情感分析等。</li>
+<li><strong>多标签分类</strong>：适用于需要同时考虑多个类别的情况，如文本分类（一篇文章可能属于多个主题）、图像标记（同一图像可能有多种物体）等。</li>
+</ul>
+<h1 id="Adam算法"><a href="#Adam算法" class="headerlink" title="Adam算法"></a>Adam算法</h1><p>Adam算法（Adaptive Moment Estimation）是一种广泛使用的优化算法，主要用于训练深度学习模型。能够自适应地调整每个参数的学习率，是一种在实际应用中表现良好的算法</p>
+<h3 id="与传统梯度下降的区别"><a href="#与传统梯度下降的区别" class="headerlink" title="与传统梯度下降的区别"></a>与传统梯度下降的区别</h3><ul>
+<li><strong>学习率调整</strong>：<ul>
+<li><strong>梯度下降</strong>：使用固定的学习率，可能导致学习不稳定或收敛慢。</li>
+<li><strong>Adam</strong>：自适应调整每个参数的学习率，采用学习率逐步减少的方法，更能适应各参数之间的更新速度。</li>
+</ul>
+</li>
+<li><strong>动量</strong>：<ul>
+<li><strong>标准梯度下降</strong>：不使用动量，可能导致在鞍点附近震荡。</li>
+<li><strong>Adam</strong>：结合了动量（通过一阶矩的估计）和自适应学习率（通过二阶矩的估计），使得收敛更快。</li>
+</ul>
+</li>
+<li><strong>收敛性</strong>：<ul>
+<li><strong>标准梯度下降</strong>：收敛可能较慢，容易陷入局部最优。</li>
+<li><strong>Adam</strong>：通过自适应调整学习率和使用动量，有助于更快和更稳健地收敛。</li>
+</ul>
+</li>
+</ul>
+<h3 id="Adam算法的优势"><a href="#Adam算法的优势" class="headerlink" title="Adam算法的优势"></a>Adam算法的优势</h3><ul>
+<li><strong>效率</strong>：Adam在大规模数据集上效率高，训练速度快。</li>
+<li><strong>收敛性</strong>：在许多情况下，Adam能以较少的训练轮次获得较好的结果。</li>
+<li><strong>噪声鲁棒性</strong>：Adam对梯度噪声较为鲁棒，适用于稀疏梯度问题，如自然语言处理和计算机视觉中的模型。</li>
+<li><strong>常用性</strong>：在许多深度学习任务中，如图像识别、自然语言处理等，Adam算法已成为默认选择。</li>
+</ul>
+<h1 id="卷积层"><a href="#卷积层" class="headerlink" title="卷积层"></a>卷积层</h1><p>卷积层是卷积神经网络（Convolutional Neural Networks, CNNs）中的核心组件，广泛应用于计算机视觉、自然语言处理和其他深度学习任务。卷积层通过卷积操作提取输入数据的局部特征，并在特征图中保留重要信息。</p>
+<h3 id="1-卷积层的基本概念"><a href="#1-卷积层的基本概念" class="headerlink" title="1. 卷积层的基本概念"></a>1. 卷积层的基本概念</h3><ul>
+<li><strong>卷积操作</strong>：卷积是一种数学运算，通过一个滑动窗口（通常称为卷积核或滤波器）在输入数据（如图像）上进行操作。卷积核在输入数据上“滑动”，每次计算窗口内的加权和，生成特征图（feature map）。</li>
+<li><strong>输入和输出</strong>：<ul>
+<li>输入通常是一个多维张量（例如，图像的高度、宽度和通道数）。</li>
+<li>输出是一个新的多维张量，也称为特征图，表现出输入中提取的特征信息。</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-卷积层的组成部分"><a href="#2-卷积层的组成部分" class="headerlink" title="2. 卷积层的组成部分"></a>2. 卷积层的组成部分</h3><ul>
+<li><strong>卷积核</strong>：卷积核是一个小尺寸的权重矩阵，通常为二维（在处理图像时）。它在输入数据上滑动，通过加权和计算特征图。卷积核的尺寸（如3x3或5x5）和数量（即输出通道数）是卷积层的超参数。</li>
+<li><strong>步幅（Stride）</strong>：步幅指的是卷积核滑动的步长。设置更大的步幅会使得输出特征图尺寸减小。</li>
+<li><strong>填充（Padding）</strong>：填充是在输入数据的边缘添加额外的像素。填充可以是“valid”（无填充）或“same”（输出尺寸与输入相同）。使用填充可以防止特征图尺寸过小，保留更多的边缘信息。</li>
+<li><strong>激活函数</strong>：卷积层通常会在计算卷积后，通过激活函数（如ReLU、Sigmoid等）对结果进行非线性变换，以增强网络的表达能力。</li>
+</ul>
+<h3 id="3-卷积层的功能"><a href="#3-卷积层的功能" class="headerlink" title="3. 卷积层的功能"></a>3. 卷积层的功能</h3><ul>
+<li><strong>局部连接</strong>：卷积层通过局部连接，专注于输入中的局部区域，有效提取局部特征。这种局部连接的特点使得卷积层比传统的全连接层参数更少，计算更高效。</li>
+<li><strong>参数共享</strong>：同一个卷积核在整个输入数据上重复使用，减少了模型的复杂性和参数数量。这使得卷积网络在训练时更加高效并减少过拟合的风险。</li>
+<li><strong>层次特征提取</strong>：通过堆叠多个卷积层，可以学习到越来越复杂的特征。初级卷积层可能捕捉边缘和纹理，中级卷积层可能识别简单形状，高级卷积层则能捕捉更复杂的对象。</li>
+</ul>
+<h3 id="4-卷积层的优势"><a href="#4-卷积层的优势" class="headerlink" title="4. 卷积层的优势"></a>4. 卷积层的优势</h3><ul>
+<li><strong>空间不变性</strong>：通过对局部区域的卷积操作，卷积层对物体位置的变化有一定的鲁棒性，能够检测到对象的形状和特征，无论它们在图像中的位置如何。</li>
+<li><strong>参数高效性</strong>：相比于全连接层，卷积层参数更少，更易于训练，这对于大规模数据集尤为重要。</li>
+<li><strong>特征自适应</strong>：卷积神经网络能够自动学习卷积核和特征，而不需要手动设计特征提取器。</li>
+</ul>
+<h3 id="5-卷积层的应用"><a href="#5-卷积层的应用" class="headerlink" title="5. 卷积层的应用"></a>5. 卷积层的应用</h3><p>卷积层广泛应用于许多领域，尤其是：</p>
+<ul>
+<li><strong>计算机视觉</strong>：如图像分类、物体检测、图像分割等任务。</li>
+<li><strong>自然语言处理</strong>：在文本分类等任务中，使用一维卷积层提取文本特征。</li>
+<li><strong>音频处理</strong>：将音频信号转换为频谱图像，进行分类和识别。</li>
+</ul>
+<h1 id="模型评估"><a href="#模型评估" class="headerlink" title="模型评估"></a>模型评估</h1><h3 id="1-模型性能评估的重要性"><a href="#1-模型性能评估的重要性" class="headerlink" title="1. 模型性能评估的重要性"></a>1. 模型性能评估的重要性</h3><ul>
+<li>评估模型的性能可帮助了解其有效性，并为后续的优化提供方向。</li>
+<li>建立系统化的评估方法是确保模型能够适应新数据的关键。</li>
+</ul>
+<h3 id="2-数据集的划分"><a href="#2-数据集的划分" class="headerlink" title="2. 数据集的划分"></a>2. 数据集的划分</h3><ul>
+<li><strong>训练集和测试集</strong>：一般将数据集分为70%用于训练，30%用于测试。</li>
+<li><strong>训练集</strong>：用于优化和学习模型参数，确保模型捕捉数据的主要特征和模式。</li>
+<li><strong>测试集</strong>：用于检验模型在未知数据上的性能，评估其泛化能力。</li>
+</ul>
+<h3 id="3-评估指标"><a href="#3-评估指标" class="headerlink" title="3. 评估指标"></a>3. 评估指标</h3><ul>
+<li><strong>训练误差</strong>：在训练集上的表现，低训练误差并不一定意味着模型在新数据上的表现同样良好。</li>
+<li><strong>测试误差</strong>：在测试集上计算的误差，反映模型在未见数据上的表现；高测试误差可能是过拟合的指征。</li>
+<li><strong>平方误差和逻辑回归损失函数</strong>：可用于计算训练误差和测试误差，帮助判断模型效果。</li>
+</ul>
+<h3 id="4-过拟合与泛化能力"><a href="#4-过拟合与泛化能力" class="headerlink" title="4. 过拟合与泛化能力"></a>4. 过拟合与泛化能力</h3><ul>
+<li>过拟合现象表现为训练误差低但测试误差高，需要进行优化和正则化以提高模型的泛化能力。</li>
+<li>通过监控训练误差和测试误差，可以识别潜在的过拟合问题并进行调整。</li>
+</ul>
+<h3 id="5-成本函数和参数优化"><a href="#5-成本函数和参数优化" class="headerlink" title="5. 成本函数和参数优化"></a>5. 成本函数和参数优化</h3><ul>
+<li>成本函数的最小化是模型训练中的关键步骤，通过优化平方误差和正则化项来提高模型性能。</li>
+</ul>
+<h3 id="6-错误分类率和逻辑损失函数"><a href="#6-错误分类率和逻辑损失函数" class="headerlink" title="6. 错误分类率和逻辑损失函数"></a>6. 错误分类率和逻辑损失函数</h3><ul>
+<li>在分类任务中，通过比较训练集和测试集的错误分类率，可以更好地评估模型的表现。</li>
+<li>使用逻辑损失函数计算平均损失，帮助了解模型在未见数据上的效果，确保模型的泛化能力。</li>
+</ul>
+<h3 id="7-模型选择"><a href="#7-模型选择" class="headerlink" title="7. 模型选择"></a>7. 模型选择</h3><ul>
+<li>选择合适的模型对于解决特定的机器学习问题非常重要，可以自动选择适用的线性模型或多项式模型，以提高预测精度。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="tag"># 人工智能</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/10/11/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0(l%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E6%A8%A1%E5%9E%8B)/" rel="prev" title="深度学习(逻辑回归模型)">
+      <i class="fa fa-chevron-left"></i> 深度学习(逻辑回归模型)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/10/13/%E7%94%B5%E5%BD%B1%E6%8E%A8%E8%8D%90%E7%AE%97%E6%B3%95/" rel="next" title="电影推荐算法">
+      电影推荐算法 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C"><span class="nav-number">1.</span> <span class="nav-text">深度学习(神经网络)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%B1%82"><span class="nav-number">2.</span> <span class="nav-text">神经网络中的层</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0"><span class="nav-number">2.0.1.</span> <span class="nav-text">激活函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B1%82%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.0.2.</span> <span class="nav-text">层的类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A8%E7%90%86%EF%BC%9A%E5%90%91%E5%89%8D%E4%BC%A0%E6%92%AD"><span class="nav-number">2.0.3.</span> <span class="nav-text">推理：向前传播</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A8%A0%E5%AF%86%E5%87%BD%E6%95%B0"><span class="nav-number">2.0.3.1.</span> <span class="nav-text">稠密函数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%AD%E7%BB%83%EF%BC%9A%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD"><span class="nav-number">2.0.4.</span> <span class="nav-text">训练：反向传播</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B4%E4%BD%93%E6%B5%81%E7%A8%8B%E6%A1%86%E6%9E%B6"><span class="nav-number">3.</span> <span class="nav-text">整体流程框架</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86"><span class="nav-number">3.0.1.</span> <span class="nav-text">1. 数据处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%95%B0%E6%8D%AE%E7%9A%84%E6%A0%BC%E5%BC%8F"><span class="nav-number">3.0.2.</span> <span class="nav-text">2.数据的格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%9E%84%E5%BB%BA%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C"><span class="nav-number">3.0.3.</span> <span class="nav-text">3. 构建神经网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%8E%A8%E7%90%86%E6%B5%81%E7%A8%8B%EF%BC%88%E5%90%91%E5%89%8D%E4%BC%A0%E6%92%AD%EF%BC%89"><span class="nav-number">3.0.4.</span> <span class="nav-text">3. 推理流程（向前传播）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD"><span class="nav-number">3.0.5.</span> <span class="nav-text">4. 反向传播</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%EF%BC%9A"><span class="nav-number">3.1.</span> <span class="nav-text">扩展：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ANI%EF%BC%88%E7%AA%84%E5%9F%9F%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%EF%BC%89"><span class="nav-number">3.1.1.</span> <span class="nav-text">ANI（窄域人工智能）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AGI%EF%BC%88%E9%80%9A%E7%94%A8%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%EF%BC%89"><span class="nav-number">3.1.2.</span> <span class="nav-text">AGI（通用人工智能）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">3.1.3.</span> <span class="nav-text">小结</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9F%A9%E9%98%B5%E7%9B%B8%E5%85%B3"><span class="nav-number">4.</span> <span class="nav-text">矩阵相关</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9F%A9%E9%98%B5%E7%9A%84%E4%B9%98%E6%B3%95"><span class="nav-number">4.1.</span> <span class="nav-text">矩阵的乘法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%90%E7%AE%97%E8%A7%84%E5%88%99"><span class="nav-number">4.1.1.</span> <span class="nav-text">运算规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%90%E7%AE%97%E7%9A%84%E5%89%8D%E6%8F%90"><span class="nav-number">4.1.2.</span> <span class="nav-text">运算的前提</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B9%98%E6%B3%95%E7%9A%84%E8%BF%90%E7%AE%97%E9%A1%BA%E5%BA%8F"><span class="nav-number">4.1.3.</span> <span class="nav-text">乘法的运算顺序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B9%98%E6%B3%95%E7%9A%84%E7%BB%93%E5%90%88%E5%BE%8B%E4%B8%8E%E5%88%86%E9%85%8D%E5%BE%8B"><span class="nav-number">4.1.4.</span> <span class="nav-text">乘法的结合律与分配律</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9F%A9%E9%98%B5%E7%9A%84%E8%BD%AC%E7%BD%AE"><span class="nav-number">4.2.</span> <span class="nav-text">矩阵的转置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%90%E7%AE%97%E5%BE%8B"><span class="nav-number">4.2.1.</span> <span class="nav-text">运算律</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="nav-number">4.3.</span> <span class="nav-text">代码实现</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%AD%E7%BB%83%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C"><span class="nav-number">5.</span> <span class="nav-text">训练神经网络</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0-1"><span class="nav-number">6.</span> <span class="nav-text">激活函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E7%9A%84%E9%87%8D%E8%A6%81%E6%80%A7"><span class="nav-number">6.1.</span> <span class="nav-text">1. 激活函数的重要性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-number">6.2.</span> <span class="nav-text">2. 激活函数的应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%AD%A6%E4%B9%A0%E9%80%9F%E5%BA%A6%E4%B8%8E%E6%95%88%E7%8E%87"><span class="nav-number">6.3.</span> <span class="nav-text">3. 学习速度与效率</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E7%9A%84%E5%A4%9A%E6%A0%B7%E5%8C%96"><span class="nav-number">6.4.</span> <span class="nav-text">4. 激活函数的多样化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E7%9A%84%E5%B1%80%E9%99%90%E6%80%A7"><span class="nav-number">6.5.</span> <span class="nav-text">5. 激活函数的局限性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E5%A4%9A%E5%88%86%E7%B1%BB%E9%97%AE%E9%A2%98%E7%9A%84%E6%89%A9%E5%B1%95"><span class="nav-number">6.6.</span> <span class="nav-text">6. 多分类问题的扩展</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%9A%E7%B1%BB"><span class="nav-number">7.</span> <span class="nav-text">多类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#softmax"><span class="nav-number">7.1.</span> <span class="nav-text">softmax</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%9A%E6%A0%87%E7%AD%BE%E7%B1%BB"><span class="nav-number">8.</span> <span class="nav-text">多标签类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%93%E5%87%BA%E5%B1%82%E8%AE%BE%E8%AE%A1"><span class="nav-number">8.0.1.</span> <span class="nav-text">输出层设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="nav-number">8.0.2.</span> <span class="nav-text">损失函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">8.0.3.</span> <span class="nav-text">应用场景</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Adam%E7%AE%97%E6%B3%95"><span class="nav-number">9.</span> <span class="nav-text">Adam算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8E%E4%BC%A0%E7%BB%9F%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">9.0.1.</span> <span class="nav-text">与传统梯度下降的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Adam%E7%AE%97%E6%B3%95%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="nav-number">9.0.2.</span> <span class="nav-text">Adam算法的优势</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%B7%E7%A7%AF%E5%B1%82"><span class="nav-number">10.</span> <span class="nav-text">卷积层</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%8D%B7%E7%A7%AF%E5%B1%82%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">10.0.1.</span> <span class="nav-text">1. 卷积层的基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%8D%B7%E7%A7%AF%E5%B1%82%E7%9A%84%E7%BB%84%E6%88%90%E9%83%A8%E5%88%86"><span class="nav-number">10.0.2.</span> <span class="nav-text">2. 卷积层的组成部分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%8D%B7%E7%A7%AF%E5%B1%82%E7%9A%84%E5%8A%9F%E8%83%BD"><span class="nav-number">10.0.3.</span> <span class="nav-text">3. 卷积层的功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%8D%B7%E7%A7%AF%E5%B1%82%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="nav-number">10.0.4.</span> <span class="nav-text">4. 卷积层的优势</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E5%8D%B7%E7%A7%AF%E5%B1%82%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-number">10.0.5.</span> <span class="nav-text">5. 卷积层的应用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0"><span class="nav-number">11.</span> <span class="nav-text">模型评估</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%A8%A1%E5%9E%8B%E6%80%A7%E8%83%BD%E8%AF%84%E4%BC%B0%E7%9A%84%E9%87%8D%E8%A6%81%E6%80%A7"><span class="nav-number">11.0.1.</span> <span class="nav-text">1. 模型性能评估的重要性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E5%88%92%E5%88%86"><span class="nav-number">11.0.2.</span> <span class="nav-text">2. 数据集的划分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E8%AF%84%E4%BC%B0%E6%8C%87%E6%A0%87"><span class="nav-number">11.0.3.</span> <span class="nav-text">3. 评估指标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E8%BF%87%E6%8B%9F%E5%90%88%E4%B8%8E%E6%B3%9B%E5%8C%96%E8%83%BD%E5%8A%9B"><span class="nav-number">11.0.4.</span> <span class="nav-text">4. 过拟合与泛化能力</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E6%88%90%E6%9C%AC%E5%87%BD%E6%95%B0%E5%92%8C%E5%8F%82%E6%95%B0%E4%BC%98%E5%8C%96"><span class="nav-number">11.0.5.</span> <span class="nav-text">5. 成本函数和参数优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E9%94%99%E8%AF%AF%E5%88%86%E7%B1%BB%E7%8E%87%E5%92%8C%E9%80%BB%E8%BE%91%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="nav-number">11.0.6.</span> <span class="nav-text">6. 错误分类率和逻辑损失函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-%E6%A8%A1%E5%9E%8B%E9%80%89%E6%8B%A9"><span class="nav-number">11.0.7.</span> <span class="nav-text">7. 模型选择</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="AlexQFMM"
+      src="/images/Avatar.jpg">
+  <p class="site-author-name" itemprop="name">AlexQFMM</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://qexo-ten-roan.vercel.app/" title="控制中心 → https:&#x2F;&#x2F;qexo-ten-roan.vercel.app&#x2F;" rel="noopener" target="_blank">控制中心</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AlexQFMM</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : 'UaEUwcYLlkREnSn9jPNe0oRf-gzGzoHsz',
+      appKey     : '5d7KwGdf31jiCBxBobH0wVk6',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/assets/miku.model.json"},"display":{"position":"left","width":200,"height":400},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

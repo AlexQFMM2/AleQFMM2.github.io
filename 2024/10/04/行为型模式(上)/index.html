@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="行为型模式（上）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="行为型模式（上）">
+<meta property="og:url" content="http://example.com/2024/10/04/%E8%A1%8C%E4%B8%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F(%E4%B8%8A)/index.html">
+<meta property="og:site_name" content="AlexHome">
+<meta property="og:description" content="行为型模式（上）">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-10-04T10:20:45.000Z">
+<meta property="article:modified_time" content="2024-12-01T13:58:43.022Z">
+<meta property="article:author" content="AlexQFMM">
+<meta property="article:tag" content="设计模式">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2024/10/04/%E8%A1%8C%E4%B8%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F(%E4%B8%8A)/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>行为型模式（上） | AlexHome</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">AlexHome</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-guestbook">
+
+    <a href="/guestbook/" rel="section"><i class="fa fa-book fa-fw"></i>留言</a>
+
+  </li>
+        <li class="menu-item menu-item-mypage">
+
+    <a href="/MYHTML/test/index.html" rel="section"><i class="fas fa-file-user fa-fw"></i>myPage</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/10/04/%E8%A1%8C%E4%B8%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F(%E4%B8%8A)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/Avatar.jpg">
+      <meta itemprop="name" content="AlexQFMM">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AlexHome">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          行为型模式（上）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-10-04 10:20:45" itemprop="dateCreated datePublished" datetime="2024-10-04T10:20:45+00:00">2024-10-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-12-01 13:58:43" itemprop="dateModified" datetime="2024-12-01T13:58:43+00:00">2024-12-01</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2024/10/04/%E8%A1%8C%E4%B8%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F(%E4%B8%8A)/" class="post-meta-item leancloud_visitors" data-flag-title="行为型模式（上）" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2024/10/04/%E8%A1%8C%E4%B8%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F(%E4%B8%8A)/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2024/10/04/%E8%A1%8C%E4%B8%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F(%E4%B8%8A)/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="行为型模式（上）"><a href="#行为型模式（上）" class="headerlink" title="行为型模式（上）"></a><strong>行为型模式</strong>（上）</h1><span id="more"></span>
+
+<h2 id="职责链模式（Chain-of-Responsibility）"><a href="#职责链模式（Chain-of-Responsibility）" class="headerlink" title="职责链模式（Chain of Responsibility）"></a><strong>职责链模式（Chain of Responsibility）</strong></h2><p>职责链模式是一种行为型设计模式，它允许多个对象有机会处理请求，从而避免请求的发送者与接收者之间的耦合关系。将这些接收对象连成一条链，请求沿着这条链传递，直到有对象处理它为止。</p>
+<p><strong>核心思想：</strong></p>
+<ul>
+<li><strong>请求的发送者</strong>无需明确指定请求的接收者。</li>
+<li><strong>处理者对象</strong>被连接成链，按照顺序处理请求。</li>
+<li><strong>请求</strong>在链中移动，直到被处理或到达链的末端。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;  </span><br><span class="line">#include &lt;string&gt;  </span><br><span class="line">#include &lt;vector&gt;  </span><br><span class="line">#include &lt;memory&gt;  </span><br><span class="line"></span><br><span class="line">// 命令接口  </span><br><span class="line">class Command &#123;  </span><br><span class="line">public:  </span><br><span class="line">    virtual void execute() = 0;  </span><br><span class="line">    virtual ~Command() = default;  </span><br><span class="line">&#125;;  </span><br><span class="line"></span><br><span class="line">// 接收者：厨师  </span><br><span class="line">class Chef &#123;  </span><br><span class="line">public:  </span><br><span class="line">    void cookDish(const std::string&amp; dish) &#123;  </span><br><span class="line">        std::cout &lt;&lt; &quot;厨师正在烹饪：&quot; &lt;&lt; dish &lt;&lt; std::endl;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;;  </span><br><span class="line"></span><br><span class="line">// 具体命令：烹饪菜品  </span><br><span class="line">class CookCommand : public Command &#123;  </span><br><span class="line">public:  </span><br><span class="line">    CookCommand(Chef* chef, const std::string&amp; dish) : chef_(chef), dish_(dish) &#123;&#125;  </span><br><span class="line">    void execute() override &#123;  </span><br><span class="line">        chef_-&gt;cookDish(dish_);  </span><br><span class="line">    &#125;  </span><br><span class="line">private:  </span><br><span class="line">    Chef* chef_;  </span><br><span class="line">    std::string dish_;  </span><br><span class="line">&#125;;  </span><br><span class="line"></span><br><span class="line">// 调用者：服务员  </span><br><span class="line">class Waiter &#123;  </span><br><span class="line">public:  </span><br><span class="line">    void setOrder(std::shared_ptr&lt;Command&gt; cmd) &#123;  </span><br><span class="line">        commands_.push_back(cmd);  </span><br><span class="line">        std::cout &lt;&lt; &quot;服务员记录订单。&quot; &lt;&lt; std::endl;  </span><br><span class="line">    &#125;  </span><br><span class="line">    void notify() &#123;  </span><br><span class="line">        for (const auto&amp; cmd : commands_) &#123;  </span><br><span class="line">            cmd-&gt;execute();  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">private:  </span><br><span class="line">    std::vector&lt;std::shared_ptr&lt;Command&gt;&gt; commands_;  </span><br><span class="line">&#125;;  </span><br><span class="line"></span><br><span class="line">// 客户端代码  </span><br><span class="line">int main() &#123;  </span><br><span class="line">    Chef chef;  </span><br><span class="line">    Waiter waiter;  </span><br><span class="line">    </span><br><span class="line">    // 顾客点菜  </span><br><span class="line">    waiter.setOrder(std::make_shared&lt;CookCommand&gt;(&amp;chef, &quot;宫保鸡丁&quot;));  </span><br><span class="line">    waiter.setOrder(std::make_shared&lt;CookCommand&gt;(&amp;chef, &quot;鱼香肉丝&quot;));  </span><br><span class="line">    </span><br><span class="line">    // 通知厨师  </span><br><span class="line">    waiter.notify();  </span><br><span class="line">    </span><br><span class="line">    return 0;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="具体分析"><a href="#具体分析" class="headerlink" title="具体分析"></a>具体分析</h3><h4 id="特点"><a href="#特点" class="headerlink" title="特点"></a><strong>特点</strong></h4><ul>
+<li><strong>职责链中的各个处理者拥有相同的接口。</strong></li>
+<li><strong>处理者决定是否处理请求以及是否将请求传递给下一个处理者。</strong></li>
+<li><strong>请求发送者和接收者解耦，新增处理者时无需修改客户端代码。</strong></li>
+</ul>
+<hr>
+<h4 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a><strong>优缺点</strong></h4><p><strong>优点：</strong></p>
+<ol>
+<li><strong>降低耦合度：</strong>请求者与处理者解耦，增加新的处理者非常方便。</li>
+<li><strong>增强了灵活性：</strong>通过改变链内的成员或调动它们的次序，动态地新增或删除责任。</li>
+<li><strong>符合开闭原则：</strong>增加新的处理类不影响原有类的代码。</li>
+</ol>
+<p><strong>缺点：</strong></p>
+<ol>
+<li><strong>可能导致请求未被处理：</strong>如果链的末端没有合适的处理者，可能导致请求被丢弃。</li>
+<li><strong>调试困难：</strong>由于请求沿链传递，调试时可能需要跟踪整个链条。</li>
+<li><strong>性能影响：</strong>过长的职责链可能影响性能，尤其是在链上处理请求的次数过多时。</li>
+</ol>
+<p>职责链模式通过将请求按顺序传递给一系列处理者，实现了请求发送者与多个潜在接收者之间的解耦。它允许动态地添加或删除处理者，增加了系统的灵活性和可扩展性。但是需要注意职责链的设计，避免过长的链条导致性能问题，以及确保请求能够被恰当的处理者处理。</p>
+<h2 id="命令（command）模式"><a href="#命令（command）模式" class="headerlink" title="命令（command）模式"></a>命令（command）模式</h2><p>命令模式（Command Pattern）是一种行为型设计模式，它将一个请求封装为一个对象，从而使你可用不同的请求对客户端进行参数化；对请求排队或记录请求日志，以及支持可撤销的操作。</p>
+<p>在命令模式中，命令（Command）是一种抽象化的动作或操作，它包含了执行操作的所有信息。这使得调用操作的对象（调用者 Invoker）与实现操作的对象（接收者 Receiver）完全解耦。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;  </span><br><span class="line">#include &lt;string&gt;  </span><br><span class="line">#include &lt;vector&gt;  </span><br><span class="line">#include &lt;memory&gt;  </span><br><span class="line"></span><br><span class="line">// 命令接口  </span><br><span class="line">class Command &#123;</span><br><span class="line">public:</span><br><span class="line">    virtual void execute() = 0;</span><br><span class="line">    virtual ~Command() = default;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// 接收者：厨师  </span><br><span class="line">class Chef &#123;</span><br><span class="line">public:</span><br><span class="line">    void cookDish(const std::string&amp; dish) &#123;</span><br><span class="line">        std::cout &lt;&lt; &quot;厨师正在烹饪：&quot; &lt;&lt; dish &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// 具体命令：烹饪菜品  </span><br><span class="line">class CookCommand : public Command &#123;</span><br><span class="line">public:</span><br><span class="line">    CookCommand(Chef* chef, const std::string&amp; dish) : chef_(chef), dish_(dish) &#123;&#125;</span><br><span class="line">    void execute() override &#123;</span><br><span class="line">        chef_-&gt;cookDish(dish_);</span><br><span class="line">    &#125;</span><br><span class="line">private:</span><br><span class="line">    Chef* chef_;</span><br><span class="line">    std::string dish_;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// 调用者：服务员  </span><br><span class="line">class Waiter &#123;</span><br><span class="line">public:</span><br><span class="line">    void setOrder(std::shared_ptr&lt;Command&gt; cmd) &#123;</span><br><span class="line">        commands_.push_back(cmd);</span><br><span class="line">        std::cout &lt;&lt; &quot;服务员记录订单。&quot; &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line">    void notify() &#123;</span><br><span class="line">        for (const auto&amp; cmd : commands_) &#123;</span><br><span class="line">            cmd-&gt;execute();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">private:</span><br><span class="line">    std::vector&lt;std::shared_ptr&lt;Command&gt;&gt; commands_;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// 客户端代码  </span><br><span class="line">int main() &#123;</span><br><span class="line">    Chef chef;</span><br><span class="line">    Waiter waiter;</span><br><span class="line"></span><br><span class="line">    // 顾客点菜  </span><br><span class="line">    waiter.setOrder(std::make_shared&lt;CookCommand&gt;(&amp;chef, &quot;宫保鸡丁&quot;));</span><br><span class="line">    waiter.setOrder(std::make_shared&lt;CookCommand&gt;(&amp;chef, &quot;鱼香肉丝&quot;));</span><br><span class="line"></span><br><span class="line">    // 通知厨师  </span><br><span class="line">    waiter.notify();</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="具体分析-1"><a href="#具体分析-1" class="headerlink" title="具体分析"></a>具体分析</h3><h4 id="一、命令模式的特点"><a href="#一、命令模式的特点" class="headerlink" title="一、命令模式的特点"></a><strong>一、命令模式的特点</strong></h4><ol>
+<li><strong>将请求封装为对象</strong>：<ul>
+<li>命令模式将请求、操作或行为封装为一个对象，即命令对象（Command）。这样可以将请求的调用者与请求的接收者解耦。</li>
+</ul>
+</li>
+<li><strong>调用者与接收者解耦</strong>：<ul>
+<li>调用者（Invoker）只需要知道如何调用命令对象，而不需要关心具体的命令是如何执行的。</li>
+<li>接收者（Receiver）执行具体的操作，但不需要知道是谁触发了这些操作。</li>
+</ul>
+</li>
+<li><strong>支持撤销（Undo）和重做（Redo）</strong>：<ul>
+<li>因为命令对象包含了执行操作所需的所有信息，所以可以很容易地实现操作的撤销和重做。</li>
+</ul>
+</li>
+<li><strong>支持宏命令（组合命令）</strong>：<ul>
+<li>可以将多个命令组合成一个复合命令（宏命令），使得调用者可以一次执行一系列操作。</li>
+</ul>
+</li>
+<li><strong>增加新的命令很方便</strong>：<ul>
+<li>通过增加新的命令类，可以很容易地添加新的操作，而无需修改现有的代码，符合<strong>开闭原则</strong>。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h4 id="二、命令模式的优点"><a href="#二、命令模式的优点" class="headerlink" title="二、命令模式的优点"></a><strong>二、命令模式的优点</strong></h4><ol>
+<li><strong>降低系统的耦合度</strong>：<ul>
+<li>请求的发送者和请求的接收者彼此独立，调用者不需要直接调用接收者，减少了模块之间的依赖性。</li>
+</ul>
+</li>
+<li><strong>更灵活的设计</strong>：<ul>
+<li>可以在运行时动态地指定、排列和执行请求。</li>
+<li>请求被封装为对象后，可以存储、传递、序列化、队列化等，提供了更灵活的设计。</li>
+</ul>
+</li>
+<li><strong>支持可撤销操作</strong>：<ul>
+<li>通过存储命令执行的历史记录，可以方便地实现撤销和重做功能，提高了系统的可操作性。</li>
+</ul>
+</li>
+<li><strong>方便扩展新命令</strong>：<ul>
+<li>新的命令可以很容易地通过实现命令接口或抽象类来添加，而不影响其他的类，符合开闭原则。</li>
+</ul>
+</li>
+<li><strong>组合命令更强大</strong>：<ul>
+<li>支持将多个命令组合成一个宏命令，方便地执行一系列复杂的操作。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h4 id="三、命令模式的缺点"><a href="#三、命令模式的缺点" class="headerlink" title="三、命令模式的缺点"></a><strong>三、命令模式的缺点</strong></h4><ol>
+<li><strong>类的数量可能大量增加</strong>：<ul>
+<li>每一个具体的命令都需要设计一个类，可能会导致系统中类的数量显著增加，增加了系统的复杂性。</li>
+</ul>
+</li>
+<li><strong>可能过于复杂</strong>：<ul>
+<li>对于简单的操作，使用命令模式可能显得过于笨重和繁琐，不如直接调用方法来得简单。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h4 id="四、命令模式的适用场景"><a href="#四、命令模式的适用场景" class="headerlink" title="四、命令模式的适用场景"></a><strong>四、命令模式的适用场景</strong></h4><ol>
+<li><strong>需要解耦调用者和接收者时</strong>：<ul>
+<li>调用者需要向多个接收者发送请求，或者接收者需要在运行时动态指定时，使用命令模式可以实现二者的解耦。</li>
+</ul>
+</li>
+<li><strong>需要支持撤销和重做功能时</strong>：<ul>
+<li>通过在命令对象中实现相应的逻辑，可以方便地记录操作历史，实现撤销和重做。</li>
+</ul>
+</li>
+<li><strong>需要记录操作日志或事务时</strong>：<ul>
+<li>将请求封装为命令对象后，可以方便地记录命令执行的日志，或者在出现错误时重新执行命令。</li>
+</ul>
+</li>
+<li><strong>系统需要支持事务操作时</strong>：<ul>
+<li>可以将一组命令组合成一个事务操作，保证要么全部成功，要么全部失败。</li>
+</ul>
+</li>
+<li><strong>需要将一组操作组合为一个宏命令时</strong>：<ul>
+<li>可以将多个命令组合成一个宏命令，方便地调用一系列复杂的操作。</li>
+</ul>
+</li>
+<li><strong>需要在不同的时间指定、排列和执行请求时</strong>：<ul>
+<li>由于请求被封装为对象，可以在运行时动态地创建、组合和执行命令。</li>
+</ul>
+</li>
+</ol>
+<h2 id="解释器模式"><a href="#解释器模式" class="headerlink" title="解释器模式"></a><strong>解释器模式</strong></h2><p>解释器模式定义了一种语言的文法表示，并定义一个解释器来解释该语言中的句子。</p>
+<p>简单来说，它：</p>
+<ul>
+<li><strong>为语言创建语法表示</strong>：定义语言的文法规则，用类表示语法中的每一条规则。</li>
+<li><strong>使用解释器解释语言句子</strong>：通过解释器模式，可以解释表达式或句子，执行相应的操作</li>
+</ul>
+<h3 id="解释器模式的应用场景"><a href="#解释器模式的应用场景" class="headerlink" title="解释器模式的应用场景"></a><strong>解释器模式的应用场景</strong></h3><ol>
+<li><strong>特定领域语言（DSL）的实现</strong>：<ul>
+<li>在某些软件中，需要嵌入一种简单的、特定于领域的语言来描述配置、规则或行为。</li>
+<li>例如，业务规则引擎、数据库查询语言、自定义脚本语言等。</li>
+</ul>
+</li>
+<li><strong>表达式计算器</strong>：<ul>
+<li>实现数学表达式、逻辑表达式的解析与计算。</li>
+<li>例如，计算器应用程序，公式计算，条件表达式求值等。</li>
+</ul>
+</li>
+<li><strong>配置文件解析</strong>：<ul>
+<li>对特定格式的配置文件进行解析，将其转换为程序可以理解的数据结构。</li>
+<li>例如，解析自定义格式的配置文件、命令脚本等。</li>
+</ul>
+</li>
+<li><strong>游戏中的规则处理</strong>：<ul>
+<li>在游戏开发中，可能需要解释执行游戏脚本、AI行为脚本等。</li>
+<li>通过解释器模式，可以动态地定义和修改游戏中的行为规则。</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li><strong>对于简单的需求</strong>，使用解释器模式可能显得过于复杂和繁琐，不如直接采用简单的解析方法或者直接编码实现来得高效。</li>
+<li><strong>对于复杂的需求</strong>，例如需要解析复杂的语法、支持丰富的语言特性时，解释器模式又显得力不从心。这种情况下，通常会选择更专业、更高效的替代方案：<ul>
+<li><strong>嵌入现有的脚本语言</strong>：如 <strong>Python</strong>、<strong>Lua</strong>、<strong>JavaScript</strong> 等，它们有成熟的解析器和执行引擎，能够满足复杂的需求。</li>
+<li><strong>使用解析器生成器</strong>：如 <strong>ANTLR</strong>、<strong>Lex&#x2F;Yacc</strong>、<strong>Bison</strong> 等工具，可以自动生成高效的解析器，适用于复杂语法的解析。</li>
+<li><strong>采用配置文件格式和解析库</strong>：如 <strong>JSON</strong>、<strong>YAML</strong>、<strong>XML</strong> 等格式，有丰富的解析库支持，方便解析和处理数据。</li>
+</ul>
+</li>
+</ul>
+<h2 id="迭代器模式"><a href="#迭代器模式" class="headerlink" title="迭代器模式"></a>迭代器模式</h2><p>迭代器模式（Iterator Pattern）是一种行为设计模式，它允许客户端以一种统一的方式遍历集合内部的元素，而无需了解集合的内部实现细节。</p>
+<blockquote>
+<p><strong>定义</strong>：提供一种方法，顺序访问一个聚合对象中的各个元素，而又不需要暴露该对象的内部表示。</p>
+</blockquote>
+<p>简单来说，迭代器模式将遍历集合的行为从集合对象中分离出来，使得不同的集合类型都可以以一致的方式遍历。</p>
+<h3 id="优点和缺点"><a href="#优点和缺点" class="headerlink" title="优点和缺点"></a><strong>优点和缺点</strong></h3><h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a><strong>优点</strong></h4><ol>
+<li><strong>封装性良好，符合单一职责原则</strong><ul>
+<li>迭代器将遍历行为从集合对象中分离出来，不暴露集合的内部结构。</li>
+<li>客户端无需了解集合的实现细节，降低了耦合性。</li>
+</ul>
+</li>
+<li><strong>提供一致的遍历接口</strong><ul>
+<li>不同的集合对象都可以通过统一的迭代器接口进行遍历，增强了系统的可扩展性。</li>
+</ul>
+</li>
+<li><strong>支持不同方式的遍历</strong><ul>
+<li>可以根据需要实现不同的迭代器，支持多种遍历方式（如正向、反向、过滤等）。</li>
+</ul>
+</li>
+<li><strong>符合开闭原则</strong><ul>
+<li>新增集合类型或遍历方式时，无需修改现有代码，只需添加新的迭代器或集合类。</li>
+</ul>
+</li>
+</ol>
+<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a><strong>缺点</strong></h4><ol>
+<li><strong>类的数量增加</strong><ul>
+<li>每个聚合类都需要一个对应的迭代器类，可能导致类的数量增加，增加系统的复杂度。</li>
+</ul>
+</li>
+<li><strong>遍历过程可能较慢</strong><ul>
+<li>由于引入了迭代器的间接层，遍历过程可能比直接访问集合元素略慢。</li>
+</ul>
+</li>
+<li><strong>对于简单的集合，使用迭代器模式可能显得过于复杂</strong><ul>
+<li>对于较小或固定的集合，直接在聚合类中实现遍历方法可能更简单。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="适用的场景"><a href="#适用的场景" class="headerlink" title="适用的场景"></a><strong>适用的场景</strong></h3><ol>
+<li><strong>访问一个聚合对象的内容而无需暴露其内部表示</strong><ul>
+<li>当你需要遍历一个复杂的数据结构（如树、图等）时，但又不希望客户端依赖于这些结构的实现细节。</li>
+</ul>
+</li>
+<li><strong>为不同的聚合结构提供统一的遍历接口</strong><ul>
+<li>当你需要以一致的方式遍历不同类型的集合对象时，使用迭代器模式可以实现接口的一致性。</li>
+</ul>
+</li>
+<li><strong>需要提供多种遍历方式</strong><ul>
+<li>当需要对同一个聚合对象提供多种遍历方式时，可以为每种遍历方式实现一个迭代器。</li>
+</ul>
+</li>
+<li><strong>访问的聚合对象可能是多种类型的组合</strong><ul>
+<li>如组合模式中的组合对象，可以使用迭代器模式来遍历其内部的叶子和容器元素。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="在C-STL中的应用"><a href="#在C-STL中的应用" class="headerlink" title="在C++ STL中的应用"></a><strong>在C++ STL中的应用</strong></h3><h4 id="1-STL中的迭代器"><a href="#1-STL中的迭代器" class="headerlink" title="1. STL中的迭代器"></a><strong>1. STL中的迭代器</strong></h4><p>在 C++ 的标准模板库（STL）中，迭代器被广泛应用，是 STL 的五大组件之一。STL 中的容器（如 <code>vector</code>、<code>list</code>、<code>map</code> 等）都提供了迭代器，用于遍历容器中的元素。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;vector&gt;  </span><br><span class="line"></span><br><span class="line">int main() &#123;  </span><br><span class="line">    vector&lt;int&gt; nums = &#123;1, 2, 3, 4, 5&#125;;  </span><br><span class="line"></span><br><span class="line">    // 使用迭代器遍历  </span><br><span class="line">    for (vector&lt;int&gt;::iterator it = nums.begin(); it != nums.end(); ++it) &#123;  </span><br><span class="line">        cout &lt;&lt; *it &lt;&lt; &quot; &quot;;  </span><br><span class="line">    &#125;  </span><br><span class="line">    cout &lt;&lt; endl;  </span><br><span class="line"></span><br><span class="line">    // 使用 C++11 的范围 for 循环（底层也是使用迭代器）  </span><br><span class="line">    for (int num : nums) &#123;  </span><br><span class="line">        cout &lt;&lt; num &lt;&lt; &quot; &quot;;  </span><br><span class="line">    &#125;  </span><br><span class="line">    cout &lt;&lt; endl;  </span><br><span class="line"></span><br><span class="line">    return 0;  </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+
+<h4 id="2-迭代器的分类"><a href="#2-迭代器的分类" class="headerlink" title="2. 迭代器的分类"></a><strong>2. 迭代器的分类</strong></h4><p>STL 中的迭代器根据功能和特性分为五类：</p>
+<ul>
+<li><strong>输入迭代器（Input Iterator）</strong></li>
+<li><strong>输出迭代器（Output Iterator）</strong></li>
+<li><strong>前向迭代器（Forward Iterator）</strong></li>
+<li><strong>双向迭代器（Bidirectional Iterator）</strong></li>
+<li><strong>随机访问迭代器（Random Access Iterator）</strong></li>
+</ul>
+<p>不同的容器根据其特性，提供相应类型的迭代器。例如：</p>
+<ul>
+<li><code>vector</code>、<code>deque</code> 提供随机访问迭代器。</li>
+<li><code>list</code> 提供双向迭代器。</li>
+<li><code>unordered_map</code> 提供前向迭代器。</li>
+</ul>
+<h4 id="3-STL-迭代器的实现原理"><a href="#3-STL-迭代器的实现原理" class="headerlink" title="3. STL 迭代器的实现原理"></a><strong>3. STL 迭代器的实现原理</strong></h4><p>STL 的迭代器采用了模板和运算符重载，使其用法看起来类似于指针。但其底层实现可能是一个复杂的类，封装了对容器的访问。</p>
+<hr>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a><strong>总结</strong></h3><ul>
+<li><strong>迭代器模式</strong>提供了一种将遍历行为与集合对象分离的方法，使得客户端可以以一致的方式遍历不同的集合。</li>
+<li><strong>在实际开发中</strong>，迭代器模式被广泛应用，特别是在各种集合的遍历中。</li>
+<li><strong>STL 中的迭代器</strong>是迭代器模式的经典应用，通过迭代器，客户端可以不依赖于容器的内部结构，方便地访问容器中的元素。</li>
+<li><strong>理解和应用迭代器模式</strong>有助于编写高内聚、低耦合的代码，提高代码的可维护性和可扩展性。</li>
+</ul>
+<h3 id="模拟树的中序遍历"><a href="#模拟树的中序遍历" class="headerlink" title="模拟树的中序遍历"></a>模拟树的中序遍历</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;  </span><br><span class="line">#include &lt;memory&gt;  </span><br><span class="line">#include &lt;stack&gt;  </span><br><span class="line">#include &lt;iterator&gt;  </span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">class TreeNode &#123;</span><br><span class="line">public:</span><br><span class="line">    unique_ptr&lt;TreeNode&gt; left, right;</span><br><span class="line">    int val;</span><br><span class="line">    TreeNode(int x) : left(nullptr), right(nullptr), val(x) &#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class Tree &#123;</span><br><span class="line">private:</span><br><span class="line">    unique_ptr&lt;TreeNode&gt; root;</span><br><span class="line">public:</span><br><span class="line">    Tree() : root(nullptr) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    void insert(int x) &#123;</span><br><span class="line">        if (!root) &#123;</span><br><span class="line">            root = make_unique&lt;TreeNode&gt;(x);</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line">        auto current = root.get();</span><br><span class="line">        while (true) &#123;</span><br><span class="line">            if (x &lt; current-&gt;val) &#123;</span><br><span class="line">                if (current-&gt;left)</span><br><span class="line">                    current = current-&gt;left.get();</span><br><span class="line">                else &#123;</span><br><span class="line">                    current-&gt;left = make_unique&lt;TreeNode&gt;(x);</span><br><span class="line">                    break;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            else &#123;</span><br><span class="line">                if (current-&gt;right)</span><br><span class="line">                    current = current-&gt;right.get();</span><br><span class="line">                else &#123;</span><br><span class="line">                    current-&gt;right = make_unique&lt;TreeNode&gt;(x);</span><br><span class="line">                    break;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    class iterator &#123;</span><br><span class="line">    public:</span><br><span class="line">        using iterator_category = std::forward_iterator_tag;</span><br><span class="line">        using value_type = int;</span><br><span class="line">        using difference_type = ptrdiff_t;</span><br><span class="line">        using pointer = int*;</span><br><span class="line">        using reference = int&amp;;</span><br><span class="line"></span><br><span class="line">        iterator(TreeNode* root = nullptr) &#123;</span><br><span class="line">            pushLeft(root);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        int operator*() const &#123;</span><br><span class="line">            return nodeStack.top()-&gt;val;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        iterator&amp; operator++() &#123;</span><br><span class="line">            auto node = nodeStack.top();</span><br><span class="line">            nodeStack.pop();</span><br><span class="line">            if (node-&gt;right) &#123;</span><br><span class="line">                pushLeft(node-&gt;right.get());</span><br><span class="line">            &#125;</span><br><span class="line">            return *this;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        bool operator==(const iterator&amp; other) const &#123;</span><br><span class="line">            return nodeStack == other.nodeStack;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        bool operator!=(const iterator&amp; other) const &#123;</span><br><span class="line">            return !(*this == other);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    private:</span><br><span class="line">        stack&lt;TreeNode*&gt; nodeStack;</span><br><span class="line"></span><br><span class="line">        void pushLeft(TreeNode* node) &#123;</span><br><span class="line">            while (node) &#123;</span><br><span class="line">                nodeStack.push(node);</span><br><span class="line">                node = node-&gt;left.get();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    iterator begin() const &#123;</span><br><span class="line">        return iterator(root.get());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    iterator end() const &#123;</span><br><span class="line">        return iterator();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">    Tree tree;</span><br><span class="line">    tree.insert(5);</span><br><span class="line">    tree.insert(3);</span><br><span class="line">    tree.insert(7);</span><br><span class="line">    tree.insert(2);</span><br><span class="line">    tree.insert(4);</span><br><span class="line"></span><br><span class="line">    for (int val : tree) &#123;</span><br><span class="line">        cout &lt;&lt; val &lt;&lt; &quot; &quot;;</span><br><span class="line">    &#125;</span><br><span class="line">    // 输出：2 3 4 5 7  </span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="中介者模式"><a href="#中介者模式" class="headerlink" title="中介者模式"></a>中介者模式</h2><p>**中介者模式（Mediator Pattern）**是一种行为设计模式，用于**降低对象之间的耦合度**。它通过引入一个中介者对象，将系统中一组相互交互的对象封装起来，使对象之间的交互通过中介者进行，从而减少对象之间的直接依赖。</p>
+<p><strong>核心思想</strong>：</p>
+<ul>
+<li><strong>对象间通信集中化</strong>：所有对象的通信都通过中介者处理，而不再是对象之间直接通信。</li>
+<li><strong>解耦对象关系</strong>：中介者模式将对象之间的多对多关系转换为一对多关系，每个对象只需要与中介者通信。</li>
+</ul>
+<h3 id="具体代码"><a href="#具体代码" class="headerlink" title="具体代码"></a>具体代码</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;  </span><br><span class="line">#include &lt;string&gt;  </span><br><span class="line">#include &lt;unordered_map&gt;  </span><br><span class="line">#include &lt;memory&gt;  </span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">// 先声明 User 类  </span><br><span class="line">class User;</span><br><span class="line"></span><br><span class="line">// 中介者接口  </span><br><span class="line">class ChatServer &#123;</span><br><span class="line">public:</span><br><span class="line">    virtual void registerUser(const shared_ptr&lt;User&gt;&amp; user) = 0;</span><br><span class="line">    virtual void sendMessage(const string&amp; from, const string&amp; to, const string&amp; message) = 0;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// 具体中介者  </span><br><span class="line">class ConcreteChatServer : public ChatServer &#123;</span><br><span class="line">public:</span><br><span class="line">    void registerUser(const shared_ptr&lt;User&gt;&amp; user) override &#123;</span><br><span class="line">        users_[user-&gt;getName()] = user;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    void sendMessage(const string&amp; from, const string&amp; to, const string&amp; message) override &#123;</span><br><span class="line">        auto it = users_.find(to);</span><br><span class="line">        if (it != users_.end()) &#123;</span><br><span class="line">            it-&gt;second-&gt;receive(from, message);</span><br><span class="line">        &#125;</span><br><span class="line">        else &#123;</span><br><span class="line">            cout &lt;&lt; &quot;用户 [&quot; &lt;&lt; to &lt;&lt; &quot;] 未上线，无法发送消息。&quot; &lt;&lt; endl;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    unordered_map&lt;string, shared_ptr&lt;User&gt;&gt; users_;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// User 类  </span><br><span class="line">class User : public enable_shared_from_this&lt;User&gt; &#123;</span><br><span class="line">public:</span><br><span class="line">    User(const string&amp; name, const shared_ptr&lt;ChatServer&gt;&amp; server)</span><br><span class="line">        : name_(name), server_(server) &#123;</span><br><span class="line">        // 构造函数中不再进行注册  </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    void send(const string&amp; to, const string&amp; message) &#123;</span><br><span class="line">        server_-&gt;sendMessage(name_, to, message);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    void receive(const string&amp; from, const string&amp; message) &#123;</span><br><span class="line">        cout &lt;&lt; &quot;[&quot; &lt;&lt; name_ &lt;&lt; &quot;] 收到来自 [&quot; &lt;&lt; from &lt;&lt; &quot;] 的消息: &quot; &lt;&lt; message &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    string getName() const &#123;</span><br><span class="line">        return name_;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 提供注册自身的方法  </span><br><span class="line">    void registerToServer() &#123;</span><br><span class="line">        server_-&gt;registerUser(shared_from_this());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    string name_;</span><br><span class="line">    shared_ptr&lt;ChatServer&gt; server_;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">    auto server = make_shared&lt;ConcreteChatServer&gt;();</span><br><span class="line"></span><br><span class="line">    auto alice = make_shared&lt;User&gt;(&quot;Alice&quot;, server);</span><br><span class="line">    auto bob = make_shared&lt;User&gt;(&quot;Bob&quot;, server);</span><br><span class="line">    auto charlie = make_shared&lt;User&gt;(&quot;Charlie&quot;, server);</span><br><span class="line"></span><br><span class="line">    // 在对象创建后进行注册  </span><br><span class="line">    alice-&gt;registerToServer();</span><br><span class="line">    bob-&gt;registerToServer();</span><br><span class="line">    charlie-&gt;registerToServer();</span><br><span class="line"></span><br><span class="line">    alice-&gt;send(&quot;Bob&quot;, &quot;Hello, Bob!&quot;);</span><br><span class="line">    bob-&gt;send(&quot;Alice&quot;, &quot;Hi, Alice! How are you?&quot;);</span><br><span class="line">    charlie-&gt;send(&quot;Bob&quot;, &quot;Hey Bob, long time no see!&quot;);</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="具体分析-2"><a href="#具体分析-2" class="headerlink" title="具体分析"></a>具体分析</h3><h4 id="中介者模式的特点"><a href="#中介者模式的特点" class="headerlink" title="中介者模式的特点"></a>中介者模式的特点</h4><h5 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a><strong>优点</strong></h5><ol>
+<li><strong>降低对象之间的耦合性</strong><ul>
+<li>各个同事对象（Colleague）不再需要了解其他对象的细节，只需要与中介者通信。</li>
+<li>使得对象之间的依赖关系从多对多降低为一对多。</li>
+</ul>
+</li>
+<li><strong>提高系统的灵活性和可扩展性</strong><ul>
+<li>可以独立地修改或替换各个同事对象或中介者，而不影响其他部分。</li>
+<li>方便添加新的同事类或改变交互逻辑。</li>
+</ul>
+</li>
+<li><strong>集中控制交互逻辑</strong><ul>
+<li>中介者封装了复杂的交互逻辑，使得同事对象的职责更加单一。</li>
+<li>有利于对交互过程进行细粒度的控制和扩展。</li>
+</ul>
+</li>
+<li><strong>促进代码的复用性</strong><ul>
+<li>中介者和同事对象可以被复用，减少重复代码。</li>
+</ul>
+</li>
+</ol>
+<h5 id="缺点-1"><a href="#缺点-1" class="headerlink" title="缺点"></a><strong>缺点</strong></h5><ol>
+<li><strong>中介者可能变得过于复杂</strong><ul>
+<li>随着系统的扩展，中介者需要处理的交互逻辑可能变得庞大且复杂，导致中介者本身难以维护。</li>
+</ul>
+</li>
+<li><strong>可能产生性能开销</strong><ul>
+<li>所有的通信都需要经过中介者，可能增加系统的通信开销。</li>
+</ul>
+</li>
+<li><strong>可能掩盖对象之间真实的交互</strong><ul>
+<li>由于对象之间的交互被封装在中介者中，可能使得理解系统的整体交互流程变得困难。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h4 id="中介者模式的适用场景"><a href="#中介者模式的适用场景" class="headerlink" title="中介者模式的适用场景"></a>中介者模式的适用场景</h4><ol>
+<li><strong>对象之间存在复杂的引用关系</strong><ul>
+<li>系统中对象数量众多且彼此互相引用，导致关系网���杂难以维护。</li>
+<li>需要解耦对象之间的关系，简化系统结构。</li>
+</ul>
+</li>
+<li><strong>多个对象之间存在多对多的交互</strong><ul>
+<li>需要在不同对象之间发送消息或事件，且需要对交互进行集中管理。</li>
+<li>希望通过中介者来控制交互的流程和顺序。</li>
+</ul>
+</li>
+<li><strong>需要动态地改变对象之间的交互</strong><ul>
+<li>希望在运行时改变对象之间的交互模式，而不影响各个对象的实现。</li>
+<li>通过替换中介者，可以改变对象的交互行为。</li>
+</ul>
+</li>
+<li><strong>想通过抽象的方式控制对象之间的交互</strong><ul>
+<li>希望将对象之间的交互逻辑提取出来，放在一个独立的中介者中，以便更好地组织和管理。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h4 id="中介者模式的组成"><a href="#中介者模式的组成" class="headerlink" title="中介者模式的组成"></a>中介者模式的组成</h4><ol>
+<li><strong>抽象中介者（Mediator）</strong><ul>
+<li>定义了同事对象通信的接口。</li>
+</ul>
+</li>
+<li><strong>具体中介者（ConcreteMediator）</strong><ul>
+<li>实现了抽象中介者接口，协调各个同事对象的交互。</li>
+</ul>
+</li>
+<li><strong>抽象同事类（Colleague）</strong><ul>
+<li>定义了同事对象的公共接口，并持有中介者的引用。</li>
+</ul>
+</li>
+<li><strong>具体同事类（ConcreteColleague）</strong><ul>
+<li>实现了抽象同事类，与中介者进行通信。</li>
+</ul>
+</li>
+</ol>
+<h4 id="中介者模式的实际应用"><a href="#中介者模式的实际应用" class="headerlink" title="中介者模式的实际应用"></a>中介者模式的实际应用</h4><ol>
+<li><strong>GUI框架中的组件交互</strong><ul>
+<li>在图形用户界面中，各种组件（按钮、文本框等）通过中介者协调交互，避免组件之间直接通信导致的复杂性。</li>
+</ul>
+</li>
+<li><strong>聊天室或即时通讯应用</strong><ul>
+<li>多个用户通过服务器（中介者）进行消息的发送和接收，用户之间不直接通信。</li>
+</ul>
+</li>
+<li><strong>飞机航线管制系统</strong><ul>
+<li>各个飞机（同事对象）通过塔台（中介者）来协调起飞、降落等操作，防止相互干扰。</li>
+</ul>
+</li>
+<li><strong>模块化系统</strong><ul>
+<li>各个模块之间通过中介者进行通信，实现模块间的松耦合</li>
+</ul>
+</li>
+</ol>
+<h2 id="备忘录模式"><a href="#备忘录模式" class="headerlink" title="备忘录模式"></a>备忘录模式</h2><p><strong>备忘录模式</strong>是一种行为设计模式，允许在不破坏封装性的前提下，捕获对象的内部状态，并在以后将对象恢复到先前的状态。</p>
+<p>简单来说，备忘录模式可以让对象自己保存自己的状态（快照），并在需要时进行恢复，而不需要暴露对象的内部表示和实现细节。</p>
+<p>备忘录模式在应用程序内部提供了一种优雅的状态管理方式，特别适用于需要对对象状态进行细粒度控制的场景。它与外部的版本控制工具和数据库事务是<strong>不同层面的解决方案</strong>，各有其适用范围：</p>
+<ul>
+<li><strong>Git 等版本控制系统</strong>：<ul>
+<li>主要用于管理代码和文件的版本，关注的是文件系统层面的状态变化。</li>
+<li>不适用于在应用程序运行时对内存中对象状态的管理。</li>
+</ul>
+</li>
+<li><strong>数据库事务和回滚</strong>：<ul>
+<li>管理数据库层面的数据一致性，处理的是持久化数据。</li>
+<li>无法直接处理应用程序内存中的业务对象状态。</li>
+</ul>
+</li>
+<li><strong>备忘录模式</strong>：<ul>
+<li>关心的是运行时对象的内部状态保存和恢复。</li>
+<li>强调不破坏对象封装性的前提下，实现状态的回溯。</li>
+</ul>
+</li>
+</ul>
+<h3 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;  </span><br><span class="line">#include &lt;string&gt;  </span><br><span class="line">#include &lt;stack&gt;  </span><br><span class="line">#include &lt;memory&gt;  </span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">// 操作命令基类  </span><br><span class="line">class Command &#123;</span><br><span class="line">public:</span><br><span class="line">    virtual void execute(class TextEditor&amp; editor) = 0;</span><br><span class="line">    virtual void undo(TextEditor&amp; editor) = 0;</span><br><span class="line">    virtual ~Command() = default;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class TextEditor &#123;</span><br><span class="line">public:</span><br><span class="line">    void write(const string&amp; text) &#123;</span><br><span class="line">        content_ += text;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    void erase(size_t length) &#123;</span><br><span class="line">        if (length &gt; content_.size()) &#123;</span><br><span class="line">            content_.clear();</span><br><span class="line">        &#125;</span><br><span class="line">        else &#123;</span><br><span class="line">            content_.erase(content_.size() - length, length);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    string getContent() const &#123;</span><br><span class="line">        return content_;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    string content_;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// 具体的插入字符命令  </span><br><span class="line">class InsertCommand : public Command &#123;</span><br><span class="line">public:</span><br><span class="line">    InsertCommand(const string&amp; text) : text_(text) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    void execute(TextEditor&amp; editor) override &#123;</span><br><span class="line">        editor.write(text_);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    void undo(TextEditor&amp; editor) override &#123;</span><br><span class="line">        editor.erase(text_.size());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    string text_;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// 负责人（历史记录管理命令）  </span><br><span class="line">class History &#123;</span><br><span class="line">public:</span><br><span class="line">    void executeCommand(shared_ptr&lt;Command&gt; command, TextEditor&amp; editor) &#123;</span><br><span class="line">        command-&gt;execute(editor);</span><br><span class="line">        history_.push(command);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    void undo(TextEditor&amp; editor) &#123;</span><br><span class="line">        if (history_.empty()) &#123;</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line">        auto command = history_.top();</span><br><span class="line">        history_.pop();</span><br><span class="line">        command-&gt;undo(editor);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    stack&lt;shared_ptr&lt;Command&gt;&gt; history_;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// 示例  </span><br><span class="line">int main() &#123;</span><br><span class="line">    TextEditor editor;</span><br><span class="line">    History history;</span><br><span class="line"></span><br><span class="line">    // 插入&quot;Hello, &quot;  </span><br><span class="line">    auto cmd1 = make_shared&lt;InsertCommand&gt;(&quot;Hello, &quot;);</span><br><span class="line">    history.executeCommand(cmd1, editor);</span><br><span class="line"></span><br><span class="line">    // 插入&quot;World!&quot;  </span><br><span class="line">    auto cmd2 = make_shared&lt;InsertCommand&gt;(&quot;World!&quot;);</span><br><span class="line">    history.executeCommand(cmd2, editor);</span><br><span class="line"></span><br><span class="line">    cout &lt;&lt; &quot;当前内容: &quot; &lt;&lt; editor.getContent() &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">    // 撤销一次  </span><br><span class="line">    history.undo(editor);</span><br><span class="line">    cout &lt;&lt; &quot;撤销一次后: &quot; &lt;&lt; editor.getContent() &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">    // 再撤销一次  </span><br><span class="line">    history.undo(editor);</span><br><span class="line">    cout &lt;&lt; &quot;再撤销一次后: &quot; &lt;&lt; editor.getContent() &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="具体分析-3"><a href="#具体分析-3" class="headerlink" title="具体分析"></a>具体分析</h3><ul>
+<li><strong>优点</strong>：<ul>
+<li>保持对象的封装性，保护内部状态信息。</li>
+<li>简化了状态恢复的过程，实现撤销和重做功能。</li>
+<li>结构清晰，易于理解和扩展。</li>
+</ul>
+</li>
+<li><strong>缺点</strong>：<ul>
+<li>可能导致较大的内存和存储开销，特别是在频繁保存的情况下。</li>
+<li>增加了系统的实现复杂度，需要管理状态的保存和恢复逻辑。</li>
+<li>需要注意备忘录的生命周期管理，防止内存泄漏。</li>
+</ul>
+</li>
+<li><strong>适用场景</strong>：<ul>
+<li>当需要保存和恢复对象状态，且希望保持对象的封装性时，可以考虑使用备忘录模式。</li>
+<li>特别适用于需要实现撤销&#x2F;重做功能、事务回滚、状态历史记录等场景。</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag"># 设计模式</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/10/04/%E8%A1%8C%E4%B8%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F(%E4%B8%8B)/" rel="prev" title="行为型模式（下）">
+      <i class="fa fa-chevron-left"></i> 行为型模式（下）
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/10/04/%E7%BB%93%E6%9E%84%E5%9E%8B%E6%A8%A1%E5%BC%8F/" rel="next" title="结构型模式">
+      结构型模式 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A1%8C%E4%B8%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B8%8A%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">行为型模式（上）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%81%8C%E8%B4%A3%E9%93%BE%E6%A8%A1%E5%BC%8F%EF%BC%88Chain-of-Responsibility%EF%BC%89"><span class="nav-number">1.1.</span> <span class="nav-text">职责链模式（Chain of Responsibility）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E5%88%86%E6%9E%90"><span class="nav-number">1.1.1.</span> <span class="nav-text">具体分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%89%B9%E7%82%B9"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">优缺点</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%EF%BC%88command%EF%BC%89%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.2.</span> <span class="nav-text">命令（command）模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E5%88%86%E6%9E%90-1"><span class="nav-number">1.2.1.</span> <span class="nav-text">具体分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F%E7%9A%84%E7%89%B9%E7%82%B9"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">一、命令模式的特点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F%E7%9A%84%E4%BC%98%E7%82%B9"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">二、命令模式的优点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">三、命令模式的缺点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F%E7%9A%84%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">1.2.1.4.</span> <span class="nav-text">四、命令模式的适用场景</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E9%87%8A%E5%99%A8%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.3.</span> <span class="nav-text">解释器模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%87%8A%E5%99%A8%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">1.3.1.</span> <span class="nav-text">解释器模式的应用场景</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.4.</span> <span class="nav-text">迭代器模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E7%82%B9%E5%92%8C%E7%BC%BA%E7%82%B9"><span class="nav-number">1.4.1.</span> <span class="nav-text">优点和缺点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%98%E7%82%B9"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%82%E7%94%A8%E7%9A%84%E5%9C%BA%E6%99%AF"><span class="nav-number">1.4.2.</span> <span class="nav-text">适用的场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8C-STL%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-number">1.4.3.</span> <span class="nav-text">在C++ STL中的应用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-STL%E4%B8%AD%E7%9A%84%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="nav-number">1.4.3.1.</span> <span class="nav-text">1. STL中的迭代器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%9A%84%E5%88%86%E7%B1%BB"><span class="nav-number">1.4.3.2.</span> <span class="nav-text">2. 迭代器的分类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-STL-%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="nav-number">1.4.3.3.</span> <span class="nav-text">3. STL 迭代器的实现原理</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.4.4.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E6%8B%9F%E6%A0%91%E7%9A%84%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86"><span class="nav-number">1.4.5.</span> <span class="nav-text">模拟树的中序遍历</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AD%E4%BB%8B%E8%80%85%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.5.</span> <span class="nav-text">中介者模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E4%BB%A3%E7%A0%81"><span class="nav-number">1.5.1.</span> <span class="nav-text">具体代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E5%88%86%E6%9E%90-2"><span class="nav-number">1.5.2.</span> <span class="nav-text">具体分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%AD%E4%BB%8B%E8%80%85%E6%A8%A1%E5%BC%8F%E7%9A%84%E7%89%B9%E7%82%B9"><span class="nav-number">1.5.2.1.</span> <span class="nav-text">中介者模式的特点</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BC%98%E7%82%B9-1"><span class="nav-number">1.5.2.1.1.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9-1"><span class="nav-number">1.5.2.1.2.</span> <span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%AD%E4%BB%8B%E8%80%85%E6%A8%A1%E5%BC%8F%E7%9A%84%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">1.5.2.2.</span> <span class="nav-text">中介者模式的适用场景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%AD%E4%BB%8B%E8%80%85%E6%A8%A1%E5%BC%8F%E7%9A%84%E7%BB%84%E6%88%90"><span class="nav-number">1.5.2.3.</span> <span class="nav-text">中介者模式的组成</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%AD%E4%BB%8B%E8%80%85%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8"><span class="nav-number">1.5.2.4.</span> <span class="nav-text">中介者模式的实际应用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%87%E5%BF%98%E5%BD%95%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.6.</span> <span class="nav-text">备忘录模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.6.1.</span> <span class="nav-text">具体实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E5%88%86%E6%9E%90-3"><span class="nav-number">1.6.2.</span> <span class="nav-text">具体分析</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="AlexQFMM"
+      src="/images/Avatar.jpg">
+  <p class="site-author-name" itemprop="name">AlexQFMM</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://qexo-ten-roan.vercel.app/" title="控制中心 → https:&#x2F;&#x2F;qexo-ten-roan.vercel.app&#x2F;" rel="noopener" target="_blank">控制中心</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AlexQFMM</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : 'UaEUwcYLlkREnSn9jPNe0oRf-gzGzoHsz',
+      appKey     : '5d7KwGdf31jiCBxBobH0wVk6',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/assets/miku.model.json"},"display":{"position":"left","width":200,"height":400},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

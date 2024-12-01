@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="数据库池与数据库管理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据库池与数据库管理">
+<meta property="og:url" content="http://example.com/2024/09/30/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B1%A0%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AE%A1%E7%90%86/index.html">
+<meta property="og:site_name" content="AlexHome">
+<meta property="og:description" content="数据库池与数据库管理">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-09-30T10:20:45.000Z">
+<meta property="article:modified_time" content="2024-12-01T13:58:43.018Z">
+<meta property="article:author" content="AlexQFMM">
+<meta property="article:tag" content="网络">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2024/09/30/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B1%A0%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AE%A1%E7%90%86/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>数据库池与数据库管理 | AlexHome</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">AlexHome</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-guestbook">
+
+    <a href="/guestbook/" rel="section"><i class="fa fa-book fa-fw"></i>留言</a>
+
+  </li>
+        <li class="menu-item menu-item-mypage">
+
+    <a href="/MYHTML/test/index.html" rel="section"><i class="fas fa-file-user fa-fw"></i>myPage</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/30/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B1%A0%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AE%A1%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/Avatar.jpg">
+      <meta itemprop="name" content="AlexQFMM">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AlexHome">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          数据库池与数据库管理
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-09-30 10:20:45" itemprop="dateCreated datePublished" datetime="2024-09-30T10:20:45+00:00">2024-09-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-12-01 13:58:43" itemprop="dateModified" datetime="2024-12-01T13:58:43+00:00">2024-12-01</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2024/09/30/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B1%A0%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AE%A1%E7%90%86/" class="post-meta-item leancloud_visitors" data-flag-title="数据库池与数据库管理" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2024/09/30/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B1%A0%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AE%A1%E7%90%86/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2024/09/30/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B1%A0%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AE%A1%E7%90%86/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="数据库池与数据库管理"><a href="#数据库池与数据库管理" class="headerlink" title="数据库池与数据库管理"></a>数据库池与数据库管理</h1><span id="more"></span>
+
+<h1 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h1><h2 id="DatabasePool-hpp"><a href="#DatabasePool-hpp" class="headerlink" title="DatabasePool.hpp"></a>DatabasePool.hpp</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">#ifndef DATABASEPOOL_H  </span><br><span class="line">#define DATABASEPOOL_H  </span><br><span class="line"></span><br><span class="line">#include &lt;memory&gt;  </span><br><span class="line">#include &lt;string&gt;  </span><br><span class="line">#include &lt;queue&gt;  </span><br><span class="line">#include &lt;mutex&gt;  </span><br><span class="line">#include &lt;condition_variable&gt;  </span><br><span class="line">#include &lt;cppconn/driver.h&gt;  </span><br><span class="line">#include &lt;cppconn/connection.h&gt;  </span><br><span class="line">#include &lt;cppconn/statement.h&gt;  </span><br><span class="line">#include &lt;functional&gt;</span><br><span class="line">#include &quot;MYJSON.hpp&quot;  </span><br><span class="line"></span><br><span class="line">class DatabasePool  </span><br><span class="line">&#123;  </span><br><span class="line">public:  </span><br><span class="line">    DatabasePool();  </span><br><span class="line">    ~DatabasePool();  </span><br><span class="line">    void initPool(json dbconfig); // 初始化连接池  </span><br><span class="line">    std::unique_ptr&lt;sql::Connection , std::function&lt;void(sql::Connection*)&gt;&gt; getConnection(); // 获取连接  </span><br><span class="line">    void releaseConnection(sql::Connection *conn); // 释放连接  </span><br><span class="line"></span><br><span class="line">private:  </span><br><span class="line">    void createPool(size_t size); // 创建连接池  </span><br><span class="line"></span><br><span class="line">    std::queue&lt;std::unique_ptr&lt;sql::Connection , std::function&lt;void(sql::Connection*)&gt;&gt;&gt; connectionPool; // 连接池  </span><br><span class="line">    std::mutex poolMutex; // 互斥量  </span><br><span class="line">    std::condition_variable cv; // 条件变量  </span><br><span class="line"></span><br><span class="line">    std::string dbHost;     // 数据库主机  </span><br><span class="line">    std::string dbUser;     // 数据库用户  </span><br><span class="line">    std::string dbPassword; // 数据库密码  </span><br><span class="line">    std::string dbDatabase; // 数据库名称  </span><br><span class="line">&#125;;  </span><br><span class="line"></span><br><span class="line">#endif // DATABASEPOOL_H</span><br></pre></td></tr></table></figure>
+
+<h3 id="解读"><a href="#解读" class="headerlink" title="解读"></a>解读</h3><h4 id="1、unique-ptr"><a href="#1、unique-ptr" class="headerlink" title="1、unique_ptr"></a>1、unique_ptr</h4><p><code>unique_ptr</code> 是 C++11 引入的一种智能指针，用于管理动态分配的对象的生命周期。它的主要特点是保证一个对象只有一个所有者，当 <code>unique_ptr</code> 被销毁时，它所管理的对象也会被自动释放。这种机制可以有效地避免内存泄漏和重复释放的问题</p>
+<p><strong>为什么使用它？</strong></p>
+<ol>
+<li><strong>资源管理</strong>: <code>unique_ptr</code> 确保数据库连接在不再需要时自动释放，减少了手动管理内存的复杂性。开发者不需要担心忘记释放连接而导致的内存泄漏。</li>
+<li><strong>独占所有权</strong>: <code>unique_ptr</code> 只能有一个所有者，这意味着在任何时刻，某个数据库连接只能被一个 <code>unique_ptr</code> 管理。这种独占性可以防止多个部分代码同时尝试关闭同一个连接，从而避免潜在的错误。</li>
+<li><strong>移动语义</strong>: <code>unique_ptr</code> 支持移动语义，这意味着可以安全地将连接的所有权从一个 <code>unique_ptr</code> 转移到另一个。这在连接池的实现中非常有用，因为当一个连接被借出时，连接的所有权可以从连接池转移到使用该连接的代码中。</li>
+<li><strong>异常安全</strong>: 使用 <code>unique_ptr</code> 可以提高代码的异常安全性。在发生异常时，<code>unique_ptr</code> 会自动释放所管理的资源，确保不会发生资源泄漏。</li>
+<li><strong>简化代码</strong>: 使用智能指针可以使代码更加简洁和易于阅读，减少了手动管理内存所需的代码量。</li>
+</ol>
+<h4 id="2、sql-Connection"><a href="#2、sql-Connection" class="headerlink" title="2、sql::Connection"></a>2、sql::Connection</h4><p><code>sql::Connection</code> 是构建在 MySQL Connector&#x2F;C++ 库上的一个重要类</p>
+<p><strong>主要功能和属性</strong></p>
+<ol>
+<li><strong>连接到数据库</strong>: <code>sql::Connection</code> 提供初始化和连接到指定数据库的方法。连接建立后，程序可以使用这个连接执行 SQL 语句。</li>
+<li><strong>执行 SQL 语句</strong>:<ul>
+<li><strong>查询</strong>: 通过该对象，可以发起 SQL 查询并获取结果集。这包括 SELECT 语句，它返回一组数据。</li>
+<li><strong>数据操作</strong>: 可以执行 INSERT, UPDATE, DELETE 等操作，这些语句不需要返回结果集，但需要确认操作是否成功。</li>
+</ul>
+</li>
+<li><strong>事务处理</strong>:<ul>
+<li><code>sql::Connection</code> 允许处理数据库事务。开发者可以选择自动提交（每个操作都会立即生效）或手动管理事务（多条操作可以在一个事务中进行，直到调用 commit 或 rollback）。</li>
+</ul>
+</li>
+<li><strong>元数据访问</strong>: 可以通过该连接获取数据库结构的相关信息，比如表的名称、字段名称和数据类型等。这通常用于动态生成 SQL 语句或进行数据验证。</li>
+<li><strong>关闭与释放</strong>: 在不再需要连接时，<code>sql::Connection</code> 提供的方法用于关闭连接并释放资源。通常，连接会在对象被销毁时自动关闭，但也可以显式调用关闭方法。</li>
+<li><strong>错误处理</strong>: 在与数据库交互时，可能会遇到各种错误。<code>sql::Connection</code> 提供错误处理机制，允许用户捕获和处理这些异常情况。</li>
+</ol>
+<h4 id="3、互斥量和条件变量"><a href="#3、互斥量和条件变量" class="headerlink" title="3、互斥量和条件变量"></a>3、互斥量和条件变量</h4><p><code>std::mutex</code> 是一种同步原语，用于<strong>保护共享资源</strong>，以确保在任何时刻<strong>只有一个线程</strong>可以访问该资源。</p>
+<ul>
+<li>线程在访问共享资源之前，首先获取互斥量的锁。如果锁被其他线程持有，则该线程会阻塞，直到锁被释放。</li>
+<li>访问完共享资源后，线程需要释放锁，以允许其他线程进入。</li>
+</ul>
+<p>使用互斥量可以有效管理线程间对共享资源的访问，从而避免数据冲突和不确定性</p>
+<p><code>td::condition_variable</code> 是一种用于在多个线程之间<strong>进行通信的同步原语</strong>。它允许一个线程在某个条件满足时通知其他线程继续执行。</p>
+<ul>
+<li>线程可以在一个条件变量上等待某个条件的发生。等待时，线程会释放与条件变量关联的互斥量，阻塞自己。</li>
+<li>另一个线程在某个条件满足时，可以通知等待在该条件变量上的线程，让它们继续执行。</li>
+</ul>
+<p>条件变量有助于避免忙等待，同时使得线程能够有效地等待特定条件的发生，提高了资源的利用率。</p>
+<p><strong>追加</strong>：</p>
+<h4 id="数据库常见的锁类型"><a href="#数据库常见的锁类型" class="headerlink" title="数据库常见的锁类型"></a>数据库常见的锁类型</h4><p>在数据库管理系统中，锁的使用至关重要，以确保数据的一致性和完整性。以下是一些常见的锁类型：</p>
+<ol>
+<li><strong>行级锁 (Row Lock)</strong>:<ul>
+<li>只锁定特定的数据行，这样可以允许更高的并发性，因为不同的事务可以同时锁定不同的行。</li>
+</ul>
+</li>
+<li><strong>表级锁 (Table Lock)</strong>:<ul>
+<li>锁定整个表，以确保在执行操作时，其他事务不能对该表执行任何操作。这种锁通常会降低并发性。</li>
+</ul>
+</li>
+<li><strong>共享锁 (Shared Lock)</strong>:<ul>
+<li>允许多个事务同时读取某个资源，但不允许对其进行修改。事务在共享锁上进行读取操作时，其他事务只能持有共享锁。</li>
+</ul>
+</li>
+<li><strong>排他锁 (Exclusive Lock)</strong>:<ul>
+<li>只允许一个事务在某个时间段内读取或写入数据。其他事务在该排他锁上无法进行任何操作，既不能读取也不能写入。</li>
+</ul>
+</li>
+<li><strong>意向锁 (Intent Lock)</strong>:<ul>
+<li>一种表级锁，指示一个事务希望在表中锁定某些行。用于协调行级锁与表级锁的关系。</li>
+</ul>
+</li>
+<li><strong>乐观锁 (Optimistic Lock)</strong>:<ul>
+<li>不强制数据在读取时就锁定，而是在事务提交之前检查数据是否被其他事务修改，适合于读取多、写入少的场景。</li>
+</ul>
+</li>
+<li><strong>悲观锁 (Pessimistic Lock)</strong>:<ul>
+<li>在读取数据之前先对数据上锁，以防止其他事务在同一时间修改数据，适合于写入多的场景。</li>
+</ul>
+</li>
+</ol>
+<p>在这个数据池中我们实现的是排他锁；</p>
+<h2 id="DatabasePool-cpp"><a href="#DatabasePool-cpp" class="headerlink" title="DatabasePool.cpp"></a>DatabasePool.cpp</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;DatabasePool.hpp&quot;  </span><br><span class="line">#include &lt;stdexcept&gt;  </span><br><span class="line"></span><br><span class="line">DatabasePool::DatabasePool() = default;  </span><br><span class="line"></span><br><span class="line">DatabasePool::~DatabasePool() &#123;  </span><br><span class="line">   </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">void DatabasePool::initPool(json dbconfig) &#123;  </span><br><span class="line">    dbHost = dbconfig[&quot;host&quot;];  </span><br><span class="line">    dbUser = dbconfig[&quot;user&quot;];  </span><br><span class="line">    dbPassword = dbconfig[&quot;password&quot;];  </span><br><span class="line">    dbDatabase = dbconfig[&quot;DatabaseName&quot;];  </span><br><span class="line"></span><br><span class="line">    createPool(10); // 假设池的大小为10  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">void DatabasePool::createPool(size_t size) &#123;  </span><br><span class="line">    sql::Driver* driver = get_driver_instance();   </span><br><span class="line">    for (size_t i = 0; i &lt; size; ++i) &#123;  </span><br><span class="line">        auto conn = driver-&gt;connect(dbHost, dbUser, dbPassword);  </span><br><span class="line">        conn-&gt;setSchema(dbDatabase);  </span><br><span class="line"></span><br><span class="line">        auto connPtr = std::unique_ptr&lt;sql::Connection, std::function&lt;void(sql::Connection*)&gt;&gt;(conn, [this](sql::Connection*conn) &#123;  </span><br><span class="line">            this-&gt;releaseConnection(conn);  </span><br><span class="line">        &#125;);  </span><br><span class="line"></span><br><span class="line">        &#123;  </span><br><span class="line">            std::lock_guard&lt;std::mutex&gt; lock(poolMutex);  </span><br><span class="line">            connectionPool.push(std::move(connPtr));  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 获取连接  </span><br><span class="line">//std::unique_ptr&lt;redisContext, std::function&lt;void(redisContext*)&gt;&gt;</span><br><span class="line">std::unique_ptr&lt;sql::Connection, std::function&lt;void(sql::Connection*)&gt;&gt; DatabasePool::getConnection() &#123;  </span><br><span class="line">    std::unique_lock&lt;std::mutex&gt; lock(poolMutex);  </span><br><span class="line">    while (connectionPool.empty()) &#123;  </span><br><span class="line">        cv.wait(lock);  </span><br><span class="line">    &#125;  </span><br><span class="line">    </span><br><span class="line">    auto connPtr = std::move(connectionPool.front());  </span><br><span class="line">    connectionPool.pop();  </span><br><span class="line"></span><br><span class="line">    //std::cout &lt;&lt; &quot;now connect has: &quot; &lt;&lt; connectionPool.size() &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line">    return connPtr;  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void DatabasePool::releaseConnection(sql::Connection *conn) &#123;  </span><br><span class="line">    bool isConnectionValid = true;  </span><br><span class="line"></span><br><span class="line">    try &#123;  </span><br><span class="line">        // 检查连接是否有效，执行一个简单的查询  </span><br><span class="line">        std::unique_ptr&lt;sql::Statement&gt; stmt(conn-&gt;createStatement());  </span><br><span class="line">        stmt-&gt;execute(&quot;SELECT * FROM test&quot;);  </span><br><span class="line">    &#125; catch (const sql::SQLException&amp; e) &#123;  </span><br><span class="line">        isConnectionValid = false;  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    if (!isConnectionValid) &#123;  </span><br><span class="line">        try &#123;  </span><br><span class="line">            // 重新初始化连接  </span><br><span class="line">            sql::Driver* driver = get_driver_instance();  </span><br><span class="line">            sql::Connection* newConn = driver-&gt;connect(dbHost, dbUser, dbPassword);  </span><br><span class="line">            newConn-&gt;setSchema(dbDatabase);  </span><br><span class="line">            conn = newConn;  </span><br><span class="line">        &#125; catch (const sql::SQLException&amp; e) &#123;  </span><br><span class="line">            // 记录失败信息并防止添加连接到池中  </span><br><span class="line">            // 这里你可以选择记录日志以了解初始化失败的原因  </span><br><span class="line">            delete conn;   </span><br><span class="line">            return;  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">    </span><br><span class="line">    // 将连接入池  </span><br><span class="line">    &#123;  </span><br><span class="line">        std::unique_lock&lt;std::mutex&gt; lock(poolMutex);  </span><br><span class="line"></span><br><span class="line">        // 清空原有连接，替换为新连接，并放回队列  </span><br><span class="line">        connectionPool.push(std::unique_ptr&lt;sql::Connection, std::function&lt;void(sql::Connection*)&gt;&gt;(  </span><br><span class="line">            conn, [this](sql::Connection*conn) &#123;  </span><br><span class="line">                this-&gt;releaseConnection(conn);  </span><br><span class="line">            &#125;));  </span><br><span class="line"></span><br><span class="line">        // 通知等待的线程有可用连接  </span><br><span class="line">        cv.notify_one();  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="解读-1"><a href="#解读-1" class="headerlink" title="解读"></a>解读</h3><h4 id="1、-default"><a href="#1、-default" class="headerlink" title="1、 &#x3D; default"></a>1、 &#x3D; default</h4><ul>
+<li><code>= default</code> 是 C++11 中引入的一种语法，它用来告诉编译器生成一个默认的构造函数。也就是说，编译器将为该类生成一个默认构造函数，该构造函数将初始化类的成员变量为默认值。</li>
+<li>使用 <code>= default</code> 有几个好处：<ul>
+<li><strong>简洁性</strong>: 如果构造函数不需要特殊的初始化逻辑，使用 <code>= default</code> 是一种更简洁的声明方式。</li>
+<li><strong>可维护性</strong>: 当你只需要一个默认构造函数而不需要自定义实现时，使用 <code>= default</code> 可以避免手动编写构造函数，从而保持代码的简洁性和可维护性。</li>
+<li><strong>自动生成</strong>: 默认构造函数会生成合理的初始化，包括对成员变量的默认初始化</li>
+</ul>
+</li>
+</ul>
+<h4 id="2、Drive"><a href="#2、Drive" class="headerlink" title="2、Drive"></a>2、Drive</h4><ul>
+<li><code>sql::Driver</code> 是 MySQL Connector&#x2F;C++ 中定义的一个类，代表数据库驱动，负责创建数据库连接。</li>
+<li><code>*</code> 表示 <code>driver</code> 是一个指向 <code>sql::Driver</code> 的指针。通过这个指针，程序可以调用驱动的相关方法。</li>
+</ul>
+<h4 id="3、get-driver-instance"><a href="#3、get-driver-instance" class="headerlink" title="3、get_driver_instance()"></a>3、<code>get_driver_instance()</code></h4><ul>
+<li><code>get_driver_instance()</code> 是 MySQL Connector&#x2F;C++ 提供的一个函数，通常是一个全局函数。这个函数的作用是返回 MySQL 驱动的唯一实例。</li>
+<li>这一函数确保在整个程序运行期间只有一个驱动实例，符合<strong>单例模式</strong>（Singleton Pattern），这样可以避免不必要的资源浪费，同时确保驱动的管理一致性。</li>
+</ul>
+<h4 id="4、为什么说数据库池是多线程"><a href="#4、为什么说数据库池是多线程" class="headerlink" title="4、为什么说数据库池是多线程"></a>4、为什么说数据库池是多线程</h4><p>在 <code>DatabasePool</code> 实现中，并没有看到创建线程的代码是因为连接池的设计不涉及线程的创建与管理，而是通过互斥量和条件变量来确保多线程环境中的安全性与有效性。线程的创建和操作通常由其他部分负责，这种方法使得代码更加模块化，有助于理解和维护。</p>
+<h2 id="DatabaseManager-hpp"><a href="#DatabaseManager-hpp" class="headerlink" title="DatabaseManager.hpp"></a>DatabaseManager.hpp</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">#ifndef DATABASEMANAGER_H  </span><br><span class="line">#define DATABASEMANAGER_H  </span><br><span class="line"></span><br><span class="line">#include &quot;DatabasePool.hpp&quot;  </span><br><span class="line">#include &lt;string&gt;  </span><br><span class="line">#include &lt;any&gt;  </span><br><span class="line">#include &lt;vector&gt;  </span><br><span class="line">#include &lt;memory&gt;  </span><br><span class="line">#include &lt;iostream&gt;  </span><br><span class="line">#include &lt;mysql_driver.h&gt;  </span><br><span class="line">#include &lt;mysql_connection.h&gt;  </span><br><span class="line">#include &lt;cppconn/prepared_statement.h&gt; // 准备好的语句  </span><br><span class="line">#include &lt;cppconn/resultset.h&gt;     // 结果集  </span><br><span class="line">#include &quot;MYJSON.hpp&quot;  </span><br><span class="line"></span><br><span class="line">using ROW = std::unordered_map&lt;std::string, std::any&gt;; // 使用映射来更好地表示行  </span><br><span class="line">using TABLE = std::vector&lt;ROW&gt;; // 定义表格  </span><br><span class="line"></span><br><span class="line">class DatabaseManager &#123;  </span><br><span class="line">public:  </span><br><span class="line">    static DatabaseManager&amp; getInstance(const json&amp; config = json&#123;&#125;) &#123;  </span><br><span class="line">        static DatabaseManager instance(config); // 首次调用时创建实例  </span><br><span class="line">        return instance;  </span><br><span class="line">    &#125;   </span><br><span class="line"></span><br><span class="line">    // 执行 SQL 查询并返回结果  </span><br><span class="line">    bool execSQL(const std::string&amp; SQL, const std::vector&lt;std::any&gt;&amp; params, TABLE&amp; result);  </span><br><span class="line"></span><br><span class="line">private:  </span><br><span class="line">    DatabasePool pool; // 数据库连接池   </span><br><span class="line"></span><br><span class="line">    // 私有构造函数，单例模式  </span><br><span class="line">    DatabaseManager(const json&amp; dbconfig);  </span><br><span class="line"></span><br><span class="line">    // 私有克隆和赋值构造函数以防止复制  </span><br><span class="line">    DatabaseManager(const DatabaseManager&amp;) = delete;  </span><br><span class="line">    DatabaseManager&amp; operator=(const DatabaseManager&amp;) = delete;  </span><br><span class="line">&#125;;  </span><br><span class="line"></span><br><span class="line">#endif</span><br></pre></td></tr></table></figure>
+
+<h3 id="解读-2"><a href="#解读-2" class="headerlink" title="解读"></a>解读</h3><h4 id="1、any"><a href="#1、any" class="headerlink" title="1、any"></a>1、any</h4><p><code>std::any</code> 是 C++17 中引入的一个类型，用于存储任何类型的值，而不需要事先知道值的具体类型。它可以存储任意类型的对象，并提供相应的方法来访问或转换类型。</p>
+<ol>
+<li><ul>
+<li><code>std::any()</code>：默认构造函数，创建一个空的 <code>std::any</code> 对象。</li>
+<li><code>template &lt;typename T&gt; std::any(const T&amp; value)</code>：根据提供的值创建 <code>std::any</code> 对象。</li>
+</ul>
+</li>
+<li><strong>赋值操作</strong>：<ul>
+<li><code>std::any&amp; operator=(const std::any&amp; rhs)</code>：赋值操作符，将一个 <code>std::any</code> 赋值给另一个。</li>
+</ul>
+</li>
+<li><strong>检查类型</strong>：<ul>
+<li><code>bool has_value() const noexcept</code>：检查 <code>std::any</code> 中是否有值。</li>
+</ul>
+</li>
+<li><strong>类型转换</strong>：<ul>
+<li><code>template &lt;typename T&gt; T any_cast(const std::any&amp; a)</code>：将 <code>std::any</code> 中的值转换为指定的类型。必须确保类型是匹配的，否则会抛出 <code>std::bad_any_cast</code> 异常。</li>
+</ul>
+</li>
+<li><strong>清空内容</strong>：<ul>
+<li><code>void reset() noexcept</code>：清空 <code>std::any</code> 中的值</li>
+</ul>
+</li>
+</ol>
+<p><strong>举例</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">std::vector&lt;std::any&gt; vars = &#123;std::make_any&lt;std::string&gt;(&quot;user9&quot;)&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">for(auto&amp; it:vars)&#123;</span><br><span class="line">	if(it.type() == typeid(int))&#123;</span><br><span class="line">		cout &lt;&lt; any_cast&lt;int&gt;(it) &lt;&lt; endl;</span><br><span class="line">	&#125;else if(等于其他的类型)&#123;</span><br><span class="line">		....</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2、私有构造函数"><a href="#2、私有构造函数" class="headerlink" title="2、私有构造函数"></a>2、私有构造函数</h4><p>私有构造方法是类的一种设计模式，通常用于实现<strong>单例模式</strong>（Singleton Pattern）或控制实例化的数量。</p>
+<p>私有构造方法是一个被声明为 <code>private</code> 的构造函数，使得外部代码无法直接实例化该类的对象。其主要目的是限制类的实例创建，从而控制类的行为或资源的使用。</p>
+<h5 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h5><ol>
+<li><strong>控制实例化</strong>:<ul>
+<li>可以防止类被实例化多次，确保只有一个对象管理共享资源。</li>
+</ul>
+</li>
+<li><strong>集中管理</strong>:<ul>
+<li>可以集中管理类的实例，使得代码的维护和修改更加方便。例如，修改单例的实现时，无需修改其他调用代码。</li>
+</ul>
+</li>
+<li><strong>节约资源</strong>:<ul>
+<li>在某些情况下，可以避免不必要的资源消耗，例如，重复创建的对象占用内存或打开的数据库连接。</li>
+</ul>
+</li>
+</ol>
+<h5 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h5><ol>
+<li><strong>全局状态</strong>:<ul>
+<li>使用单例可能导致全局状态，降低了程序的可测试性和可维护性。全局状态使得函数之间的依赖变得复杂，同时常常增加耦合。</li>
+</ul>
+</li>
+<li><strong>多线程问题</strong>:<ul>
+<li>当多个线程同时访问 <code>getInstance</code> 方法时，如果没有适当的同步机制，可能导致多次创建实例的问题。</li>
+</ul>
+</li>
+<li><strong>灵活性降低</strong>:<ul>
+<li>限制了类的灵活性，特别是如果将来需要多个实例或变更实现时，可能需要重构代码</li>
+</ul>
+</li>
+</ol>
+<h5 id="搭配-getInstance-方法"><a href="#搭配-getInstance-方法" class="headerlink" title="搭配 getInstance 方法"></a>搭配 <code>getInstance</code> 方法</h5><p><code>getInstance</code> 方法用于提供一个访问类的唯一实例的方式。通常，它是一个静态方法，负责：</p>
+<ol>
+<li><strong>创建实例（仅在必要时）</strong>：<ul>
+<li>在第一次调用 <code>getInstance</code> 时，创建类的唯一实例，并保存这个实例。</li>
+</ul>
+</li>
+<li><strong>返回同一个实例</strong>：<ul>
+<li>后续调用 <code>getInstance</code> 方法会直接返回已经创建的实例，而不是创建新的实例。</li>
+</ul>
+</li>
+</ol>
+<h5 id="防止复制的私有拷贝构造函数和赋值操作符"><a href="#防止复制的私有拷贝构造函数和赋值操作符" class="headerlink" title="防止复制的私有拷贝构造函数和赋值操作符"></a>防止复制的私有拷贝构造函数和赋值操作符</h5><p>为了确保类的唯一性，通常还会实现以下几个私有成员：</p>
+<ol>
+<li><p><strong>私有拷贝构造函数</strong>:</p>
+<ul>
+<li>防止使用拷贝构造函数复制实例，避免产生多个实例。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MySingleton(const MySingleton&amp;) = delete; // 禁止拷贝  </span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>私有赋值操作符</strong>:</p>
+<ul>
+<li>防止使用赋值操作符赋值给其他实例，确保只保留一个实例。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MySingleton&amp; operator=(const MySingleton&amp;) = delete; // 禁止赋值 </span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>完整</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">class MySingleton &#123;  </span><br><span class="line">public:  </span><br><span class="line">    static MySingleton&amp; getInstance() &#123;  </span><br><span class="line">        static MySingleton instance; // 局部静态变量，第一次调用时初始化  </span><br><span class="line">        return instance;  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">private:  </span><br><span class="line">    MySingleton() &#123;&#125; // 私有构造函数  </span><br><span class="line">    MySingleton(const MySingleton&amp;) = delete; // 禁止拷贝  </span><br><span class="line">    MySingleton&amp; operator=(const MySingleton&amp;) = delete; // 禁止赋值  </span><br><span class="line">&#125;;  </span><br><span class="line"></span><br><span class="line">// 用法  </span><br><span class="line">int main() &#123;  </span><br><span class="line">    MySingleton&amp; singleton = MySingleton::getInstance();  </span><br><span class="line">    return 0;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="DatabaseManager-cpp"><a href="#DatabaseManager-cpp" class="headerlink" title="DatabaseManager.cpp"></a>DatabaseManager.cpp</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;DatabaseManager.hpp&quot;</span><br><span class="line"></span><br><span class="line">DatabaseManager::DatabaseManager(const json&amp; dbconfig)</span><br><span class="line">&#123;</span><br><span class="line">    pool.initPool(dbconfig); // 初始化连接池</span><br><span class="line">    std::cout &lt;&lt; &quot;Database Pools is Waitting ....&quot; &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bool DatabaseManager::execSQL(const std::string&amp; SQL, const std::vector&lt;std::any&gt;&amp; params, TABLE&amp; result) &#123;  </span><br><span class="line">    try &#123;  </span><br><span class="line">        // 获取连接  </span><br><span class="line">        auto con = pool.getConnection();  </span><br><span class="line"></span><br><span class="line">        std::unique_ptr&lt;sql::PreparedStatement&gt; pstmt(con-&gt;prepareStatement(SQL));  </span><br><span class="line">        </span><br><span class="line">        // 绑定参数  </span><br><span class="line">        for (size_t i = 0; i &lt; params.size(); ++i) &#123;  </span><br><span class="line">            if (params[i].type() == typeid(int)) &#123;  </span><br><span class="line">                pstmt-&gt;setInt(i + 1, std::any_cast&lt;int&gt;(params[i]));  </span><br><span class="line">            &#125; else if (params[i].type() == typeid(std::string)) &#123;  </span><br><span class="line">                pstmt-&gt;setString(i + 1, std::any_cast&lt;std::string&gt;(params[i]));  </span><br><span class="line">            &#125;  </span><br><span class="line">            // 添加其他数据类型的处理  </span><br><span class="line">        &#125;  </span><br><span class="line"></span><br><span class="line">        // 执行查询  </span><br><span class="line">        std::unique_ptr&lt;sql::ResultSet&gt; res(pstmt-&gt;executeQuery());  </span><br><span class="line">        </span><br><span class="line">        while (res-&gt;next()) &#123;  </span><br><span class="line">            ROW row;  </span><br><span class="line">            for (int i = 1; i &lt;= res-&gt;getMetaData()-&gt;getColumnCount(); ++i) &#123;  </span><br><span class="line">                std::string columnName = res-&gt;getMetaData()-&gt;getColumnName(i);</span><br><span class="line">                std::string value = res-&gt;getString(i);  // 获取当前列的值，假设所有列都为 VARCHAR 类型</span><br><span class="line">                row[columnName] = value;  // 将列名和值存入结果</span><br><span class="line">            &#125;  </span><br><span class="line">            result.push_back(row);  // 将这一行推入结果集</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125; catch (sql::SQLException&amp; e) &#123;  </span><br><span class="line">        std::cerr &lt;&lt; &quot;SQLException: &quot; &lt;&lt; e.what() &lt;&lt; std::endl;  </span><br><span class="line">        std::cerr &lt;&lt; &quot;\tError code: &quot; &lt;&lt; e.getErrorCode() &lt;&lt; std::endl;  </span><br><span class="line">        std::cerr &lt;&lt; &quot;\tSQLState: &quot; &lt;&lt; e.getSQLState() &lt;&lt; std::endl;  </span><br><span class="line">        return false;  </span><br><span class="line">    &#125;  </span><br><span class="line">    </span><br><span class="line">    return true;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="解读-3"><a href="#解读-3" class="headerlink" title="解读"></a>解读</h3><h4 id="1、sql-PreparedStatement"><a href="#1、sql-PreparedStatement" class="headerlink" title="1、sql::PreparedStatement"></a>1、sql::PreparedStatement</h4><p><code>sql::PreparedStatement</code> 是 MySQL Connector&#x2F;C++ 库中的一个类，用于执行预处理语句</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">string SQL = &quot;select * from Login username = ?&quot;;</span><br><span class="line">string value1;</span><br></pre></td></tr></table></figure>
+
+<p><strong>使用方法</strong></p>
+<p><strong>初始化</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sql::PreparedStatement *prep_stmt = connection-&gt;prepareStatement(SQL);</span><br></pre></td></tr></table></figure>
+
+<p><strong>绑定参数到指定占位符</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">prep_stmt-&gt;setInt(1, value1);</span><br></pre></td></tr></table></figure>
+
+<p><strong>执行语句</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">prep_stmt-&gt;executeUpdate();  // 执行更新语句（INSERT, UPDATE, DELETE）</span><br></pre></td></tr></table></figure>
+
+<p>或者</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sql::ResultSet *res = prep_stmt-&gt;executeQuery();  // 执行查询返回结果集</span><br></pre></td></tr></table></figure>
+
+<h3 id="2、sql-ResultSet"><a href="#2、sql-ResultSet" class="headerlink" title="2、sql::ResultSet"></a>2、sql::ResultSet</h3><p>使用 <code>ResultSet</code> 对象，开发者可以逐行读取查询结果，并获取每一列的值。</p>
+<ul>
+<li><strong>逐行读取</strong>: <code>ResultSet</code> 提供了访问查询结果的功能，可以通过多种方法获取当前行的列值。</li>
+<li><strong>列索引和列名访问</strong>: 可以根据列的索引或列名访问结果集的值。</li>
+<li><strong>检查结果状态</strong>: 提供方法来检查结果集是否有数据，是否到达了末尾等。</li>
+</ul>
+<p><strong><code>next()</code></strong>: 移动游标到结果集的下一行。返回 <code>true</code> 表示有数据可供读取，返回 <code>false</code> 表示已经到达结果集的末尾。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">while (res-&gt;next()) &#123;  </span><br><span class="line">    // 处理每一行数据  </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+
+<p><strong><code>getInt(const std::string &amp;columnLabel)</code></strong>: 获取指定列名的整型值。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int id = res-&gt;getInt(&quot;id&quot;);  </span><br></pre></td></tr></table></figure>
+
+<p><strong><code>getString(const std::string &amp;columnLabel)</code></strong>: 获取指定列名的字符串值。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">std::string name = res-&gt;getString(&quot;name&quot;);  </span><br></pre></td></tr></table></figure>
+
+<p><strong><code>getDouble(const std::string &amp;columnLabel)</code></strong>: 获取指定列名的双浮点值。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">double salary = res-&gt;getDouble(&quot;salary&quot;);  </span><br></pre></td></tr></table></figure>
+
+<p><strong><code>getBlob(const std::string &amp;columnLabel)</code></strong>: 获取指定列名的 BLOB（Binary Large Object）数据。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const unsigned char* data = res-&gt;getBlob(&quot;blob_column&quot;);  </span><br></pre></td></tr></table></figure>
+
+<p><strong><code>getRow()</code></strong>: 获取当前行的所有列的值，以数组形式返回。</p>
+<p><strong><code>rowsCount()</code></strong>: 获取结果集中行的总数。注意，这个方法在某些情况下可能不准确，因为在某些数据库引擎中，行数可能在接受查询后才确定。</p>
+<p><strong><code>isNull(const std::string &amp;columnLabel)</code></strong>: 检查指定列值是否为 NULL。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if (res-&gt;isNull(&quot;optional_column&quot;)) &#123;  </span><br><span class="line">    // 处理 NULL 值  </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+
+<p><strong><code>getColumnCount()</code></strong>:</p>
+<p>返回结果集中列的总数。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int columnCount = res-&gt;getMetaData()-&gt;getColumnCount();  </span><br></pre></td></tr></table></figure>
+
+<p><strong><code>getColumnName(int column)</code></strong>:</p>
+<p>返回指定列索引的列名。索引从 1 开始。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">for (int i = 1; i &lt;= columnCount; ++i) &#123;  </span><br><span class="line">    std::string columnName = res-&gt;getMetaData()-&gt;getColumnName(i);  </span><br><span class="line">    std::cout &lt;&lt; &quot;Column &quot; &lt;&lt; i &lt;&lt; &quot;: &quot; &lt;&lt; columnName &lt;&lt; std::endl;  </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+
+<p><strong><code>getColumnType(int column)</code></strong>:</p>
+<p>返回指定列的数据类型，如整型、字符串等。</p>
+<p><strong><code>isNullable(int column)</code></strong>:</p>
+<p>返回指定列是否允许 NULL 值。</p>
+<h1 id="设计模式：单例模式"><a href="#设计模式：单例模式" class="headerlink" title="设计模式：单例模式"></a>设计模式：单例模式</h1><p>单例模式（Singleton Pattern）是一种常用的软件设计模式，主要用来确保某个类只有一个实例，并提供一个全局访问点来获取这个实例。它常用于需要全局控制某个资源的场景，比如配置管理、日志记录、线程池、数据库连接等。</p>
+<h3 id="1-单例模式的基本概念"><a href="#1-单例模式的基本概念" class="headerlink" title="1. 单例模式的基本概念"></a>1. 单例模式的基本概念</h3><p>单例模式确保一个类只有一个实例，并提供一个<strong>公共的静态方法</strong>来访问这个实例。为了实现这个模式，通常会将<strong>构造函数设为私有</strong>，以防止外部直接实例化对象。只通过一个静态成员函数（如 <code>getInstance()</code>）来获取单例实例。</p>
+<h3 id="2-单例模式的实现步骤"><a href="#2-单例模式的实现步骤" class="headerlink" title="2. 单例模式的实现步骤"></a>2. 单例模式的实现步骤</h3><p>一般来说，单例模式的实现步骤如下：</p>
+<ul>
+<li><strong>私有构造函数</strong>: 防止外部创建实例。</li>
+<li><strong>私有静态实例</strong>: 在类内部定义一个静态变量，用于存储单例实例。</li>
+<li><strong>公共静态方法</strong>: 提供一个公共方法，用以获取单例实例。如果实例为空，则创建一个新实例；否则，返回已存在的实例。</li>
+<li><strong>防止复制</strong>: 私有化拷贝构造函数和赋值操作符，以防止通过复制或赋值来创建新的实例。</li>
+</ul>
+<h3 id="3-示例代码"><a href="#3-示例代码" class="headerlink" title="3. 示例代码"></a>3. 示例代码</h3><p>以下是单例模式的一个简单实现：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">class Singleton &#123;  </span><br><span class="line">public:  </span><br><span class="line">    static Singleton&amp; getInstance() &#123;  </span><br><span class="line">        static Singleton instance; // 局部静态变量  </span><br><span class="line">        return instance;  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">private:  </span><br><span class="line">    Singleton() &#123;&#125; // 私有构造函数  </span><br><span class="line">    Singleton(const Singleton&amp;) = delete; // 禁止拷贝构造  </span><br><span class="line">    Singleton&amp; operator=(const Singleton&amp;) = delete; // 禁止赋值  </span><br><span class="line">&#125;;  </span><br><span class="line"></span><br><span class="line">// 使用示例  </span><br><span class="line">int main() &#123;  </span><br><span class="line">    Singleton&amp; singletonInstance = Singleton::getInstance(); // 获取单例实例  </span><br><span class="line">    return 0;  </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+
+<h3 id="4-单例模式的优点"><a href="#4-单例模式的优点" class="headerlink" title="4. 单例模式的优点"></a>4. 单例模式的优点</h3><ul>
+<li><strong>全局访问</strong>: 提供了一个全局的访问点，让程序中的不同部分都能访问到单一的实例。</li>
+<li><strong>资源管理</strong>: 控制全局资源的使用，避免了多个实例造成的资源浪费。</li>
+<li><strong>延迟实例化</strong>: 在需要的时候才创建实例，提高了资源的利用率，尤其在实例创建开销大或者不一定需要使用的情况下。</li>
+<li><strong>避免重复实例化</strong>: 通过控制实例，可以避免因多次创建而引发的问题，比如状态的不一致。</li>
+</ul>
+<h3 id="5-单例模式的缺点"><a href="#5-单例模式的缺点" class="headerlink" title="5. 单例模式的缺点"></a>5. 单例模式的缺点</h3><ul>
+<li><strong>全局状态</strong>: 单例模式引入了全局状态，这在多线程环境中可能会导致不可预料的结果，增加代码的复杂性。</li>
+<li><strong>测试困难</strong>: 由于单例直接限制了实例的数量，可能增加单元测试的难度，尤其是在需要替换单例或模拟单例行为的场景中。</li>
+<li><strong>隐含的依赖</strong>: 单例使得类之间的依赖关系变得隐蔽，导致代码的可读性和维护性下降。</li>
+<li><strong>线程安全问题</strong>: 在多线程环境下，如果实现不当，可能导致多个线程同时创建实例，从而违背单例模式的初衷。</li>
+</ul>
+<h3 id="6-总结"><a href="#6-总结" class="headerlink" title="6. 总结"></a>6. 总结</h3><p>单例模式是一种有效的设计模式，能够方便地控制对资源的访问和管理，在适当的场景中使用能够带来很大的便利。然而，它也有一些不足之处，尤其是在测试和多线程环境中。因此，在使用单例模式时，需仔细评估其适用性，并确保正确的实现。通过正确的设计，单例模式可以是一个强大的工具，用于管理应用程序中的共享资源和状态。</p>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><p>测试用函数(test.cpp)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;  </span><br><span class="line">#include &quot;DatabaseManager.hpp&quot;  </span><br><span class="line">#include &quot;MYJSON.hpp&quot;  </span><br><span class="line"></span><br><span class="line">using namespace std;  </span><br><span class="line"></span><br><span class="line">// 函数声明  </span><br><span class="line">void test_sql(const string&amp; sql, const vector&lt;any&gt;&amp; vars, DatabaseManager&amp; db);  </span><br><span class="line">void fit_dbconfig();  </span><br><span class="line">void print_Table(const TABLE&amp; res);  </span><br><span class="line"></span><br><span class="line">json dbconfig;  </span><br><span class="line"></span><br><span class="line">void fit_dbconfig() &#123;  </span><br><span class="line">    dbconfig[&quot;host&quot;] = &quot;localhost&quot;;  </span><br><span class="line">    dbconfig[&quot;user&quot;] = &quot;root&quot;;  </span><br><span class="line">    dbconfig[&quot;password&quot;] = &quot;257348619.ylY&quot;;  </span><br><span class="line">    dbconfig[&quot;DatabaseName&quot;] = &quot;ChatServer&quot;;  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">void print_Table(const TABLE&amp; res) &#123;  </span><br><span class="line">    std::cout &lt;&lt; &quot;--------------------------&quot; &lt;&lt; std::endl;  </span><br><span class="line">    for (const ROW&amp; row : res) &#123;  </span><br><span class="line">        for (const auto&amp; it : row) &#123;  </span><br><span class="line">            std::string columnName = it.first; // 列名  </span><br><span class="line">            const std::any&amp; value = it.second; // 获取对应的值  </span><br><span class="line"></span><br><span class="line">            if (value.type() == typeid(int)) &#123;  </span><br><span class="line">                std::cout &lt;&lt; columnName &lt;&lt; &quot;: &quot; &lt;&lt; std::any_cast&lt;int&gt;(value) &lt;&lt; &quot; &quot;;  </span><br><span class="line">            &#125; else if (value.type() == typeid(std::string)) &#123;  </span><br><span class="line">                std::cout &lt;&lt; columnName &lt;&lt; &quot;: &quot; &lt;&lt; std::any_cast&lt;std::string&gt;(value)   </span><br><span class="line">                          &lt;&lt; &quot; (size: &quot; &lt;&lt; std::any_cast&lt;std::string&gt;(value).size() &lt;&lt; &quot;) &quot;;  </span><br><span class="line">            &#125; else &#123;  </span><br><span class="line">                std::cout &lt;&lt; columnName &lt;&lt; &quot;: NULL &quot;; // 处理 NULL 值  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;  </span><br><span class="line">        std::cout &lt;&lt; std::endl; // 换行以区分不同的行  </span><br><span class="line">    &#125;  </span><br><span class="line">    std::cout &lt;&lt; &quot;--------------------------&quot; &lt;&lt; std::endl;  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">int main() &#123;  </span><br><span class="line">    fit_dbconfig(); // 初始化数据库连接配置  </span><br><span class="line"></span><br><span class="line">    // 获取并初始化单例  </span><br><span class="line">    DatabaseManager&amp; db = DatabaseManager::getInstance(dbconfig);  </span><br><span class="line"></span><br><span class="line">    int i = 0;</span><br><span class="line">    do&#123;</span><br><span class="line">        // 测试 SQL 查询  </span><br><span class="line">        string sql = &quot;SELECT * FROM Login where username = ? and password = ?&quot;; // 或其他测试 SQL  </span><br><span class="line">        std::vector&lt;std::any&gt; vars = &#123;std::make_any&lt;std::string&gt;(&quot;user1&quot;), std::make_any&lt;std::string&gt;(&quot;a12345&quot;)&#125;;</span><br><span class="line"></span><br><span class="line">        cout &lt;&lt; &quot;exec sql....&quot; &lt;&lt; endl;</span><br><span class="line">        test_sql(sql, vars, db); // 执行测试查询  </span><br><span class="line">    &#125;while(++i &lt; 10);</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    return 0;  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">void test_sql(const string&amp; sql, const vector&lt;any&gt;&amp; vars, DatabaseManager&amp; db) &#123;  </span><br><span class="line">    TABLE res; // 用于存储查询结果  </span><br><span class="line"></span><br><span class="line">    if (db.execSQL(sql, vars, res)) &#123;  </span><br><span class="line">        print_Table(res); // 打印结果  </span><br><span class="line">    &#125; else &#123;  </span><br><span class="line">        cout &lt;&lt; &quot;SQL execution failed.&quot; &lt;&lt; endl;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>CMakeLists.txt</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">cmake_minimum_required(VERSION 3.10)  </span><br><span class="line"></span><br><span class="line">project(DataBaseTest VERSION 1.0)  </span><br><span class="line"></span><br><span class="line"># 设置 C++ 标准  </span><br><span class="line">set(CMAKE_CXX_STANDARD 20)  </span><br><span class="line">set(CMAKE_CXX_STANDARD_REQUIRED True)  </span><br><span class="line"></span><br><span class="line"># 查找 MySQL 客户端库  </span><br><span class="line">find_library(MYSQL_LIBRARIES NAMES mysqlclient PATHS /usr/lib/x86_64-linux-gnu)  </span><br><span class="line"></span><br><span class="line"># 查找 MySQL Connector/C++ 库  </span><br><span class="line">find_library(MYSQL_CONNECTOR_CPP_LIB mysqlcppconn PATHS /usr/lib/x86_64-linux-gnu)  </span><br><span class="line"></span><br><span class="line"># 查找 MySQL 头文件  </span><br><span class="line">find_path(MYSQL_INCLUDE_DIR NAMES mysql.h PATHS /usr/include/mysql)  </span><br><span class="line">find_path(MYSQL_CONNECTOR_CPP_INCLUDE_DIR NAMES mysql_driver.h PATHS /usr/include/cppconn)  </span><br><span class="line"></span><br><span class="line"># 检查所需的库和头文件是否找到  </span><br><span class="line">if(NOT MYSQL_LIBRARIES)  </span><br><span class="line">    message(FATAL_ERROR &quot;MySQL library not found.&quot;)  </span><br><span class="line">endif()  </span><br><span class="line"></span><br><span class="line">if(NOT MYSQL_INCLUDE_DIR)  </span><br><span class="line">    message(FATAL_ERROR &quot;MySQL include directory not found.&quot;)  </span><br><span class="line">endif()  </span><br><span class="line"></span><br><span class="line">if(NOT MYSQL_CONNECTOR_CPP_LIB)  </span><br><span class="line">    message(FATAL_ERROR &quot;MySQL Connector/C++ library not found.&quot;)  </span><br><span class="line">endif()  </span><br><span class="line"></span><br><span class="line">if(NOT MYSQL_CONNECTOR_CPP_INCLUDE_DIR)  </span><br><span class="line">    message(FATAL_ERROR &quot;MySQL Connector/C++ include directory not found.&quot;)  </span><br><span class="line">endif()  </span><br><span class="line"></span><br><span class="line"># 添加可执行文件  </span><br><span class="line">add_executable(DataBaseTest  </span><br><span class="line">    DatabasePool.cpp  </span><br><span class="line">    DatabaseManager.cpp  </span><br><span class="line">    ../json/MYJSON.cpp  </span><br><span class="line">    test.cpp  </span><br><span class="line">)  </span><br><span class="line"></span><br><span class="line"># 添加头文件搜索路径  </span><br><span class="line">target_include_directories(DataBaseTest PRIVATE  </span><br><span class="line">    &quot;$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;&quot;  </span><br><span class="line">    &quot;$&#123;MYSQL_INCLUDE_DIR&#125;&quot;  </span><br><span class="line">    &quot;$&#123;MYSQL_CONNECTOR_CPP_INCLUDE_DIR&#125;&quot;  # 添加 MySQL Connector/C++ 头文件路径  </span><br><span class="line">    &quot;$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;/../json&quot;  # 添加 json 目录  </span><br><span class="line">)  </span><br><span class="line"></span><br><span class="line"># 链接 MySQL C API 库和 MySQL Connector/C++ 库  </span><br><span class="line">target_link_libraries(DataBaseTest PRIVATE  </span><br><span class="line">    $&#123;MYSQL_LIBRARIES&#125;  </span><br><span class="line">    $&#123;MYSQL_CONNECTOR_CPP_LIB&#125;  # 添加 MySQL Connector/C++ 库链接  </span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%BD%91%E7%BB%9C/" rel="tag"># 网络</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/09/21/%E7%BA%BF%E7%A8%8B%E6%B1%A0/" rel="prev" title="线程池">
+      <i class="fa fa-chevron-left"></i> 线程池
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/09/30/Redis%E6%B1%A0%E4%B8%8ERedis%E7%AE%A1%E7%90%86/" rel="next" title="Redis池与Redis管理">
+      Redis池与Redis管理 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B1%A0%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AE%A1%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">数据库池与数据库管理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.</span> <span class="nav-text">具体实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#DatabasePool-hpp"><span class="nav-number">2.1.</span> <span class="nav-text">DatabasePool.hpp</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E8%AF%BB"><span class="nav-number">2.1.1.</span> <span class="nav-text">解读</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81unique-ptr"><span class="nav-number">2.1.1.1.</span> <span class="nav-text">1、unique_ptr</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81sql-Connection"><span class="nav-number">2.1.1.2.</span> <span class="nav-text">2、sql::Connection</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%E3%80%81%E4%BA%92%E6%96%A5%E9%87%8F%E5%92%8C%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F"><span class="nav-number">2.1.1.3.</span> <span class="nav-text">3、互斥量和条件变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E5%B8%B8%E8%A7%81%E7%9A%84%E9%94%81%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.1.1.4.</span> <span class="nav-text">数据库常见的锁类型</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DatabasePool-cpp"><span class="nav-number">2.2.</span> <span class="nav-text">DatabasePool.cpp</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E8%AF%BB-1"><span class="nav-number">2.2.1.</span> <span class="nav-text">解读</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81-default"><span class="nav-number">2.2.1.1.</span> <span class="nav-text">1、 &#x3D; default</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81Drive"><span class="nav-number">2.2.1.2.</span> <span class="nav-text">2、Drive</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%E3%80%81get-driver-instance"><span class="nav-number">2.2.1.3.</span> <span class="nav-text">3、get_driver_instance()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88%E8%AF%B4%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B1%A0%E6%98%AF%E5%A4%9A%E7%BA%BF%E7%A8%8B"><span class="nav-number">2.2.1.4.</span> <span class="nav-text">4、为什么说数据库池是多线程</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DatabaseManager-hpp"><span class="nav-number">2.3.</span> <span class="nav-text">DatabaseManager.hpp</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E8%AF%BB-2"><span class="nav-number">2.3.1.</span> <span class="nav-text">解读</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81any"><span class="nav-number">2.3.1.1.</span> <span class="nav-text">1、any</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81%E7%A7%81%E6%9C%89%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="nav-number">2.3.1.2.</span> <span class="nav-text">2、私有构造函数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BC%98%E7%82%B9"><span class="nav-number">2.3.1.2.1.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9"><span class="nav-number">2.3.1.2.2.</span> <span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%90%AD%E9%85%8D-getInstance-%E6%96%B9%E6%B3%95"><span class="nav-number">2.3.1.2.3.</span> <span class="nav-text">搭配 getInstance 方法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%98%B2%E6%AD%A2%E5%A4%8D%E5%88%B6%E7%9A%84%E7%A7%81%E6%9C%89%E6%8B%B7%E8%B4%9D%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%92%8C%E8%B5%8B%E5%80%BC%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="nav-number">2.3.1.2.4.</span> <span class="nav-text">防止复制的私有拷贝构造函数和赋值操作符</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DatabaseManager-cpp"><span class="nav-number">2.4.</span> <span class="nav-text">DatabaseManager.cpp</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E8%AF%BB-3"><span class="nav-number">2.4.1.</span> <span class="nav-text">解读</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81sql-PreparedStatement"><span class="nav-number">2.4.1.1.</span> <span class="nav-text">1、sql::PreparedStatement</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81sql-ResultSet"><span class="nav-number">2.4.2.</span> <span class="nav-text">2、sql::ResultSet</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%9A%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">设计模式：单例模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">3.0.1.</span> <span class="nav-text">1. 单例模式的基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%AD%A5%E9%AA%A4"><span class="nav-number">3.0.2.</span> <span class="nav-text">2. 单例模式的实现步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81"><span class="nav-number">3.0.3.</span> <span class="nav-text">3. 示例代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E7%9A%84%E4%BC%98%E7%82%B9"><span class="nav-number">3.0.4.</span> <span class="nav-text">4. 单例模式的优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="nav-number">3.0.5.</span> <span class="nav-text">5. 单例模式的缺点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E6%80%BB%E7%BB%93"><span class="nav-number">3.0.6.</span> <span class="nav-text">6. 总结</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">4.</span> <span class="nav-text">其他</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="AlexQFMM"
+      src="/images/Avatar.jpg">
+  <p class="site-author-name" itemprop="name">AlexQFMM</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://qexo-ten-roan.vercel.app/" title="控制中心 → https:&#x2F;&#x2F;qexo-ten-roan.vercel.app&#x2F;" rel="noopener" target="_blank">控制中心</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AlexQFMM</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : 'UaEUwcYLlkREnSn9jPNe0oRf-gzGzoHsz',
+      appKey     : '5d7KwGdf31jiCBxBobH0wVk6',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/assets/miku.model.json"},"display":{"position":"left","width":200,"height":400},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

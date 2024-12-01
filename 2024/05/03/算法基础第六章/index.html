@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="贪心算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="贪心算法（ACwing）">
+<meta property="og:url" content="http://example.com/2024/05/03/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E7%AC%AC%E5%85%AD%E7%AB%A0/index.html">
+<meta property="og:site_name" content="AlexHome">
+<meta property="og:description" content="贪心算法">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-05-03T12:28:45.000Z">
+<meta property="article:modified_time" content="2024-12-01T13:58:43.022Z">
+<meta property="article:author" content="AlexQFMM">
+<meta property="article:tag" content="算法基础">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2024/05/03/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E7%AC%AC%E5%85%AD%E7%AB%A0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>贪心算法（ACwing） | AlexHome</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">AlexHome</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-guestbook">
+
+    <a href="/guestbook/" rel="section"><i class="fa fa-book fa-fw"></i>留言</a>
+
+  </li>
+        <li class="menu-item menu-item-mypage">
+
+    <a href="/MYHTML/test/index.html" rel="section"><i class="fas fa-file-user fa-fw"></i>myPage</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/05/03/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E7%AC%AC%E5%85%AD%E7%AB%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/Avatar.jpg">
+      <meta itemprop="name" content="AlexQFMM">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AlexHome">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          贪心算法（ACwing）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-05-03 12:28:45" itemprop="dateCreated datePublished" datetime="2024-05-03T12:28:45+00:00">2024-05-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-12-01 13:58:43" itemprop="dateModified" datetime="2024-12-01T13:58:43+00:00">2024-12-01</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ACWing/" itemprop="url" rel="index"><span itemprop="name">ACWing</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2024/05/03/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E7%AC%AC%E5%85%AD%E7%AB%A0/" class="post-meta-item leancloud_visitors" data-flag-title="贪心算法（ACwing）" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2024/05/03/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E7%AC%AC%E5%85%AD%E7%AB%A0/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2024/05/03/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E7%AC%AC%E5%85%AD%E7%AB%A0/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="贪心算法"><a href="#贪心算法" class="headerlink" title="贪心算法"></a>贪心算法</h1><span id="more"></span>
+
+<h1 id="一、区域选点"><a href="#一、区域选点" class="headerlink" title="一、区域选点"></a>一、区域选点</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">给定 N个闭区间 [ai,bi]，请你在数轴上选择尽量少的点，使得每个区间内至少包含一个选出的点。</span><br><span class="line"></span><br><span class="line">输出选择的点的最小数量。</span><br><span class="line"></span><br><span class="line">位于区间端点上的点也算作区间内。</span><br><span class="line"></span><br><span class="line">输入格式</span><br><span class="line">第一行包含整数 N，表示区间数。</span><br><span class="line">接下来 N行，每行包含两个整数 ai,bi，表示一个区间的两个端点。</span><br><span class="line"></span><br><span class="line">输出格式</span><br><span class="line">输出一个整数，表示所需的点的最小数量。</span><br><span class="line"></span><br><span class="line">数据范围</span><br><span class="line">1≤N≤10^5</span><br><span class="line">−10^9≤ai≤bi≤10^9</span><br><span class="line">输入样例：</span><br><span class="line">3</span><br><span class="line">-1 1</span><br><span class="line">2 4</span><br><span class="line">3 5</span><br><span class="line">输出样例：</span><br><span class="line">2</span><br></pre></td></tr></table></figure>
+
+<p>有点类似于打气球</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[-1,1] [2,4] [3,5]</span><br><span class="line">-&gt;</span><br><span class="line">[-1,1] [3,4]</span><br><span class="line">不难看出是保留区间的重叠部分</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">#include&lt;cmath&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">using PILL = pair&lt;int,int&gt;;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    int n;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    vector&lt;PILL&gt;areas(n);</span><br><span class="line">    for(int i=0;i&lt;n;i++)&#123;</span><br><span class="line">        int x,y;</span><br><span class="line">        cin &gt;&gt; x &gt;&gt; y;</span><br><span class="line">        areas[i] = &#123;x,y&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    sort(areas.begin(),areas.end());</span><br><span class="line">    </span><br><span class="line">    vector&lt;PILL&gt;merge;</span><br><span class="line">    merge.push_back(areas[0]);</span><br><span class="line">    for(int i=1;i&lt;n;i++)&#123;</span><br><span class="line">        if(areas[i].first &lt;= merge.back().second)&#123;</span><br><span class="line">            merge.back().first = max(areas[i].first,merge.back().first);</span><br><span class="line">            merge.back().second = min(areas[i].second,merge.back().second);</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            merge.push_back(areas[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    cout &lt;&lt; merge.size() &lt;&lt; endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="二、最大不相交区间数量"><a href="#二、最大不相交区间数量" class="headerlink" title="二、最大不相交区间数量"></a>二、最大不相交区间数量</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">给定 N 个闭区间 [ai,bi]请你在数轴上选择若干区间，使得选中的区间之间互不相交（包括端点）。</span><br><span class="line"></span><br><span class="line">输出可选取区间的最大数量。</span><br><span class="line"></span><br><span class="line">输入格式</span><br><span class="line">第一行包含整数 N ，表示区间数。</span><br><span class="line"></span><br><span class="line">接下来 N 行，每行包含两个整数 ai,bi，表示一个区间的两个端点。</span><br><span class="line"></span><br><span class="line">输出格式</span><br><span class="line">输出一个整数，表示可选取区间的最大数量。</span><br><span class="line"></span><br><span class="line">数据范围</span><br><span class="line">1≤N≤105</span><br><span class="line">−109≤ai≤bi≤109</span><br><span class="line">输入样例：</span><br><span class="line">3</span><br><span class="line">-1 1</span><br><span class="line">2 4</span><br><span class="line">3 5</span><br><span class="line">输出样例：</span><br><span class="line">2</span><br></pre></td></tr></table></figure>
+
+<p>本题和上题代码一样</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[-1,1] [2,4] [3,5]</span><br><span class="line">-&gt;</span><br><span class="line">可选区的不重复区间[-1,1] [2,4] / [-1,1] [3,5] </span><br><span class="line"></span><br><span class="line">不难看出有重叠部分的区间我们只能选一次，如果我们把两个重叠的区间算一个区间，也就成为上面一题，有多少个点了</span><br></pre></td></tr></table></figure>
+
+<h1 id="三、区间分组"><a href="#三、区间分组" class="headerlink" title="三、区间分组"></a>三、区间分组</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">给定 N</span><br><span class="line"> 个闭区间 [ai,bi]</span><br><span class="line">，请你将这些区间分成若干组，使得每组内部的区间两两之间（包括端点）没有交集，并使得组数尽可能小。</span><br><span class="line"></span><br><span class="line">输出最小组数。</span><br><span class="line"></span><br><span class="line">输入格式</span><br><span class="line">第一行包含整数 N</span><br><span class="line">，表示区间数。</span><br><span class="line"></span><br><span class="line">接下来 N</span><br><span class="line"> 行，每行包含两个整数 ai,bi</span><br><span class="line">，表示一个区间的两个端点。</span><br><span class="line"></span><br><span class="line">输出格式</span><br><span class="line">输出一个整数，表示最小组数。</span><br><span class="line"></span><br><span class="line">数据范围</span><br><span class="line">1≤N≤105</span><br><span class="line">,</span><br><span class="line">−109≤ai≤bi≤109</span><br><span class="line">输入样例：</span><br><span class="line">3</span><br><span class="line">-1 1</span><br><span class="line">2 4</span><br><span class="line">3 5</span><br><span class="line">输出样例：</span><br><span class="line">2</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[-1,1] [2,4] [3,5]</span><br><span class="line">-&gt;</span><br><span class="line">其中2，4和3，5有重叠部分，所以不能分到同一组</span><br><span class="line">可以将[-1,1][2,4]分到同一组，合并后发现[-1,4]和[3,5]有重叠部分，所以不能分组</span><br><span class="line">那么最后就是两组；</span><br><span class="line"></span><br><span class="line">题目转换成按左端点升序后，选最小的右端点连接，如果最小的右端点都比当前左端点大，那就不能合并成一组</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;bits/stdc++.h&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">using PILL = pair&lt;int,int&gt;;</span><br><span class="line"></span><br><span class="line">class MYCMP&#123;</span><br><span class="line">    public:</span><br><span class="line">        bool operator()(const PILL&amp;x , const PILL&amp; y)&#123;</span><br><span class="line">            return x.second &gt; y.second || (x.second == y.second &amp;&amp; x.first&gt;y.first);</span><br><span class="line">        &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    int n;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    vector&lt;PILL&gt;areas(n);</span><br><span class="line">    for(int i=0;i&lt;n;i++)&#123;</span><br><span class="line">        int x,y;</span><br><span class="line">        cin &gt;&gt; x &gt;&gt; y;</span><br><span class="line">        areas[i] = &#123;x,y&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    sort(areas.begin(),areas.end());</span><br><span class="line"></span><br><span class="line">    priority_queue&lt;PILL,vector&lt;PILL&gt;,MYCMP&gt;pq;</span><br><span class="line">    pq.push(areas[0]);</span><br><span class="line">    for(int i=1;i&lt;n;i++)&#123;</span><br><span class="line">        if(areas[i].first &lt;= pq.top().second) pq.push(areas[i]);</span><br><span class="line">        else&#123;</span><br><span class="line">            int l = pq.top().first;</span><br><span class="line">            int r = areas[i].second;</span><br><span class="line">            pq.pop();</span><br><span class="line">            pq.push(&#123;l,r&#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; pq.size() &lt;&lt; endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="四、区间覆盖"><a href="#四、区间覆盖" class="headerlink" title="四、区间覆盖"></a>四、区间覆盖</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">给定 N</span><br><span class="line"> 个闭区间 [ai,bi]</span><br><span class="line"> 以及一个线段区间 [s,t]</span><br><span class="line">，请你选择尽量少的区间，将指定线段区间完全覆盖。</span><br><span class="line"></span><br><span class="line">输出最少区间数，如果无法完全覆盖则输出 −1</span><br><span class="line">。</span><br><span class="line"></span><br><span class="line">输入格式</span><br><span class="line">第一行包含两个整数 s</span><br><span class="line"> 和 t</span><br><span class="line">，表示给定线段区间的两个端点。</span><br><span class="line"></span><br><span class="line">第二行包含整数 N</span><br><span class="line">，表示给定区间数。</span><br><span class="line"></span><br><span class="line">接下来 N</span><br><span class="line"> 行，每行包含两个整数 ai,bi</span><br><span class="line">，表示一个区间的两个端点。</span><br><span class="line"></span><br><span class="line">输出格式</span><br><span class="line">输出一个整数，表示所需最少区间数。</span><br><span class="line"></span><br><span class="line">如果无解，则输出 −1</span><br><span class="line">。</span><br><span class="line"></span><br><span class="line">数据范围</span><br><span class="line">1≤N≤105</span><br><span class="line">,</span><br><span class="line">−109≤ai≤bi≤109</span><br><span class="line">,</span><br><span class="line">−109≤s≤t≤109</span><br><span class="line">输入样例：</span><br><span class="line">1 5</span><br><span class="line">3</span><br><span class="line">-1 3</span><br><span class="line">2 4</span><br><span class="line">3 5</span><br><span class="line">输出样例：</span><br><span class="line">2</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">目标区间:[1,5]</span><br><span class="line">可用区间:[-1,3] [2,4] [3,5]</span><br><span class="line">其中[2,4]和[3,5]都可以和 [-1,3]合并，基于贪心的思路</span><br><span class="line">我们每次都走最远的一条路</span><br><span class="line">所以可以在左端点降序后，每次在不超过右端点的区间中，找能走最远的一条路</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">using PILL = pair&lt;int,int&gt;;</span><br><span class="line">const int N = 100010;</span><br><span class="line">int st, ed , n;</span><br><span class="line"></span><br><span class="line">int merge(vector&lt;PILL&gt;&amp; range)&#123;</span><br><span class="line">    int res = 0;</span><br><span class="line">	bool success = false;</span><br><span class="line">	</span><br><span class="line">	for (int i = 0; i &lt; n; i ++ ) &#123;</span><br><span class="line">		int j = i, r = -2e9;// 初始化右端点r为一个极小值</span><br><span class="line">		while (j &lt; n &amp;&amp; range[j].first &lt;= st) &#123;// 选取所有左端点在当前位置之前的区间，找到能够覆盖到的最远的右端点r</span><br><span class="line">			r = max(r, range[j].second);</span><br><span class="line">			j ++ ;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		if (r &lt; st) &#123;// 如果最远的右端点r仍然小于目标区间的左端点st，说明无法覆盖目标区间，返回-1</span><br><span class="line">			res = -1;</span><br><span class="line">			break;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		res ++ ;</span><br><span class="line">		if (r &gt;= ed) &#123;// 如果最远的右端点r大于等于目标区间的右端点ed，说明目标区间已完全被覆盖，退出循环</span><br><span class="line">			success = true;</span><br><span class="line">			break;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		st = r;// 更新当前位置为最远右端点r</span><br><span class="line">		i = j - 1;// 更新i为j-1，因为下次循环会i++</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	if (!success) res = -1;</span><br><span class="line">    return res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">	cin &gt;&gt; st &gt;&gt; ed &gt;&gt; n;</span><br><span class="line">	vector&lt;PILL&gt;range(n);</span><br><span class="line">	for (int i = 0; i &lt; n; i ++ ) &#123;</span><br><span class="line">		int l, r;</span><br><span class="line">		cin &gt;&gt; l &gt;&gt;r;</span><br><span class="line">		range[i] = &#123;l, r&#125;;</span><br><span class="line">	&#125;</span><br><span class="line">	sort(range.begin(), range.end());</span><br><span class="line">    </span><br><span class="line">    cout &lt;&lt; merge(range) &lt;&lt; endl;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="五、合并果子"><a href="#五、合并果子" class="headerlink" title="五、合并果子"></a>五、合并果子</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">题目：略</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">哈夫曼树，每次都将集合中最小的两个结点拿出，相加后再放入集合中，直到只剩最后一个元素</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">#include&lt;queue&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">using ll = long long;</span><br><span class="line"></span><br><span class="line">class MYCMP&#123;</span><br><span class="line">    public:</span><br><span class="line">        bool operator()(const int&amp; x,const int&amp; y)&#123;</span><br><span class="line">            return x &gt; y; </span><br><span class="line">        &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    priority_queue&lt;int,vector&lt;int&gt;,MYCMP&gt;pq;</span><br><span class="line">    int n;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    for(int i=0;i&lt;n;i++)&#123;</span><br><span class="line">        int x;</span><br><span class="line">        cin &gt;&gt; x;</span><br><span class="line">        pq.push(x);</span><br><span class="line">    &#125;</span><br><span class="line">    ll ans=0;</span><br><span class="line">    while(pq.size() != 1)&#123;</span><br><span class="line">        int x = pq.top();</span><br><span class="line">        pq.pop();</span><br><span class="line">        int y =pq.top();</span><br><span class="line">        pq.pop();</span><br><span class="line">        ans += x+y;</span><br><span class="line">        pq.push(x+y);</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; ans &lt;&lt; endl;</span><br><span class="line">    </span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="六、排队打水"><a href="#六、排队打水" class="headerlink" title="六、排队打水"></a>六、排队打水</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">题目略</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">有点类似于操作系统中的短作业优先，等待时间最短</span><br><span class="line">所以可以排序后，计算前缀和的和就可以（每个人的等待时间就是前缀和）</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">using ll = long long;</span><br><span class="line">int main()&#123;</span><br><span class="line">    int n;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    vector&lt;int&gt;times(n+1,0);</span><br><span class="line">    for(int i=1;i&lt;=n;i++)&#123;</span><br><span class="line">        cin &gt;&gt; times[i];</span><br><span class="line">    &#125;</span><br><span class="line">    sort(times.begin(),times.end());</span><br><span class="line">    ll ans=0;</span><br><span class="line">    for(int i=1;i&lt;=n;i++)&#123;</span><br><span class="line">        times[i] += times[i-1];//每个人的等待时间就是前缀和</span><br><span class="line">        ans+=times[i-1];//前缀和的和</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; ans &lt;&lt; endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="七、货仓选址"><a href="#七、货仓选址" class="headerlink" title="七、货仓选址"></a>七、货仓选址</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">题目：略</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">思路：递增序列距离之和最小那就是中位数。</span><br><span class="line"></span><br><span class="line">举个例子，假设有商店坐标为1,2,6,9，则中位数为median=4。</span><br><span class="line">如果货仓建在x=2,则到商店的距离之和为1-2+2-2+6-2+9-2=12；</span><br><span class="line">如果货仓建在中位数x=4,则到商店的距离之和为1-4+2-4+6-4+9-4=10。</span><br><span class="line">因此，中位数位置的距离之和最小。</span><br><span class="line"></span><br><span class="line">所以这题排序后求头尾减和就行了</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;bits/stdc++.h&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">using ll = long long;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    int n;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    vector&lt;int&gt;dist(n);</span><br><span class="line">    for(int i=0;i&lt;n;i++)</span><br><span class="line">        cin &gt;&gt; dist[i];</span><br><span class="line">    sort(dist.begin(),dist.end());</span><br><span class="line">    ll sum=0;</span><br><span class="line">    for(int i=0;i&lt;=n/2-1;i++)&#123;</span><br><span class="line">        sum += dist[n-i-1]-dist[i];</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; sum &lt;&lt; endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="八、耍杂技的牛"><a href="#八、耍杂技的牛" class="headerlink" title="八、耍杂技的牛"></a>八、耍杂技的牛</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">N头奶牛中的每一头都有着自己的重量 Wi以及自己的强壮程度 Si</span><br><span class="line"></span><br><span class="line">它头上所有牛的总重量（不包括它自己）减去它的身体强壮程度的值，为风险值</span><br><span class="line"></span><br><span class="line">确定奶牛的排序，使得所有奶牛的风险值中的最大值尽可能的小。</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wi+si最小的数，最大风险值最小</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">#include&lt;cmath&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">using ll = long long;</span><br><span class="line">using PILL =pair&lt;ll,ll&gt;;</span><br><span class="line"></span><br><span class="line">class MYCMP &#123;</span><br><span class="line">	public:</span><br><span class="line">		bool operator()(const PILL&amp; x,const PILL&amp; y) &#123;</span><br><span class="line">			return (x.first+x.second) &lt; (y.first+y.second);</span><br><span class="line">		&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">	int n;</span><br><span class="line">	cin &gt;&gt; n;</span><br><span class="line">	vector&lt;PILL&gt;cow(n);</span><br><span class="line">	for(int i=0; i&lt;n; i++) &#123;</span><br><span class="line">		ll w,s;</span><br><span class="line">		cin &gt;&gt; w &gt;&gt; s;</span><br><span class="line">		cow[i] = &#123;w,s&#125;;</span><br><span class="line">	&#125;</span><br><span class="line">	sort(cow.begin(),cow.end(),MYCMP());</span><br><span class="line">	ll ans = -2e9, sum = 0;</span><br><span class="line">	for (int i = 0; i &lt; n; i ++ ) &#123;</span><br><span class="line">		ans = max(ans, sum - cow[i].second);</span><br><span class="line">		sum += cow[i].first;</span><br><span class="line">	&#125;</span><br><span class="line">	cout &lt;&lt; ans &lt;&lt; endl;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/" rel="tag"># 算法基础</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/05/01/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%B8%89%E7%AB%A0/" rel="prev" title="图和搜索（ACwing）">
+      <i class="fa fa-chevron-left"></i> 图和搜索（ACwing）
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/05/03/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%AB%A0/" rel="next" title="动态规划（ACwing）">
+      动态规划（ACwing） <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">贪心算法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%8C%BA%E5%9F%9F%E9%80%89%E7%82%B9"><span class="nav-number">2.</span> <span class="nav-text">一、区域选点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%9C%80%E5%A4%A7%E4%B8%8D%E7%9B%B8%E4%BA%A4%E5%8C%BA%E9%97%B4%E6%95%B0%E9%87%8F"><span class="nav-number">3.</span> <span class="nav-text">二、最大不相交区间数量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%8C%BA%E9%97%B4%E5%88%86%E7%BB%84"><span class="nav-number">4.</span> <span class="nav-text">三、区间分组</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%8C%BA%E9%97%B4%E8%A6%86%E7%9B%96"><span class="nav-number">5.</span> <span class="nav-text">四、区间覆盖</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E5%90%88%E5%B9%B6%E6%9E%9C%E5%AD%90"><span class="nav-number">6.</span> <span class="nav-text">五、合并果子</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E6%8E%92%E9%98%9F%E6%89%93%E6%B0%B4"><span class="nav-number">7.</span> <span class="nav-text">六、排队打水</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E8%B4%A7%E4%BB%93%E9%80%89%E5%9D%80"><span class="nav-number">8.</span> <span class="nav-text">七、货仓选址</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E8%80%8D%E6%9D%82%E6%8A%80%E7%9A%84%E7%89%9B"><span class="nav-number">9.</span> <span class="nav-text">八、耍杂技的牛</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="AlexQFMM"
+      src="/images/Avatar.jpg">
+  <p class="site-author-name" itemprop="name">AlexQFMM</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://qexo-ten-roan.vercel.app/" title="控制中心 → https:&#x2F;&#x2F;qexo-ten-roan.vercel.app&#x2F;" rel="noopener" target="_blank">控制中心</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AlexQFMM</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : 'UaEUwcYLlkREnSn9jPNe0oRf-gzGzoHsz',
+      appKey     : '5d7KwGdf31jiCBxBobH0wVk6',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/assets/miku.model.json"},"display":{"position":"left","width":200,"height":400},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="线程池">
+<meta property="og:type" content="article">
+<meta property="og:title" content="线程池">
+<meta property="og:url" content="http://example.com/2024/09/21/%E7%BA%BF%E7%A8%8B%E6%B1%A0/index.html">
+<meta property="og:site_name" content="AlexHome">
+<meta property="og:description" content="线程池">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-09-21T16:28:45.000Z">
+<meta property="article:modified_time" content="2024-12-01T13:58:43.022Z">
+<meta property="article:author" content="AlexQFMM">
+<meta property="article:tag" content="网络">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2024/09/21/%E7%BA%BF%E7%A8%8B%E6%B1%A0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>线程池 | AlexHome</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">AlexHome</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-guestbook">
+
+    <a href="/guestbook/" rel="section"><i class="fa fa-book fa-fw"></i>留言</a>
+
+  </li>
+        <li class="menu-item menu-item-mypage">
+
+    <a href="/MYHTML/test/index.html" rel="section"><i class="fas fa-file-user fa-fw"></i>myPage</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/21/%E7%BA%BF%E7%A8%8B%E6%B1%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/Avatar.jpg">
+      <meta itemprop="name" content="AlexQFMM">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AlexHome">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          线程池
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-09-21 16:28:45" itemprop="dateCreated datePublished" datetime="2024-09-21T16:28:45+00:00">2024-09-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-12-01 13:58:43" itemprop="dateModified" datetime="2024-12-01T13:58:43+00:00">2024-12-01</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2024/09/21/%E7%BA%BF%E7%A8%8B%E6%B1%A0/" class="post-meta-item leancloud_visitors" data-flag-title="线程池" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2024/09/21/%E7%BA%BF%E7%A8%8B%E6%B1%A0/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2024/09/21/%E7%BA%BF%E7%A8%8B%E6%B1%A0/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h1><span id="more"></span>
+
+<h2 id="1、完整实现"><a href="#1、完整实现" class="headerlink" title="1、完整实现"></a>1、完整实现</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line"></span><br><span class="line">#include &lt;vector&gt;</span><br><span class="line">#include &lt;queue&gt;</span><br><span class="line"></span><br><span class="line">#include &lt;thread&gt;</span><br><span class="line">#include &lt;mutex&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#include &lt;memory&gt;</span><br><span class="line">#include &lt;stdexcept&gt;</span><br><span class="line">#include &lt;future&gt;</span><br><span class="line">#include &lt;functional&gt;</span><br><span class="line">#include &lt;condition_variable&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">class MyThreadPool&#123;</span><br><span class="line">private:</span><br><span class="line"></span><br><span class="line">    vector&lt;thread&gt;workers;//工作线程</span><br><span class="line">    queue&lt;function&lt;void()&gt;&gt; tasks;//任务队列</span><br><span class="line">    mutex queueMutex;//保护任务队列的互斥锁</span><br><span class="line">    condition_variable condition; //条件变量，通知线程有新任务</span><br><span class="line">    bool stop;  //标志线程池是否停止接受新任务</span><br><span class="line"></span><br><span class="line">public:</span><br><span class="line">	//size_t : unsigned int(long)</span><br><span class="line">    MyThreadPool(size_t threadNum) : stop(false) &#123;</span><br><span class="line">        for(int i = 0 ; i &lt; threadNum ; i ++)&#123;</span><br><span class="line">            </span><br><span class="line">            workers.emplace_back([this]&#123;//捕获this指针便于下面使用成员变量             </span><br><span class="line">                while(1)&#123;//循环                   </span><br><span class="line">                    function&lt;void()&gt; task;</span><br><span class="line">                    </span><br><span class="line">                    &#123;</span><br><span class="line">                        unique_lock&lt;mutex&gt; lock(this-&gt;queueMutex);//加锁</span><br><span class="line"></span><br><span class="line">                        this-&gt;condition.wait(lock, [this]&#123;</span><br><span class="line">                            return this-&gt;stop || !this-&gt;tasks.empty();</span><br><span class="line">                        &#125;);</span><br><span class="line"></span><br><span class="line">                        if(this-&gt;stop &amp;&amp; this-&gt;tasks.empty()) </span><br><span class="line">                            return;</span><br><span class="line">                            </span><br><span class="line">						//从任务队列中取出队首元素</span><br><span class="line">                        task = move(this-&gt;tasks.front());</span><br><span class="line">                        this-&gt;tasks.pop();</span><br><span class="line"></span><br><span class="line">                    &#125;</span><br><span class="line">                    </span><br><span class="line">                    task();</span><br><span class="line">                &#125;            </span><br><span class="line">            &#125;);</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ~MyThreadPool()&#123;</span><br><span class="line">        &#123;</span><br><span class="line">            unique_lock&lt;mutex&gt; lock(queueMutex);</span><br><span class="line">            stop = true;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        condition.notify_all();</span><br><span class="line">        for(thread &amp;worker : workers)&#123;</span><br><span class="line">            worker.join();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    template&lt;class F , class... Args&gt;</span><br><span class="line">    auto enqueue(F&amp;&amp; f,Args&amp;&amp;... args) -&gt; future&lt;typename result_of&lt;F(Args...)&gt;::type&gt;&#123;</span><br><span class="line">        </span><br><span class="line">        using return_type = typename result_of&lt;F(Args...)&gt;::type;</span><br><span class="line"></span><br><span class="line">        auto task = make_shared&lt;packaged_task&lt;return_type()&gt;&gt;(</span><br><span class="line">            bind(forward&lt;F&gt;(f) , forward&lt;Args&gt;(args)...)</span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">        future&lt;return_type&gt; res = task-&gt;get_future();</span><br><span class="line"></span><br><span class="line">        &#123;</span><br><span class="line">            unique_lock&lt;mutex&gt;lock(queueMutex);</span><br><span class="line"></span><br><span class="line">            if(stop)</span><br><span class="line">                throw runtime_error(&quot;enqueue on stopped ThreadPool&quot;);</span><br><span class="line"></span><br><span class="line">            tasks.emplace([task]() &#123;</span><br><span class="line">                (*task)();</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        condition.notify_one();</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    MyThreadPool pool(10);</span><br><span class="line"></span><br><span class="line">    for(int i = 0 ; i &lt; 20 ; i ++)&#123;</span><br><span class="line">        pool.enqueue([i] &#123;</span><br><span class="line">            cout &lt;&lt; &quot;Task : &quot; &lt;&lt; i &lt;&lt; &quot; is running in thread : &quot; &lt;&lt; this_thread::get_id() &lt;&lt; endl;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="解读1-lambda表达式"><a href="#解读1-lambda表达式" class="headerlink" title="解读1 lambda表达式"></a>解读1 lambda表达式</h2><p>Lambda表达式是<strong>C++11</strong>引入的一种语法，用于定义匿名函数。这种特性允许在代码中更灵活地使用函数，尤其是在需要将函数作为参数传递的场合，比如算法和回调。</p>
+<p>格式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[捕获的参数](型参) -&gt; 返回类型 &#123;</span><br><span class="line">    // 函数体</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="详细举例"><a href="#详细举例" class="headerlink" title="详细举例"></a>详细举例</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 示例1：无参数的lambda</span><br><span class="line">    auto hello = []() &#123;</span><br><span class="line">        cout &lt;&lt; &quot;Hello, World!&quot; &lt;&lt; endl;</span><br><span class="line">    &#125;;</span><br><span class="line">    hello(); // 输出: Hello, World!</span><br></pre></td></tr></table></figure>
+
+<p>​    </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 示例2：带参数的lambda</span><br><span class="line">    auto add = [](int a, int b) -&gt; int &#123;</span><br><span class="line">        return a + b;</span><br><span class="line">    &#125;;</span><br><span class="line">    cout &lt;&lt; &quot;Sum: &quot; &lt;&lt; add(5, 3) &lt;&lt; endl; // 输出: Sum: 8</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// 示例3：捕获外部变量</span><br><span class="line">    int x = 10;</span><br><span class="line">    auto increment = [&amp;x]() &#123;</span><br><span class="line">        x++;</span><br><span class="line">    &#125;;</span><br><span class="line">    increment();</span><br><span class="line">    cout &lt;&lt; &quot;Incremented x: &quot; &lt;&lt; x &lt;&lt; endl; // 输出: Incremented x: 11</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// 示例4：与STL算法结合</span><br><span class="line">   vector&lt;int&gt; nums = &#123;1, 2, 3, 4, 5&#125;;</span><br><span class="line">   int sum = 0;</span><br><span class="line">   for_each(nums.begin(), nums.end(), [&amp;sum](int n) &#123;</span><br><span class="line">       sum += n;</span><br><span class="line">   &#125;);</span><br><span class="line">   cout &lt;&lt; &quot;Total Sum: &quot; &lt;&lt; sum &lt;&lt; endl; // 输出: Total Sum: 15</span><br></pre></td></tr></table></figure>
+
+<h3 id="发展"><a href="#发展" class="headerlink" title="发展"></a>发展</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">C++11：引入了Lambda表达式的基础功能，包括捕获列表、参数、返回类型等。</span><br><span class="line"></span><br><span class="line">C++14：允许在Lambda中使用泛型（即模板），引入了 auto 关键字以简化参数类型的指定。</span><br><span class="line"></span><br><span class="line">C++17：增加了 constexpr 支持，使得lambda表达式可以在编译时求值。引入了 Lambda 表达式作为模板参数的能力。</span><br><span class="line"></span><br><span class="line">C++20：引入了即将到来的 template 参数的支持，使得 lambda 表达式可以作为模板。</span><br></pre></td></tr></table></figure>
+
+<h3 id="类型推导："><a href="#类型推导：" class="headerlink" title="类型推导："></a><strong>类型推导</strong>：</h3><p>在 C++ 中，如果你不显式指定 lambda 的返回类型，编译器会根据表达式的内容自动推导出返回类型。在这种情况下，返回值的类型确实是 <code>bool</code>，但你不需要写出来。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">auto lambda = [] &#123;</span><br><span class="line">       return 42; // 返回类型被推导为 int</span><br><span class="line">   &#125;;</span><br><span class="line"></span><br><span class="line">   cout &lt;&lt; lambda() &lt;&lt; endl; // 输出: 42</span><br><span class="line"></span><br><span class="line">   auto anotherLambda = []() -&gt; bool &#123;</span><br><span class="line">       return true; // 显式指定返回类型</span><br><span class="line">   &#125;;</span><br><span class="line"></span><br><span class="line">   cout &lt;&lt; anotherLambda() &lt;&lt; endl; // 输出: 1</span><br></pre></td></tr></table></figure>
+
+<h2 id="解读2-function"><a href="#解读2-function" class="headerlink" title="解读2 function"></a>解读2 function</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">function ： 功能</span><br></pre></td></tr></table></figure>
+
+<p>头文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;functional&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-std-function-的作用"><a href="#1-std-function-的作用" class="headerlink" title="1. std::function 的作用"></a>1. <code>std::function</code> 的作用</h3><p><code>std::function</code> 是一个通用的可调用对象封装器，可以存储任何可以调用的目标（函数、函数指针、lambda 表达式、绑定表达式等）。它提供了灵活性，允许在运行时决定要调用的函数。</p>
+<h3 id="2-内存和性能"><a href="#2-内存和性能" class="headerlink" title="2. 内存和性能"></a>2. 内存和性能</h3><ul>
+<li><strong>开销</strong>：使用 <code>std::function</code> 会有一些内存开销，因为它需要在内部管理可调用对象的类型信息和状态。因此，对于性能敏感的场景，可能需要考虑其他选项。</li>
+<li><strong>小对象优化</strong>：在一些实现中，对于小型的可调用对象（如小型 lambda），<code>std::function</code> 可能会在内部进行优化，以避免动态内存分配。</li>
+</ul>
+<h3 id="3-类型安全"><a href="#3-类型安全" class="headerlink" title="3. 类型安全"></a>3. 类型安全</h3><p><code>std::function</code> 确保类型安全，确保所存储的可调用对象的参数和返回类型与声明的一致。编译器会检查参数和返回类型是否匹配，以提供更好的错误消息。</p>
+<h3 id="4-支持泛型"><a href="#4-支持泛型" class="headerlink" title="4. 支持泛型"></a>4. 支持泛型</h3><p><code>std::function</code> 可以存储不同类型的可调用对象，只要它们的参数和返回类型匹配。这使得你可以编写更加灵活的代码。</p>
+<h3 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">/*用法1 ： 配合lambda表达式</span><br><span class="line">   vector&lt;function&lt;void()&gt;&gt; num;</span><br><span class="line">   </span><br><span class="line">   for(int j = 0 ; j &lt; 10 ; j ++)&#123;</span><br><span class="line">       num.emplace_back(//存放一个lambda表达式</span><br><span class="line">           [&amp;i,j]&#123;</span><br><span class="line">               i += j;</span><br><span class="line">           &#125;</span><br><span class="line">       );</span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">   for(const auto&amp; task : num)&#123;//执行每一个lambda表达式</span><br><span class="line">       task();</span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">   cout &lt;&lt; i &lt;&lt; endl;</span><br><span class="line">   */</span><br><span class="line">   </span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">//用法2 配合单独的方法</span><br><span class="line">int gbs(int a , int b , function&lt;int(int a,int b)&gt; func)&#123;</span><br><span class="line">    return a * b / func(a , b);</span><br><span class="line">&#125;</span><br><span class="line">....</span><br><span class="line"></span><br><span class="line">    function&lt;int(int a,int b)&gt; func = gcd;</span><br><span class="line"></span><br><span class="line">    for(int i = 6 ; i &lt; 10 ; i ++)&#123;</span><br><span class="line">        for(int j = i + 1 ; j &lt; 10 ; j ++)&#123;</span><br><span class="line"></span><br><span class="line">            auto gbs = [func](int i , int j) &#123;</span><br><span class="line">                return i * j / func(i , j);</span><br><span class="line">            &#125;;</span><br><span class="line">            </span><br><span class="line">            cout &lt;&lt; gbs(i , j) &lt;&lt; endl;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="解读3：互斥锁"><a href="#解读3：互斥锁" class="headerlink" title="解读3：互斥锁"></a>解读3：互斥锁</h2><p>头文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;mutex&gt;</span><br></pre></td></tr></table></figure>
+
+<p><code>unique_lock&lt;mutex&gt;</code> 和 <code>lock_guard&lt;mutex&gt;</code> 都是 C++ 中用于管理互斥锁的 RAII 类型，但它们之间有一些关键区别：</p>
+<h3 id="1-功能和灵活性"><a href="#1-功能和灵活性" class="headerlink" title="1. 功能和灵活性"></a>1. 功能和灵活性</h3><ul>
+<li>**<code>lock_guard</code>**：<ul>
+<li>简单易用，提供基本的互斥锁管理。</li>
+<li>在构造时自动加锁，在析构时自动解锁。</li>
+<li>不允许在锁的生命周期内手动解锁或重新加锁，使用上较为严格。</li>
+</ul>
+</li>
+<li>**<code>unique_lock</code>**：<ul>
+<li>提供更多的灵活性。</li>
+<li>允许在锁的生命周期内手动解锁和重新加锁。</li>
+<li>可以与条件变量一起使用，非常适合复杂的同步需求。</li>
+<li>支持延迟加锁（即在构造时不立即加锁）和条件变量的使用。</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-使用场景"><a href="#2-使用场景" class="headerlink" title="2. 使用场景"></a>2. 使用场景</h3><ul>
+<li><p>**<code>lock_guard</code>**：适合简单的锁定场景，如保护临界区，使用方便。</p>
+</li>
+<li><p>**<code>unique_lock</code>**：适合需要更复杂锁定行为的场景，如等待条件变量、需要在一个作用域内解锁再加锁的情况。</p>
+</li>
+</ul>
+<h3 id="3-RALL简介"><a href="#3-RALL简介" class="headerlink" title="3.RALL简介"></a>3.RALL简介</h3><p>RAII（Resource Acquisition Is Initialization 资源获取即初始化），主要用于管理资源的生命周期，确保资源的正确分配和释放 </p>
+<p>RAII 是 C++ 中广泛使用的设计模式。</p>
+<h4 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h4><ul>
+<li><p><strong>资源管理</strong>：在 C++ 中，RAII 的基本原则是将资源的生命周期与对象的生命周期绑定在一起。</p>
+<p>当一个对象被创建时，它获取某种资源（如内存、文件句柄、网络连接等），当对象被销毁时，资源会自动释放。</p>
+</li>
+<li><p><strong>构造和析构</strong>：资源在对象的构造函数中获得，在析构函数中释放。这样，可以确保资源在任何情况下都能够被正确释放，避免资源泄漏。</p>
+</li>
+</ul>
+<h4 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h4><ol>
+<li><strong>异常安全</strong>：如果在使用资源的过程中发生异常，RAII 可以确保在异常传播时资源能够正确释放，从而避免泄漏。</li>
+<li><strong>简化代码</strong>：由于资源管理的细节被封装在对象中，代码的复杂性降低，逻辑更加清晰。</li>
+<li><strong>易于维护</strong>：使用 RAII 可以减少错误的发生，使得资源管理更加直观和安全。</li>
+</ol>
+<h2 id="解读4：condition-variable"><a href="#解读4：condition-variable" class="headerlink" title="解读4：condition_variable"></a>解读4：condition_variable</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">variable : 变量</span><br><span class="line">condition : 条件</span><br></pre></td></tr></table></figure>
+
+<p>头文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;condition_variable&gt;</span><br></pre></td></tr></table></figure>
+
+<p><code>condition_variable</code> 是 C++11 标准库中的一个类，用于线程间的同步和通信。它提供了一种机制，使得一个或多个线程可以在某个条件满足时被唤醒。</p>
+<p>通常，它与 <code>mutex</code> 一起使用，以保护共享数据的访问。</p>
+<h3 id="核心概念-1"><a href="#核心概念-1" class="headerlink" title="核心概念"></a>核心概念</h3><ul>
+<li><strong>目的</strong>：<code>condition_variable</code> 允许线程在等待某个条件（例如，资源可用或某个状态改变）时进入等待状态，从而避免浪费 CPU 资源。</li>
+<li><strong>使用模式</strong>：通常，线程会在 <code>condition_variable</code> 上调用 <code>wait()</code> 方法进行等待，直到另一个线程调用 <code>notify_one()</code> 或 <code>notify_all()</code> 方法来唤醒它。</li>
+</ul>
+<h3 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h3><ol>
+<li><p><strong>等待</strong>：</p>
+<ul>
+<li><p>使用 <code>wait()</code> 方法，线程会自动解锁与之关联的 <code>mutex</code>，并进入等待状态。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">condition.wait(unique&lt;mutex&gt;&amp; lock , boolean)</span><br><span class="line">第一个是对一个与条件变量关联的mutex 的引用，调用wait后，他会自动释放这个锁，允许其他线程访问受保护的资源</span><br><span class="line">线程在等待时进入休眠状态，直到被通知唤醒</span><br><span class="line"></span><br><span class="line">第二个时一个可选的布尔值，返回真 则线程继续执行 ， 返回假则线程继续等待</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>当条件满足时，线程会被唤醒，重新锁定 <code>mutex</code>，然后继续执行。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>通知</strong>：</p>
+<ul>
+<li><code>notify_one()</code>：唤醒一个正在等待的线程。</li>
+<li><code>notify_all()</code>：唤醒所有正在等待的线程。</li>
+</ul>
+</li>
+</ol>
+<h2 id="解读5-：-emplace-back"><a href="#解读5-：-emplace-back" class="headerlink" title="解读5 ： emplace_back"></a>解读5 ： emplace_back</h2><p><strong>参数类型</strong>：</p>
+<ul>
+<li>**<code>push_back</code>**：接受一个对象，并将其复制或移动到容器中。如果传入的是一个对象，<code>push_back</code> 会先构造该对象，然后复制或移动到容器中。</li>
+<li>**<code>emplace_back</code>**：接受构造参数，直接在容器内部构造元素。这意味着如果你传入了构造函数需要的参数，<code>emplace_back</code> 会在容器内创建对象，而不需要中间的拷贝或移动。</li>
+</ul>
+<p><strong>性能</strong>：</p>
+<ul>
+<li>**<code>push_back</code>**：可能涉及到额外的拷贝或移动开销，特别是在传入复杂对象时。</li>
+<li>**<code>emplace_back</code>**：避免了不必要的拷贝或移动，通常性能更高，尤其是在创建大型对象时</li>
+</ul>
+<h2 id="解读6、move"><a href="#解读6、move" class="headerlink" title="解读6、move"></a>解读6、move</h2><p><code>std::move</code> 是 C++11 引入的一个标准库函数，用于将对象的所有权“移动”而不是复制。它的主要目的是启用移动语义，特别是在处理临时对象或资源密集型对象时，提高性能。</p>
+<h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><ol>
+<li><strong>移动语义</strong>：<code>std::move</code> 将一个左值转换为右值引用，从而允许移动构造函数或移动赋值运算符被调用。这意味着资源（如动态分配的内存、文件句柄等）可以从一个对象转移到另一个对象，而无需进行深拷贝。</li>
+<li><strong>性能优化</strong>：通过使用 <code>std::move</code>，你可以避免不必要的资源复制，尤其在处理大型对象时，能显著提高程序性能。</li>
+</ol>
+<h2 id="解读7、template模板"><a href="#解读7、template模板" class="headerlink" title="解读7、template模板"></a>解读7、template模板</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">template：模板</span><br></pre></td></tr></table></figure>
+
+<h3 id="发展历程"><a href="#发展历程" class="headerlink" title="发展历程"></a>发展历程</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">C++11 引入了可变参数模板和别名模板，增强了泛型的灵活性。</span><br><span class="line">C++14 和 C++17 继续扩展模板的功能，引入了泛型 Lambda 和折叠表达式。</span><br><span class="line">C++20 则引入了概念，使模板的使用更加安全和易于理解。</span><br></pre></td></tr></table></figure>
+
+<h3 id="普通模板示例"><a href="#普通模板示例" class="headerlink" title="普通模板示例"></a>普通模板示例</h3><h4 id="C-11引入"><a href="#C-11引入" class="headerlink" title="C++11引入"></a>C++11引入</h4><h5 id="函数模板"><a href="#函数模板" class="headerlink" title="函数模板"></a>函数模板</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename T&gt;</span><br><span class="line">T add(T a, T b) &#123;</span><br><span class="line">    return a + b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="类模板"><a href="#类模板" class="headerlink" title="类模板"></a>类模板</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename T&gt;</span><br><span class="line">class Box &#123;</span><br><span class="line">public:</span><br><span class="line">    Box(T value) : value(value) &#123;&#125;</span><br><span class="line">    T getValue() const &#123; return value; &#125;</span><br><span class="line">private:</span><br><span class="line">    T value;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h5 id="可变参数模板"><a href="#可变参数模板" class="headerlink" title="可变参数模板"></a>可变参数模板</h5><p>所谓可变参数，指参数的数量可变</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename... Args&gt;</span><br><span class="line">void print(Args... args) &#123;</span><br><span class="line">    (cout &lt;&lt; ... &lt;&lt; args) &lt;&lt; endl; // 通过折叠表达式打印所有参数</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="别名模板"><a href="#别名模板" class="headerlink" title="别名模板"></a>别名模板</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename T&gt;</span><br><span class="line">using Vec = std::vector&lt;T&gt;;</span><br></pre></td></tr></table></figure>
+
+<h5 id="模板类型自动推导"><a href="#模板类型自动推导" class="headerlink" title="模板类型自动推导"></a>模板类型自动推导</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">auto box = Box&lt;int&gt;(10); // C++11 中可以推导</span><br></pre></td></tr></table></figure>
+
+<h4 id="C-14-引入"><a href="#C-14-引入" class="headerlink" title="C++14 引入"></a>C++14 引入</h4><h5 id="泛型-Lambda-表达式："><a href="#泛型-Lambda-表达式：" class="headerlink" title="泛型 Lambda 表达式："></a><strong>泛型 Lambda 表达式</strong>：</h5><p>允许 Lambda 接受任意类型的参数，像模板一样。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">auto lambda = [](auto x) &#123; return x + x; &#125;;</span><br></pre></td></tr></table></figure>
+
+<h5 id="变量模板："><a href="#变量模板：" class="headerlink" title="变量模板："></a><strong>变量模板</strong>：</h5><p>允许定义具有模板参数的变量。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename T&gt;</span><br><span class="line">constexpr T pi = T(3.1415926535897932385);</span><br></pre></td></tr></table></figure>
+
+<h4 id="C-17"><a href="#C-17" class="headerlink" title="C++17"></a>C++17</h4><h5 id="模板参数推导："><a href="#模板参数推导：" class="headerlink" title="模板参数推导："></a><strong>模板参数推导</strong>：</h5><p>可以在类模板的构造函数中推导参数类型。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cpp复制代码template &lt;typename T&gt;</span><br><span class="line">struct Wrapper &#123;</span><br><span class="line">    T value;</span><br><span class="line">    template &lt;typename U&gt;</span><br><span class="line">    Wrapper(U&amp;&amp; val) : value(std::forward&lt;U&gt;(val)) &#123;&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h5 id="折叠表达式："><a href="#折叠表达式：" class="headerlink" title="折叠表达式："></a><strong>折叠表达式</strong>：</h5><p>简化对可变参数模板的操作。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cpp复制代码template &lt;typename... Args&gt;</span><br><span class="line">auto sum(Args... args) &#123;</span><br><span class="line">    return (args + ...); // 将所有参数相加</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="C-20-的变化"><a href="#C-20-的变化" class="headerlink" title="C++20 的变化"></a>C++20 的变化</h3><p>C++20 引入了更高级的模板特性：</p>
+<ol>
+<li><p><strong>概念（Concepts）</strong>：用于约束模板参数，使其符合特定条件。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cpp复制代码template &lt;typename T&gt;</span><br><span class="line">concept Incrementable = requires(T x) &#123; ++x; &#125;;</span><br><span class="line"></span><br><span class="line">template &lt;Incrementable T&gt;</span><br><span class="line">void increment(T&amp; x) &#123; ++x; &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>范围（Ranges）和视图（Views）</strong>：使处理集合和序列更为简洁。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cpp复制代码#include &lt;ranges&gt;</span><br><span class="line">auto even_numbers = std::views::filter([](int n) &#123; return n % 2 == 0; &#125;);</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="解读8：forward"><a href="#解读8：forward" class="headerlink" title="解读8：forward"></a>解读8：forward</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">forward : 转发</span><br></pre></td></tr></table></figure>
+
+<p><code>std::forward</code> 是 C++11 引入的一个标准库函数，主要用于<strong>完美转发</strong>（perfect forwarding）。它允许你在模板函数中将参数转发给另一个函数，同时保持参数的值类别（lvalue 或 rvalue）。</p>
+<h3 id="主要用途"><a href="#主要用途" class="headerlink" title="主要用途"></a>主要用途</h3><ul>
+<li><strong>保持值类别</strong>：<code>std::forward</code> 可以根据传入参数的类型（lvalue 或 rvalue）来决定如何转发参数，确保最佳的性能和语义。</li>
+<li><strong>用于模板</strong>：特别是在模板函数中，<code>std::forward</code> 可以确保将转发的参数以正确的方式传递到目标函数。</li>
+</ul>
+<h2 id="解读9：bind"><a href="#解读9：bind" class="headerlink" title="解读9：bind"></a>解读9：bind</h2><p><code>std::bind</code> 是 C++11 引入的一个标准库函数，用于创建一个可调用对象，可以将某些参数绑定到一个函数或函数对象上。它允许你固定某些参数，并生成一个新的可调用对象。</p>
+<h3 id="主要功能"><a href="#主要功能" class="headerlink" title="主要功能"></a>主要功能</h3><ol>
+<li><strong>参数绑定</strong>：<code>bind</code> 可以绑定函数的某些参数，使得生成的可调用对象在调用时只需传递剩余的参数。</li>
+<li><strong>灵活性</strong>：可以用来改变函数参数的顺序，或者将某些参数设为默认值。</li>
+<li><strong>与其他可调用对象配合使用</strong>：可以与 <code>std::function</code>、lambda 表达式等结合使用，增强代码的灵活性。</li>
+</ol>
+<h3 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cpp复制代码#include &lt;functional&gt;</span><br><span class="line"></span><br><span class="line">auto bind_result = std::bind(function, arg1, arg2, ...);</span><br></pre></td></tr></table></figure>
+
+<h2 id="解读10：future"><a href="#解读10：future" class="headerlink" title="解读10：future"></a>解读10：future</h2><p><code>future&lt;typename result_of&lt;F(Args...)&gt;::type&gt;</code> 是 C++11 引入的一个类型，用于表示异步操作的结果。</p>
+<p>它通常与 <code>std::async</code>、<code>std::promise</code> 和 <code>std::packaged_task</code> 结合使用，允许你在未来某个时刻获取异步计算的结果。</p>
+<h3 id="组成部分解析"><a href="#组成部分解析" class="headerlink" title="组成部分解析"></a>组成部分解析</h3><ol>
+<li><p><strong><code>future</code></strong>:</p>
+<ul>
+<li><code>std::future</code> 是一个模板类，用于获取异步操作的结果。它提供了接口来检查操作是否完成并访问结果。</li>
+</ul>
+</li>
+<li><p><strong><code>result_of</code></strong>:</p>
+<ul>
+<li><code>std::result_of</code> 是一个类型特征，用于推导给定可调用对象（如函数、lambda 等）的返回类型。</li>
+<li>语法为：<code>std::result_of&lt;F(Args...)&gt;::type</code>，其中 <code>F</code> 是可调用对象的类型，<code>Args...</code> 是参数类型。</li>
+</ul>
+</li>
+<li><p><strong>完整表达式</strong>:</p>
+<ul>
+<li><pre><code>future&lt;typename result_of&lt;F(Args...)&gt;::type&gt;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">      的意思是：</span><br><span class="line"></span><br><span class="line">     - 使用 `result_of` 获取 `F` 在接收 `Args...` 作为参数时的返回类型。</span><br><span class="line">     - 创建一个 `std::future` 对象，持有这个返回类型的异步结果。</span><br><span class="line"></span><br><span class="line">## 解读11：packaged_task</span><br><span class="line"></span><br><span class="line">`std::packaged_task` 是 C++11 引入的一个模板类，用于封装一个可调用对象（如函数、lambda 表达式等）并提供异步执行的功能。</span><br><span class="line"></span><br><span class="line">它常用于需要将任务排入队列并在以后执行的场景。下面是对 `packaged_task` 的详细解读：</span><br><span class="line"></span><br><span class="line">### 1. 定义</span><br><span class="line"></span><br><span class="line">`std::packaged_task` 的定义如下：</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+</ul>
+</li>
+</ol>
+<p>cpp复制代码template&lt; class R, class… Args &gt;<br>class packaged_task;</p>
+<pre><code>
+- `R` 是可调用对象的返回类型。
+- `Args` 是可调用对象的参数类型列表。
+
+### 2. 功能
+
+- **封装可调用对象**：可以将任意可调用对象（函数、lambda、绑定的函数等）封装在 `packaged_task` 中。
+- **异步执行**：它提供了一个 `operator()`，可以在将来某个时刻调用封装的可调用对象。
+- **获取结果**：通过调用 `get_future()` 方法，可以获取一个与任务相关的 `std::future` 对象，用于在任务执行完成时获取结果。
+</code></pre>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%BD%91%E7%BB%9C/" rel="tag"># 网络</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/09/21/%E7%BD%91%E7%BB%9C%E6%98%AF%E5%A6%82%E4%BD%95%E8%BF%9E%E6%8E%A5%E7%9A%84/" rel="prev" title="网络是如何连接的">
+      <i class="fa fa-chevron-left"></i> 网络是如何连接的
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/09/30/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B1%A0%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AE%A1%E7%90%86/" rel="next" title="数据库池与数据库管理">
+      数据库池与数据库管理 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E6%B1%A0"><span class="nav-number">1.</span> <span class="nav-text">线程池</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81%E5%AE%8C%E6%95%B4%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.1.</span> <span class="nav-text">1、完整实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E8%AF%BB1-lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">1.2.</span> <span class="nav-text">解读1 lambda表达式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%A6%E7%BB%86%E4%B8%BE%E4%BE%8B"><span class="nav-number">1.2.1.</span> <span class="nav-text">详细举例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%91%E5%B1%95"><span class="nav-number">1.2.2.</span> <span class="nav-text">发展</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B%E6%8E%A8%E5%AF%BC%EF%BC%9A"><span class="nav-number">1.2.3.</span> <span class="nav-text">类型推导：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E8%AF%BB2-function"><span class="nav-number">1.3.</span> <span class="nav-text">解读2 function</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-std-function-%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">1.3.1.</span> <span class="nav-text">1. std::function 的作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%86%85%E5%AD%98%E5%92%8C%E6%80%A7%E8%83%BD"><span class="nav-number">1.3.2.</span> <span class="nav-text">2. 内存和性能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E7%B1%BB%E5%9E%8B%E5%AE%89%E5%85%A8"><span class="nav-number">1.3.3.</span> <span class="nav-text">3. 类型安全</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E6%94%AF%E6%8C%81%E6%B3%9B%E5%9E%8B"><span class="nav-number">1.3.4.</span> <span class="nav-text">4. 支持泛型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BE%E4%BE%8B"><span class="nav-number">1.3.5.</span> <span class="nav-text">举例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E8%AF%BB3%EF%BC%9A%E4%BA%92%E6%96%A5%E9%94%81"><span class="nav-number">1.4.</span> <span class="nav-text">解读3：互斥锁</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%8A%9F%E8%83%BD%E5%92%8C%E7%81%B5%E6%B4%BB%E6%80%A7"><span class="nav-number">1.4.1.</span> <span class="nav-text">1. 功能和灵活性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">1.4.2.</span> <span class="nav-text">2. 使用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-RALL%E7%AE%80%E4%BB%8B"><span class="nav-number">1.4.3.</span> <span class="nav-text">3.RALL简介</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5"><span class="nav-number">1.4.3.1.</span> <span class="nav-text">核心概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%98%E5%8A%BF"><span class="nav-number">1.4.3.2.</span> <span class="nav-text">优势</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E8%AF%BB4%EF%BC%9Acondition-variable"><span class="nav-number">1.5.</span> <span class="nav-text">解读4：condition_variable</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5-1"><span class="nav-number">1.5.1.</span> <span class="nav-text">核心概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="nav-number">1.5.2.</span> <span class="nav-text">基本操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E8%AF%BB5-%EF%BC%9A-emplace-back"><span class="nav-number">1.6.</span> <span class="nav-text">解读5 ： emplace_back</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E8%AF%BB6%E3%80%81move"><span class="nav-number">1.7.</span> <span class="nav-text">解读6、move</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E7%82%B9"><span class="nav-number">1.7.1.</span> <span class="nav-text">特点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E8%AF%BB7%E3%80%81template%E6%A8%A1%E6%9D%BF"><span class="nav-number">1.8.</span> <span class="nav-text">解读7、template模板</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%91%E5%B1%95%E5%8E%86%E7%A8%8B"><span class="nav-number">1.8.1.</span> <span class="nav-text">发展历程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%99%AE%E9%80%9A%E6%A8%A1%E6%9D%BF%E7%A4%BA%E4%BE%8B"><span class="nav-number">1.8.2.</span> <span class="nav-text">普通模板示例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#C-11%E5%BC%95%E5%85%A5"><span class="nav-number">1.8.2.1.</span> <span class="nav-text">C++11引入</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E6%A8%A1%E6%9D%BF"><span class="nav-number">1.8.2.1.1.</span> <span class="nav-text">函数模板</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%B1%BB%E6%A8%A1%E6%9D%BF"><span class="nav-number">1.8.2.1.2.</span> <span class="nav-text">类模板</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%E6%A8%A1%E6%9D%BF"><span class="nav-number">1.8.2.1.3.</span> <span class="nav-text">可变参数模板</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%AB%E5%90%8D%E6%A8%A1%E6%9D%BF"><span class="nav-number">1.8.2.1.4.</span> <span class="nav-text">别名模板</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%A8%A1%E6%9D%BF%E7%B1%BB%E5%9E%8B%E8%87%AA%E5%8A%A8%E6%8E%A8%E5%AF%BC"><span class="nav-number">1.8.2.1.5.</span> <span class="nav-text">模板类型自动推导</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#C-14-%E5%BC%95%E5%85%A5"><span class="nav-number">1.8.2.2.</span> <span class="nav-text">C++14 引入</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%B3%9B%E5%9E%8B-Lambda-%E8%A1%A8%E8%BE%BE%E5%BC%8F%EF%BC%9A"><span class="nav-number">1.8.2.2.1.</span> <span class="nav-text">泛型 Lambda 表达式：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8F%98%E9%87%8F%E6%A8%A1%E6%9D%BF%EF%BC%9A"><span class="nav-number">1.8.2.2.2.</span> <span class="nav-text">变量模板：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#C-17"><span class="nav-number">1.8.2.3.</span> <span class="nav-text">C++17</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%A8%A1%E6%9D%BF%E5%8F%82%E6%95%B0%E6%8E%A8%E5%AF%BC%EF%BC%9A"><span class="nav-number">1.8.2.3.1.</span> <span class="nav-text">模板参数推导：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%8A%98%E5%8F%A0%E8%A1%A8%E8%BE%BE%E5%BC%8F%EF%BC%9A"><span class="nav-number">1.8.2.3.2.</span> <span class="nav-text">折叠表达式：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C-20-%E7%9A%84%E5%8F%98%E5%8C%96"><span class="nav-number">1.8.3.</span> <span class="nav-text">C++20 的变化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E8%AF%BB8%EF%BC%9Aforward"><span class="nav-number">1.9.</span> <span class="nav-text">解读8：forward</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E7%94%A8%E9%80%94"><span class="nav-number">1.9.1.</span> <span class="nav-text">主要用途</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E8%AF%BB9%EF%BC%9Abind"><span class="nav-number">1.10.</span> <span class="nav-text">解读9：bind</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E5%8A%9F%E8%83%BD"><span class="nav-number">1.10.1.</span> <span class="nav-text">主要功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95"><span class="nav-number">1.10.2.</span> <span class="nav-text">基本语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E8%AF%BB10%EF%BC%9Afuture"><span class="nav-number">1.11.</span> <span class="nav-text">解读10：future</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%84%E6%88%90%E9%83%A8%E5%88%86%E8%A7%A3%E6%9E%90"><span class="nav-number">1.11.1.</span> <span class="nav-text">组成部分解析</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="AlexQFMM"
+      src="/images/Avatar.jpg">
+  <p class="site-author-name" itemprop="name">AlexQFMM</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://qexo-ten-roan.vercel.app/" title="控制中心 → https:&#x2F;&#x2F;qexo-ten-roan.vercel.app&#x2F;" rel="noopener" target="_blank">控制中心</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AlexQFMM</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : 'UaEUwcYLlkREnSn9jPNe0oRf-gzGzoHsz',
+      appKey     : '5d7KwGdf31jiCBxBobH0wVk6',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/assets/miku.model.json"},"display":{"position":"left","width":200,"height":400},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

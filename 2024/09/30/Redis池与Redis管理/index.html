@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Redis池与Redis管理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis池与Redis管理">
+<meta property="og:url" content="http://example.com/2024/09/30/Redis%E6%B1%A0%E4%B8%8ERedis%E7%AE%A1%E7%90%86/index.html">
+<meta property="og:site_name" content="AlexHome">
+<meta property="og:description" content="Redis池与Redis管理">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-09-30T10:20:45.000Z">
+<meta property="article:modified_time" content="2024-12-01T13:58:43.014Z">
+<meta property="article:author" content="AlexQFMM">
+<meta property="article:tag" content="网络">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2024/09/30/Redis%E6%B1%A0%E4%B8%8ERedis%E7%AE%A1%E7%90%86/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Redis池与Redis管理 | AlexHome</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">AlexHome</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-guestbook">
+
+    <a href="/guestbook/" rel="section"><i class="fa fa-book fa-fw"></i>留言</a>
+
+  </li>
+        <li class="menu-item menu-item-mypage">
+
+    <a href="/MYHTML/test/index.html" rel="section"><i class="fas fa-file-user fa-fw"></i>myPage</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/30/Redis%E6%B1%A0%E4%B8%8ERedis%E7%AE%A1%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/Avatar.jpg">
+      <meta itemprop="name" content="AlexQFMM">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AlexHome">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Redis池与Redis管理
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-09-30 10:20:45" itemprop="dateCreated datePublished" datetime="2024-09-30T10:20:45+00:00">2024-09-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-12-01 13:58:43" itemprop="dateModified" datetime="2024-12-01T13:58:43+00:00">2024-12-01</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2024/09/30/Redis%E6%B1%A0%E4%B8%8ERedis%E7%AE%A1%E7%90%86/" class="post-meta-item leancloud_visitors" data-flag-title="Redis池与Redis管理" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2024/09/30/Redis%E6%B1%A0%E4%B8%8ERedis%E7%AE%A1%E7%90%86/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2024/09/30/Redis%E6%B1%A0%E4%B8%8ERedis%E7%AE%A1%E7%90%86/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Redis池与Redis管理"><a href="#Redis池与Redis管理" class="headerlink" title="Redis池与Redis管理"></a>Redis池与Redis管理</h1><span id="more"></span>
+
+<h2 id="什么是Redis"><a href="#什么是Redis" class="headerlink" title="什么是Redis"></a>什么是Redis</h2><p>Redis 是一个<strong>开源的内存数据库</strong>，非常快速，主要用于<strong>缓存</strong>和<strong>高效的数据存储</strong>。它的特别之处在于所有数据都保存在<strong>内存</strong>中，所以读写速度非常快，适合处理大量的快速请求。它支持很多数据结构，比如：</p>
+<ol>
+<li><strong>字符串</strong>：可以用来存储简单的键值对。</li>
+<li><strong>列表</strong>：可以存储有序的一系列字符串，类似于数组。</li>
+<li><strong>集合</strong>：存储独特的无序元素，适合去重操作。</li>
+<li><strong>有序集合</strong>：带有权重的集合，可以按顺序获取数据。</li>
+<li><strong>哈希表</strong>：可以存储对象的字段和值，非常适合像用户信息这样的数据。</li>
+</ol>
+<p>Redis 通常用于以下场景：</p>
+<ul>
+<li><strong>缓存</strong>：比如网站的用户会话信息，用来减少数据库的访问次数，加快响应速度。</li>
+<li><strong>排行榜</strong>：比如游戏里的排名系统，因为有序集合可以按分数快速排序。</li>
+<li><strong>消息队列</strong>：Redis 支持发布&#x2F;订阅功能，能够用来做消息通知。</li>
+</ul>
+<p>由于 Redis 是内存型数据库，<strong>数据存储在内存中</strong>，这虽然提高了速度，但也意味着如果没有做持久化（保存到磁盘），断电后数据可能会丢失。不过 Redis 也支持数据<strong>快照</strong>和<strong>日志</strong>来持久化数据，确保数据安全。</p>
+<h2 id="具体代码实现"><a href="#具体代码实现" class="headerlink" title="具体代码实现"></a>具体代码实现</h2><h3 id="1、RedisPool-hpp"><a href="#1、RedisPool-hpp" class="headerlink" title="1、RedisPool.hpp"></a>1、<strong>RedisPool.h</strong>pp</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">#ifndef REDISPOOL_H  </span><br><span class="line">#define REDISPOOL_H  </span><br><span class="line"></span><br><span class="line">#include &lt;hiredis/hiredis.h&gt;  //&quot;/usr/include/hiredis&quot;</span><br><span class="line">#include &lt;queue&gt;  </span><br><span class="line">#include &lt;mutex&gt;  </span><br><span class="line">#include &lt;string&gt;  </span><br><span class="line">#include &lt;iostream&gt;  </span><br><span class="line">#include &lt;stdexcept&gt;  </span><br><span class="line">#include &lt;memory&gt;  </span><br><span class="line">#include &lt;condition_variable&gt;  </span><br><span class="line">#include &lt;functional&gt;</span><br><span class="line"></span><br><span class="line">class RedisPool &#123;  </span><br><span class="line">public:  </span><br><span class="line">    RedisPool(const std::string&amp; host, int port, int pool_size);  </span><br><span class="line">    ~RedisPool();  </span><br><span class="line"></span><br><span class="line">    void releaseConnection(redisContext* conn);  </span><br><span class="line">    std::unique_ptr&lt;redisContext, std::function&lt;void(redisContext*)&gt;&gt; getConnection();  </span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">private:  </span><br><span class="line">    std::queue&lt;std::unique_ptr&lt;redisContext, std::function&lt;void(redisContext*)&gt;&gt;&gt; connectionPool; // 连接池  </span><br><span class="line">    std::mutex mtx; // 互斥锁  </span><br><span class="line">    int maxPoolSize; // 最大连接数  </span><br><span class="line">    std::condition_variable cv; // 条件变量  </span><br><span class="line"></span><br><span class="line">    std::string host;  </span><br><span class="line">    int port;  </span><br><span class="line">&#125;;  </span><br><span class="line"></span><br><span class="line">#endif // REDISPOOL_H</span><br></pre></td></tr></table></figure>
+
+<h4 id="解读1、redisContext"><a href="#解读1、redisContext" class="headerlink" title="解读1、redisContext"></a>解读1、redisContext</h4><p><code>redisContext</code> 是 Redis 的 C 语言客户端库 <code>hiredis</code> 中的一个结构体，主要用于管理客户端和 Redis 服务器之间的<strong>连接</strong>。它包含连接状态、服务器地址、端口号等信息，负责维护与 Redis 服务器的通信。</p>
+<h3 id="2、RedisPool-cpp"><a href="#2、RedisPool-cpp" class="headerlink" title="2、RedisPool.cpp"></a>2、RedisPool.cpp</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;RedisPool.hpp&quot;  </span><br><span class="line"></span><br><span class="line">RedisPool::RedisPool(const std::string&amp; host, int port, int pool_size)  </span><br><span class="line">    : host(host), port(port), maxPoolSize(pool_size) &#123;  </span><br><span class="line">    for (int i = 0; i &lt; maxPoolSize; ++i) &#123;  </span><br><span class="line">        auto ctx = redisConnect(host.c_str(), port);  </span><br><span class="line"></span><br><span class="line">        if (ctx == nullptr || ctx-&gt;err) &#123;  </span><br><span class="line">            if (ctx) &#123;  </span><br><span class="line">                std::cerr &lt;&lt; &quot;Error connecting to Redis: &quot; &lt;&lt; ctx-&gt;errstr &lt;&lt; std::endl;  </span><br><span class="line">                redisFree(ctx);  </span><br><span class="line">            &#125; else &#123;  </span><br><span class="line">                std::cerr &lt;&lt; &quot;Can&#x27;t allocate Redis context&quot; &lt;&lt; std::endl;  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125; else &#123;</span><br><span class="line">        </span><br><span class="line">            auto ctxPtr = std::unique_ptr&lt;redisContext,std::function&lt;void(redisContext*)&gt;&gt;(ctx , [this](redisContext* c)&#123;</span><br><span class="line">                this-&gt;releaseConnection(c);</span><br><span class="line">            &#125;);</span><br><span class="line"></span><br><span class="line">            &#123;</span><br><span class="line">                std::lock_guard&lt;std::mutex&gt;lock(mtx);</span><br><span class="line">                connectionPool.push(std::move(ctxPtr)); // 将连接加入池中  </span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">RedisPool::~RedisPool() &#123;  </span><br><span class="line"></span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">// 使用 unique_ptr 进行连接的获取  </span><br><span class="line">std::unique_ptr&lt;redisContext, std::function&lt;void(redisContext*)&gt;&gt; RedisPool::getConnection() &#123;  </span><br><span class="line">    std::unique_lock&lt;std::mutex&gt; lock(mtx); // 加锁  </span><br><span class="line">    cv.wait(lock, [this] &#123; return !connectionPool.empty(); &#125;); // 等待直到连接可用  </span><br><span class="line"></span><br><span class="line">    auto connPtr = std::move(connectionPool.front());  </span><br><span class="line">    connectionPool.pop();  </span><br><span class="line">    </span><br><span class="line">    //std::cout &lt;&lt; &quot;pool can use thread : &quot; &lt;&lt; connectionPool.size() &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line">    return connPtr;</span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">void RedisPool::releaseConnection(redisContext* conn) &#123;  </span><br><span class="line">    if (conn) &#123;  </span><br><span class="line">        auto ctxPtr = std::unique_ptr&lt;redisContext,std::function&lt;void(redisContext*)&gt;&gt;(conn , [this](redisContext* c)&#123;</span><br><span class="line">                this-&gt;releaseConnection(c);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#123;  </span><br><span class="line">            std::lock_guard&lt;std::mutex&gt; lock(mtx);  </span><br><span class="line">            connectionPool.push(std::move(ctxPtr)); // 将连接放回池中  </span><br><span class="line">        &#125;  </span><br><span class="line">        //std::cout &lt;&lt; &quot;pool can use thread : &quot; &lt;&lt; connectionPool.size() &lt;&lt; std::endl; </span><br><span class="line">        cv.notify_one(); // 通知等待的线程  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">大致和数据库池差不多，毕竟本身也是内存数据库</span><br></pre></td></tr></table></figure>
+
+<h3 id="3、RedisManager-hpp"><a href="#3、RedisManager-hpp" class="headerlink" title="3、RedisManager.hpp"></a>3、RedisManager.hpp</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">#ifndef REDISMANAGER_H  </span><br><span class="line">#define REDISMANAGER_H  </span><br><span class="line"></span><br><span class="line">#include &lt;string&gt;  </span><br><span class="line">#include &lt;vector&gt;  </span><br><span class="line">#include &lt;hiredis/hiredis.h&gt;  </span><br><span class="line">#include &quot;RedisPool.hpp&quot;  </span><br><span class="line"></span><br><span class="line">class RedisManager &#123;  </span><br><span class="line">public:  </span><br><span class="line">    RedisManager(const std::string&amp; host, int port);  </span><br><span class="line">    ~RedisManager();  </span><br><span class="line"></span><br><span class="line">    void saveUserSession(const std::string&amp; username, int client_sock);  </span><br><span class="line">    void updateUserActivity(const std::string&amp; username);  </span><br><span class="line">    void checkUserTimeout();  </span><br><span class="line">    int getUserSocket(const std::string&amp; username);  </span><br><span class="line">    std::vector&lt;std::string&gt; getAllActiveUsers();</span><br><span class="line">    void print_online_user(std::vector&lt;std::string&gt;&amp; activeUsers);</span><br><span class="line">private:  </span><br><span class="line">    RedisPool redis_pool; // Redis 连接池 </span><br><span class="line">    long long wait_time; // 超时等待时间   </span><br><span class="line">&#125;;  </span><br><span class="line"></span><br><span class="line">#endif // REDISMANAGER_H</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="4、RedisManager-cpp"><a href="#4、RedisManager-cpp" class="headerlink" title="4、RedisManager.cpp"></a>4、RedisManager.cpp</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;RedisManager.hpp&quot;  </span><br><span class="line"></span><br><span class="line">std::mutex user_mutex; // 用于保护用户数据结构的互斥锁</span><br><span class="line"></span><br><span class="line">RedisManager::RedisManager(const std::string&amp; host, int port)  </span><br><span class="line">    : redis_pool(host, port, 10), wait_time(25) &#123; // 初始化连接池，设置超时等待时间  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">RedisManager::~RedisManager() &#123;  </span><br><span class="line">    // 连接池会在其析构函数中自动处理  </span><br><span class="line">    std::cout &lt;&lt; &quot;RedisManager destroyed.&quot; &lt;&lt; std::endl;  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">void RedisManager::saveUserSession(const std::string&amp; username, int client_sock) &#123;  </span><br><span class="line">    auto conn = redis_pool.getConnection(); // 从连接池获取连接 </span><br><span class="line"></span><br><span class="line">    // 获取当前时间并转换为秒  </span><br><span class="line">    auto now_seconds = std::chrono::system_clock::now().time_since_epoch();  </span><br><span class="line">    auto now = std::chrono::duration_cast&lt;std::chrono::seconds&gt;(now_seconds).count(); // 转换为秒  </span><br><span class="line"></span><br><span class="line">    //std::cout &lt;&lt; &quot;[&quot; &lt;&lt; std::to_string(now).c_str() &lt;&lt; &quot;] : &quot; &lt;&lt; username &lt;&lt; &quot; is Login by socket : &quot; &lt;&lt; client_sock &lt;&lt; std::endl;   </span><br><span class="line">    </span><br><span class="line">    // 保存用户 socket (以字符串形式存储)  </span><br><span class="line">    redisCommand(conn.get(), &quot;SET %s %d&quot;, username.c_str(), client_sock);  </span><br><span class="line"></span><br><span class="line">    // 保存最后活动时间（以秒为字符串形式存储）  </span><br><span class="line">    redisCommand(conn.get(), &quot;SET %s:last_active %s&quot;, username.c_str(), std::to_string(now).c_str());   </span><br><span class="line"></span><br><span class="line">    // 设置最后活动时间的过期时间  </span><br><span class="line">    redisCommand(conn.get(), &quot;EXPIRE %s:last_active %lld&quot;, username.c_str(), wait_time);  </span><br><span class="line"></span><br><span class="line">     // 将用户添加到活跃用户集合中  </span><br><span class="line">    redisCommand(conn.get(), &quot;SADD active_users %s&quot;, username.c_str());  </span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void RedisManager::updateUserActivity(const std::string&amp; username) &#123;  </span><br><span class="line">    auto conn = redis_pool.getConnection(); // 从连接池获取连接    </span><br><span class="line"></span><br><span class="line">    // 获取当前时间并转换为秒  </span><br><span class="line">    auto now_seconds = std::chrono::system_clock::now().time_since_epoch();  </span><br><span class="line">    auto now = std::chrono::duration_cast&lt;std::chrono::seconds&gt;(now_seconds).count(); // 转换为秒  </span><br><span class="line"></span><br><span class="line">    // 更新用户最后活动时间（以秒为字符串形式存储）  </span><br><span class="line">    redisCommand(conn.get(), &quot;SET %s:last_active %s&quot;, username.c_str(), std::to_string(now).c_str());  </span><br><span class="line"></span><br><span class="line">    // 可选：如果您希望在每次活动时更新过期时间，可以设置过期时间  </span><br><span class="line">    redisCommand(conn.get(), &quot;EXPIRE %s:last_active %lld&quot;, username.c_str(), wait_time); </span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">std::vector&lt;std::string&gt; RedisManager::getAllActiveUsers() &#123;  </span><br><span class="line">    auto conn = redis_pool.getConnection(); // 从连接池获取连接 </span><br><span class="line"></span><br><span class="line">    std::vector&lt;std::string&gt; activeUsers; // 用于存储活跃用户列表  </span><br><span class="line"></span><br><span class="line">    // 获取集合中的所有成员  </span><br><span class="line">    redisReply* reply = (redisReply*)redisCommand(conn.get(), &quot;SMEMBERS active_users&quot;);  </span><br><span class="line">    </span><br><span class="line">    if (reply &amp;&amp; reply-&gt;type == REDIS_REPLY_ARRAY) &#123;  </span><br><span class="line">        for (size_t i = 0; i &lt; reply-&gt;elements; ++i) &#123;  </span><br><span class="line">            activeUsers.emplace_back(reply-&gt;element[i]-&gt;str); // 将用户名添加到列表中  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">    </span><br><span class="line">    freeReplyObject(reply); // 释放 Redis 回复对象  </span><br><span class="line"></span><br><span class="line">    return activeUsers; // 返回活跃用户列表  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void RedisManager::print_online_user(std::vector&lt;std::string&gt;&amp; activeUsers)</span><br><span class="line">&#123;</span><br><span class="line">    std::cout &lt;&lt;&quot; now online user : &quot; &lt;&lt; std::endl;</span><br><span class="line">    for(auto s:activeUsers)&#123;</span><br><span class="line">        std::cout &lt;&lt; s &lt;&lt; &quot; &quot;;</span><br><span class="line">    &#125;</span><br><span class="line">    std::cout &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void RedisManager::checkUserTimeout() &#123;  </span><br><span class="line">    auto conn = redis_pool.getConnection(); // 从连接池获取连接  </span><br><span class="line"></span><br><span class="line">    if(conn == nullptr)&#123;</span><br><span class="line">        std::cout &lt;&lt; &quot;connect error&quot; &lt;&lt; std::endl;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 获取当前时间并转换为秒  </span><br><span class="line">    auto now_seconds = std::chrono::system_clock::now().time_since_epoch();  </span><br><span class="line">    auto current_time = std::chrono::duration_cast&lt;std::chrono::seconds&gt;(now_seconds).count(); // 转换为秒  </span><br><span class="line">    std::cout &lt;&lt; &quot;current_time is : &quot; &lt;&lt; current_time &lt;&lt; std::endl;</span><br><span class="line">    // 假设有一个获取所有用户会话的命令  </span><br><span class="line">    std::vector&lt;std::string&gt; users = getAllActiveUsers(); // 需要实现此方法以获取所有活跃用户  </span><br><span class="line"></span><br><span class="line">    //print_online_user(users);</span><br><span class="line"></span><br><span class="line">    for (const auto&amp; username : users) &#123;  </span><br><span class="line">        // 获取最后活动时间  </span><br><span class="line">        std::cout &lt;&lt; &quot;---------------------------------&quot; &lt;&lt; std::endl;</span><br><span class="line">        std::cout &lt;&lt; username &lt;&lt; &quot;: &quot; &lt;&lt; std::endl;</span><br><span class="line">        redisReply* reply = (redisReply*)redisCommand(conn.get(), &quot;GET %s:last_active&quot;, username.c_str());  </span><br><span class="line">        </span><br><span class="line">        if (!reply) &#123;  </span><br><span class="line">            std::cerr &lt;&lt; &quot;Failed to execute command for user &quot; &lt;&lt; username &lt;&lt; std::endl;  </span><br><span class="line">            continue; // 跳过当前用户，继续下一个  </span><br><span class="line">        &#125;  </span><br><span class="line"></span><br><span class="line">        if (reply-&gt;type == REDIS_REPLY_NIL) &#123;  </span><br><span class="line">            std::cout &lt;&lt; &quot;User &quot; &lt;&lt; username &lt;&lt; &quot; is no longer active (data not found).&quot; &lt;&lt; std::endl;  </span><br><span class="line">            </span><br><span class="line">            redisCommand(conn.get(), &quot;DEL %s&quot;, username.c_str());  </span><br><span class="line">            redisCommand(conn.get(), &quot;DEL %s:sock&quot;, username.c_str());  </span><br><span class="line">            redisCommand(conn.get(), &quot;DEL %s:last_active&quot;, username.c_str());  </span><br><span class="line">            </span><br><span class="line">            freeReplyObject(reply); // 释放 reply 对象  </span><br><span class="line">            continue; // 如果用户数据不在，跳过  </span><br><span class="line">        &#125;  </span><br><span class="line"></span><br><span class="line">        if (reply &amp;&amp; reply-&gt;type == REDIS_REPLY_STRING) &#123;  </span><br><span class="line">            long long last_active_time = std::stoll(reply-&gt;str); // 将字符串转换为 long long  </span><br><span class="line">            std::cout &lt;&lt; &quot; last_active_time is : &quot; &lt;&lt; last_active_time &lt;&lt; std::endl;</span><br><span class="line">            std::cout &lt;&lt; &quot; no activity time is : &quot; &lt;&lt; current_time - last_active_time  &lt;&lt; std::endl;</span><br><span class="line">        &#125;  </span><br><span class="line"></span><br><span class="line">        freeReplyObject(reply); // 释放 Redis 回复对象  </span><br><span class="line">        std::cout &lt;&lt; &quot;---------------------------------&quot; &lt;&lt; std::endl;</span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int RedisManager::getUserSocket(const std::string&amp; username) &#123;  </span><br><span class="line">    auto conn = redis_pool.getConnection(); // 从连接池获取连接  </span><br><span class="line"></span><br><span class="line">    redisReply* reply = (redisReply*)redisCommand(conn.get(), &quot;GET %s&quot;, username.c_str());  </span><br><span class="line"></span><br><span class="line">    int socket = -1;  </span><br><span class="line">    if (reply) &#123;  </span><br><span class="line">        if (reply-&gt;type == REDIS_REPLY_STRING) &#123;  </span><br><span class="line">            socket = std::stoi(reply-&gt;str); // 将字符串转换为整数  </span><br><span class="line">        &#125; else &#123;  </span><br><span class="line">            std::cout &lt;&lt; &quot;No socket found for user: &quot; &lt;&lt; username &lt;&lt; std::endl;  </span><br><span class="line">        &#125;  </span><br><span class="line">        freeReplyObject(reply); // 释放 Redis 回复对象  </span><br><span class="line">    &#125; else &#123;  </span><br><span class="line">        std::cerr &lt;&lt; &quot;Failed to execute command: &quot; &lt;&lt; conn-&gt;errstr &lt;&lt; std::endl;  </span><br><span class="line">    &#125;  </span><br><span class="line">    return socket; // 返回 socket 值  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="解读1、std-chrono-system-clock-now-time-since-epoch"><a href="#解读1、std-chrono-system-clock-now-time-since-epoch" class="headerlink" title="解读1、std::chrono::system_clock::now().time_since_epoch()"></a>解读1、std::chrono::system_clock::now().time_since_epoch()</h4><p>std::chrono::system_clock::now().time_since_epoch() 是一个 C++ 中用于获取自纪元（epoch）以来经过的时间的常用操作。它与 std::chrono 库结合使用，提供了一种高精度、跨平台的方式来测量时间和时间点。</p>
+<h6 id="使用方式"><a href="#使用方式" class="headerlink" title="使用方式"></a>使用方式</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;chrono&gt;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">    // 获取当前时间点</span><br><span class="line">    auto current_time = std::chrono::system_clock::now();</span><br><span class="line">    </span><br><span class="line">    // 获取自纪元以来的时间差</span><br><span class="line">    auto duration = current_time.time_since_epoch();</span><br><span class="line">    </span><br><span class="line">    // 将时间差转换为秒</span><br><span class="line">    auto seconds = std::chrono::duration_cast&lt;std::chrono::seconds&gt;(duration);</span><br><span class="line">    std::cout &lt;&lt; &quot;Seconds since epoch: &quot; &lt;&lt; seconds.count() &lt;&lt; &quot;s\n&quot;;</span><br><span class="line"></span><br><span class="line">    // 将时间差转换为毫秒</span><br><span class="line">    auto milliseconds = std::chrono::duration_cast&lt;std::chrono::milliseconds&gt;(duration);</span><br><span class="line">    std::cout &lt;&lt; &quot;Milliseconds since epoch: &quot; &lt;&lt; milliseconds.count() &lt;&lt; &quot;ms\n&quot;;</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="解读2、redisCommand"><a href="#解读2、redisCommand" class="headerlink" title="解读2、redisCommand"></a>解读2、redisCommand</h4><p><code>redisCommand</code> 是 Redis 的 C 语言客户端库 <code>hiredis</code> 中用于向 Redis 服务器发送命令并获取结果的核心函数。通过 <code>redisCommand</code>，你可以在 C 程序中发送任何 Redis 支持的命令，并接收返回的结果。</p>
+<p><strong>构建命令</strong>：根据传入的格式化字符串，生成 Redis 命令。</p>
+<p><strong>发送命令</strong>：将命令通过客户端与 Redis 服务器的连接发送出去。</p>
+<p><strong>接收结果</strong>：等待 Redis 服务器执行命令后返回结果，并将结果封装在 <code>redisReply</code> 结构体中。</p>
+<p>redis官方文档</p>
+<p><a target="_blank" rel="noopener" href="https://redis.com.cn/documentation.html">https://redis.com.cn/documentation.html</a></p>
+<h4 id="解读3、redisReply"><a href="#解读3、redisReply" class="headerlink" title="解读3、redisReply"></a>解读3、redisReply</h4><p>结构体一览</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">typedef struct redisReply &#123;</span><br><span class="line">    int type;        // 响应的类型</span><br><span class="line">    long long integer; // 如果是整数类型，存储整数值</span><br><span class="line">    size_t len;     // 字符串的长度</span><br><span class="line">    char *str;      // 字符串值</span><br><span class="line">    size_t elements; // 数组（如列表、集合等）的元素数量</span><br><span class="line">    struct redisReply **element; // 指向子元素的指针</span><br><span class="line">&#125; redisReply;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>其中type表示响应的类型，可能的值有：<br>REDIS_REPLY_STRING：字符串类型。<br>REDIS_REPLY_INTEGER：整数类型。<br>REDIS_REPLY_ARRAY：数组类型（如列表、集合）。<br>REDIS_REPLY_NIL：表示空值（通常对应 Redis 的 nil）。<br>REDIS_REPLY_STATUS：状态信息（如命令成功或失败的消息）。<br>REDIS_REPLY_ERROR：错误信息（如命令执行失败时的错误消息）。<br>通过 reply-&gt;type 可以判断响应的类型，进而处理数据。</p>
+<p>使用后用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">freeReplyObject(reply);</span><br></pre></td></tr></table></figure>
+
+<p>释放</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%BD%91%E7%BB%9C/" rel="tag"># 网络</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/09/30/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B1%A0%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AE%A1%E7%90%86/" rel="prev" title="数据库池与数据库管理">
+      <i class="fa fa-chevron-left"></i> 数据库池与数据库管理
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/10/03/%E5%88%9B%E5%BB%BA%E5%9E%8B%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="next" title="创建型模式（Creational Patterns）">
+      创建型模式（Creational Patterns） <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis%E6%B1%A0%E4%B8%8ERedis%E7%AE%A1%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">Redis池与Redis管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFRedis"><span class="nav-number">1.1.</span> <span class="nav-text">什么是Redis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.2.</span> <span class="nav-text">具体代码实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81RedisPool-hpp"><span class="nav-number">1.2.1.</span> <span class="nav-text">1、RedisPool.hpp</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%A3%E8%AF%BB1%E3%80%81redisContext"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">解读1、redisContext</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81RedisPool-cpp"><span class="nav-number">1.2.2.</span> <span class="nav-text">2、RedisPool.cpp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81RedisManager-hpp"><span class="nav-number">1.2.3.</span> <span class="nav-text">3、RedisManager.hpp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81RedisManager-cpp"><span class="nav-number">1.2.4.</span> <span class="nav-text">4、RedisManager.cpp</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%A3%E8%AF%BB1%E3%80%81std-chrono-system-clock-now-time-since-epoch"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">解读1、std::chrono::system_clock::now().time_since_epoch()</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F"><span class="nav-number">1.2.4.1.0.1.</span> <span class="nav-text">使用方式</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%A3%E8%AF%BB2%E3%80%81redisCommand"><span class="nav-number">1.2.4.2.</span> <span class="nav-text">解读2、redisCommand</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%A3%E8%AF%BB3%E3%80%81redisReply"><span class="nav-number">1.2.4.3.</span> <span class="nav-text">解读3、redisReply</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="AlexQFMM"
+      src="/images/Avatar.jpg">
+  <p class="site-author-name" itemprop="name">AlexQFMM</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://qexo-ten-roan.vercel.app/" title="控制中心 → https:&#x2F;&#x2F;qexo-ten-roan.vercel.app&#x2F;" rel="noopener" target="_blank">控制中心</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AlexQFMM</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : 'UaEUwcYLlkREnSn9jPNe0oRf-gzGzoHsz',
+      appKey     : '5d7KwGdf31jiCBxBobH0wVk6',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/assets/miku.model.json"},"display":{"position":"left","width":200,"height":400},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
