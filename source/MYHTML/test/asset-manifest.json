@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/MYHTML/test/static/css/main.3d80578e.css",
-    "main.js": "/MYHTML/test/static/js/main.fd9be555.js",
+    "main.css": "/static/css/main.3d80578e.css",
+    "main.js": "/static/js/main.fd9be555.js",
     "static/media/Avatar.png": "/MYHTML/test/static/media/Avatar.1247867056bbc249498a.png",
-    "static/media/1733016441471.jpeg": "/MYHTML/test/static/media/1733016441471.603abb27112560206cf4.jpeg",
-    "static/media/奖杯.svg": "/MYHTML/test/static/media/奖杯.1d8bbfb99efbe9f48862b8ea70b5fd54.svg",
-    "static/media/github.svg": "/MYHTML/test/static/media/github.0d0dcef614853821cfb7309af508f3f5.svg",
-    "static/media/简历.svg": "/MYHTML/test/static/media/简历.263f34ea84909f726d23c088b388c475.svg",
-    "static/media/blog.svg": "/MYHTML/test/static/media/blog.db810bbfe826e8c0e9a1bf0f32e8db95.svg",
-    "static/media/教育.svg": "/MYHTML/test/static/media/教育.860d70d2102d93b8b100d6169b7b996e.svg",
-    "static/media/电影.svg": "/MYHTML/test/static/media/电影.d97f236d7f763d2bf4ef8685c580fa7a.svg",
-    "static/media/服务器.svg": "/MYHTML/test/static/media/服务器.2658250a6211bb432fb1518e9fdfd5fc.svg",
-    "static/media/leetcode.svg": "/MYHTML/test/static/media/leetcode.15fac4a1dece3742806396a44788e02c.svg",
-    "index.html": "/MYHTML/test/index.html",
-    "main.3d80578e.css.map": "/MYHTML/test/static/css/main.3d80578e.css.map",
-    "main.fd9be555.js.map": "/MYHTML/test/static/js/main.fd9be555.js.map"
+    "static/media/1733016441471.jpeg": "/static/media/1733016441471.603abb27112560206cf4.jpeg",
+    "static/media/奖杯.svg": "/static/media/奖杯.1d8bbfb99efbe9f48862b8ea70b5fd54.svg",
+    "static/media/github.svg": "/static/media/github.0d0dcef614853821cfb7309af508f3f5.svg",
+    "static/media/简历.svg": "/static/media/简历.263f34ea84909f726d23c088b388c475.svg",
+    "static/media/blog.svg": "/static/media/blog.db810bbfe826e8c0e9a1bf0f32e8db95.svg",
+    "static/media/教育.svg": "/static/media/教育.860d70d2102d93b8b100d6169b7b996e.svg",
+    "static/media/电影.svg": "/static/media/电影.d97f236d7f763d2bf4ef8685c580fa7a.svg",
+    "static/media/服务器.svg": "/static/media/服务器.2658250a6211bb432fb1518e9fdfd5fc.svg",
+    "static/media/leetcode.svg": "/static/media/leetcode.15fac4a1dece3742806396a44788e02c.svg",
+    "index.html": "/index.html",
+    "main.3d80578e.css.map": "/static/css/main.3d80578e.css.map",
+    "main.fd9be555.js.map": "/static/js/main.fd9be555.js.map"
   },
   "entrypoints": [
-    "/MYHTML/test/static/css/main.3d80578e.css",
-    "/MYHTML/test/static/js/main.fd9be555.js"
+    "static/css/main.3d80578e.css",
+    "static/js/main.fd9be555.js"
   ]
 }
